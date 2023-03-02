@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "772000803288",
+    "project_id": "southcinema",
+    "storage_bucket": "southcinema.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772000803288:android:b71dcb68f79dff6a516aad",
+        "android_client_info": {
+          "package_name": "com.krygo_dev.south_cinema"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "772000803288-h8kls6c02elkc0gonandgr5avkh7lfu9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbphAdB_w9FXb8l3WrkRfAakpGng7_7CI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "772000803288-h8kls6c02elkc0gonandgr5avkh7lfu9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
