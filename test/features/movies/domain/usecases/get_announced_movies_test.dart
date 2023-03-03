@@ -20,7 +20,7 @@ void main() {
 
   const tMoviesList = sampleListOfMovies;
 
-  test('should get list of announced movies', () async {
+  test('should get list of announced movies from the repository', () async {
     // arrange
     when(mockMoviesRepository.getAnnouncedMovies())
         .thenAnswer((_) async => const Right(tMoviesList));
