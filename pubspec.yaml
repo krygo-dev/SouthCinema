@@ -16,6 +16,8 @@ dependencies:
   flutter_bloc: ^8.1.2
   # Value equality
   equatable: ^2.0.5
+  # Functional programming
+  dartz: ^0.10.1
   # Local cache
   shared_preferences: ^2.0.18
   # Network
