@@ -24,6 +24,8 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   # Firebase
   firebase_core: ^2.7.0
+  firebase_auth: ^4.2.9
+  firebase_auth_mocks: ^0.10.3
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
