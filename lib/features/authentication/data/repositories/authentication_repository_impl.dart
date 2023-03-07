@@ -16,8 +16,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   });
 
   @override
-  // TODO: implement currentUser
-  AuthUser? get currentUser => throw UnimplementedError();
+  AuthUser? get currentUser => authenticationService.currentUser;
 
   @override
   Future<Either<Error, AuthUser>> signInWithEmailAndPassword({
@@ -54,8 +53,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    if (await networkInfo.isConnected) {
+      return await authenticationService.signOut();
+    } else {
+      throw NetworkError();
+    }
   }
 }

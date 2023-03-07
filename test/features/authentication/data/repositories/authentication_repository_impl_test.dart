@@ -162,7 +162,6 @@ void main() {
 
     runTestsOffline(() {
       test('should return NetworkError when device is offline', () async {
-        // arrange
         // act
         final result = await repository.signUpWithEmailAndPassword(
           email: tEmail,
@@ -171,6 +170,56 @@ void main() {
         // assert
         verifyZeroInteractions(mockAuthenticationService);
         expect(result, equals(Left(NetworkError())));
+      });
+    });
+  });
+
+  group('get currentUser', () {
+    test('should forward call to AuthenticationService.currentUser', () {
+      // arrange
+      const tAuthUser =
+          AuthUser(uid: "testID", email: "test@test.com", displayName: "Test");
+      when(mockAuthenticationService.currentUser).thenAnswer((_) => tAuthUser);
+      // act
+      final result = repository.currentUser;
+      // assert
+      verify(mockAuthenticationService.currentUser);
+      expect(result, tAuthUser);
+    });
+  });
+
+  group('signOut', () {
+    test('should check if device is online', () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      // act
+      repository.signOut();
+      // assert
+      verify(mockNetworkInfo.isConnected);
+    });
+
+    runTestsOnline(() {
+      test('should sign out any signed in user', () async {
+        // arrange
+        final tSignedOutFuture = Future.value();
+        when(mockAuthenticationService.signOut())
+            .thenAnswer((_) => tSignedOutFuture);
+        // act
+        final _ = await repository.signOut();
+        // assert
+        expect(() async => await repository.signOut(), isA<void>());
+        verify(mockAuthenticationService.signOut());
+        verifyNoMoreInteractions(mockAuthenticationService);
+      });
+    });
+
+    runTestsOffline(() {
+      test('should throw NetworkError when device is offline', () async {
+        // act
+        final call = repository.signOut;
+        // assert
+        verifyZeroInteractions(mockAuthenticationService);
+        expect(() => call(), throwsA(const TypeMatcher<NetworkError>()));
       });
     });
   });
