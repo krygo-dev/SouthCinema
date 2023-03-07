@@ -28,6 +28,7 @@ void main() {
       final result = usecase.call;
       // assert
       verify(mockAuthenticationRepository.currentUser);
+      verifyNoMoreInteractions(mockAuthenticationRepository);
       expect(result, tAuthUser);
     });
   });

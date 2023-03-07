@@ -26,6 +26,7 @@ void main() {
       final result = usecase();
       // assert
       verify(mockAuthenticationRepository.signOut());
+      verifyNoMoreInteractions(mockAuthenticationRepository);
       expect(result, isA<void>());
     });
   });

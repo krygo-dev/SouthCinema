@@ -26,8 +26,9 @@ void main() {
   test('should return AuthUser when signed in successfully', () async {
     // arrange
     when(mockAuthenticationRepository.signInWithEmailAndPassword(
-            email: anyNamed("email"), password: anyNamed("password")))
-        .thenAnswer((_) async => const Right(tAuthUser));
+      email: anyNamed("email"),
+      password: anyNamed("password"),
+    )).thenAnswer((_) async => const Right(tAuthUser));
     // act
     final result = await usecase(email: tEmail, password: tPassword);
     // assert
