@@ -109,4 +109,69 @@ void main() {
       });
     });
   });
+
+  group('signUpWithEmailAndPassword', () {
+    const tEmail = "test@test.com";
+    const tPassword = "qqqqqq";
+    const tAuthUser =
+        AuthUser(uid: "testID", email: "test@test.com", displayName: "Test");
+
+    test('should check if device is online', () async {
+      // arrange
+      when(mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      when(mockAuthenticationService.signUpWithEmailAndPassword(any, any))
+          .thenAnswer((_) async => tAuthUser);
+      // act
+      repository.signUpWithEmailAndPassword(email: tEmail, password: tPassword);
+      // assert
+      verify(mockNetworkInfo.isConnected);
+    });
+
+    runTestsOnline(() {
+      test('should return AuthUser when signing up is successful', () async {
+        // arrange
+        when(mockAuthenticationService.signUpWithEmailAndPassword(any, any))
+            .thenAnswer((_) async => tAuthUser);
+        // act
+        final result = await repository.signUpWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        );
+        // assert
+        verify(mockAuthenticationService.signUpWithEmailAndPassword(
+            tEmail, tPassword));
+        expect(result, equals(const Right(tAuthUser)));
+      });
+
+      test('should return AuthError when signing up is unsuccessful', () async {
+        // arrange
+        final tAuthError = AuthError(message: 'Unexpected error');
+        when(mockAuthenticationService.signUpWithEmailAndPassword(any, any))
+            .thenThrow(tAuthError);
+        // act
+        final result = await repository.signUpWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        );
+        // assert
+        verify(mockAuthenticationService.signUpWithEmailAndPassword(
+            tEmail, tPassword));
+        expect(result, equals(Left(tAuthError)));
+      });
+    });
+
+    runTestsOffline(() {
+      test('should return NetworkError when device is offline', () async {
+        // arrange
+        // act
+        final result = await repository.signUpWithEmailAndPassword(
+          email: tEmail,
+          password: tPassword,
+        );
+        // assert
+        verifyZeroInteractions(mockAuthenticationService);
+        expect(result, equals(Left(NetworkError())));
+      });
+    });
+  });
 }

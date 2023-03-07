@@ -40,9 +40,17 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<Either<Error, AuthUser>> signUpWithEmailAndPassword({
     required String email,
     required String password,
-  }) {
-    // TODO: implement signUpWithEmailAndPassword
-    throw UnimplementedError();
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final authUser = await authenticationService.signUpWithEmailAndPassword(email, password);
+        return Right(authUser);
+      } on AuthError catch(error) {
+        return Left(error);
+      }
+    } else {
+      return Left(NetworkError());
+    }
   }
 
   @override
