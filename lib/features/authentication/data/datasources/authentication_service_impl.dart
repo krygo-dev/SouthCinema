@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/authentication/data/datasources/authentication_service.dart';
 import 'package:south_cinema/features/authentication/domain/entities/auth_user.dart';
 
@@ -18,15 +19,23 @@ class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @override
-  Future<AuthUser> signInWithEmailAndPassword(String email, String password) {
-    // TODO: implement signInWithEmailAndPassword
-    throw UnimplementedError();
+  Future<AuthUser> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      return currentUser!;
+    } on FirebaseAuthException catch(e) {
+      throw AuthError(message: e.message != null ? e.message! : 'Unexpected error');
+    }
   }
 
   @override
-  Future<AuthUser> signUpWithEmailAndPassword(String email, String password) {
-    // TODO: implement signUpWithEmailAndPassword
-    throw UnimplementedError();
+  Future<AuthUser> signUpWithEmailAndPassword(String email, String password) async {
+    try {
+      await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      return currentUser!;
+    } on FirebaseAuthException catch(e) {
+      throw AuthError(message: e.message != null ? e.message! : 'Unexpected error');
+    }
   }
 
   @override
