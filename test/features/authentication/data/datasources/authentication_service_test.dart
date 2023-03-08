@@ -123,4 +123,31 @@ void main() {
       await expectLater(call(tEmail, tPassword), throwsA(isA<AuthError>()));
     });
   });
+  
+  group('signOut', () { 
+    test('should sign out currently signed in user', () async {
+      // arrange
+      final mockUser = auth_mocks.MockUser(
+          uid: "testID", email: "test@test.com", displayName: "Test");
+      when(mockFirebaseAuth.currentUser).thenAnswer((_) => mockUser);
+      when(mockFirebaseAuth.signOut()).thenAnswer((_) => Future.value());
+      // act
+      await authenticationServiceImpl.signOut();
+      // assert
+      expect(() async => await authenticationServiceImpl.signOut(), isA<void>());
+      verify(mockFirebaseAuth.signOut());
+      verify(mockFirebaseAuth.currentUser);
+      verifyNoMoreInteractions(mockFirebaseAuth);
+    });
+
+    test('should throw AuthError when there is no signed in user', () async {
+      // arrange
+      when(mockFirebaseAuth.currentUser).thenAnswer((_) => null);
+      // act
+      final call = authenticationServiceImpl.signOut;
+      // assert
+      verifyZeroInteractions(mockFirebaseAuth);
+      expect(() async => await call(), throwsA(isA<AuthError>()));
+    });
+  });
 }

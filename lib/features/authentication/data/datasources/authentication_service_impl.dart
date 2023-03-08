@@ -39,8 +39,11 @@ class AuthenticationServiceImpl implements AuthenticationService {
   }
 
   @override
-  Future<void> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<void> signOut() async {
+    if (currentUser != null) {
+      return await firebaseAuth.signOut();
+    } else {
+      throw AuthError(message: 'There is not any logged in user');
+    }
   }
 }
