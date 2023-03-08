@@ -11,7 +11,9 @@ class SignUpWithEmailAndPassword {
   Future<Either<Error, AuthUser>> call({
     required String email,
     required String password,
+    required String repeatPassword,
   }) async {
+    if (password != repeatPassword) return Left(AuthError(message: 'Passwords are different'));
     return await repository.signUpWithEmailAndPassword(email: email, password: password);
   }
 }
