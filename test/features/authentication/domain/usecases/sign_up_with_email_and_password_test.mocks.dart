@@ -44,7 +44,7 @@ class MockAuthenticationRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>> signInWithEmailAndPassword({
+  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>> signInWithEmailAndPassword({
     required String? email,
     required String? password,
   }) =>
@@ -57,8 +57,8 @@ class MockAuthenticationRepository extends _i1.Mock
             #password: password,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>>.value(
-            _FakeEither_0<_i5.Error, _i6.AuthUser>(
+        returnValue: _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
+            _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
           this,
           Invocation.method(
             #signInWithEmailAndPassword,
@@ -69,9 +69,9 @@ class MockAuthenticationRepository extends _i1.Mock
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>>);
+      ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
   @override
-  _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>> signUpWithEmailAndPassword({
+  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>> signUpWithEmailAndPassword({
     required String? email,
     required String? password,
   }) =>
@@ -84,8 +84,8 @@ class MockAuthenticationRepository extends _i1.Mock
             #password: password,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>>.value(
-            _FakeEither_0<_i5.Error, _i6.AuthUser>(
+        returnValue: _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
+            _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
           this,
           Invocation.method(
             #signUpWithEmailAndPassword,
@@ -96,7 +96,7 @@ class MockAuthenticationRepository extends _i1.Mock
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Error, _i6.AuthUser>>);
+      ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
   @override
   _i4.Future<void> signOut() => (super.noSuchMethod(
         Invocation.method(

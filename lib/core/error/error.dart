@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-abstract class Error extends Equatable {
+abstract class BaseError extends Equatable {
   final String message;
 
-  Error({required this.message});
+  const BaseError({required this.message});
 
   @override
   List<Object> get props => [];
 }
 
-class AuthError extends Error {
-  AuthError({required super.message});
+class AuthError extends BaseError {
+  const AuthError({required super.message});
 }
 
-class NetworkError extends Error {
-  NetworkError({super.message = "You don't have Internet connection."});
+class NetworkError extends BaseError {
+  const NetworkError({super.message = "You don't have Internet connection."});
 }

@@ -19,7 +19,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   AuthUser? get currentUser => authenticationService.currentUser;
 
   @override
-  Future<Either<Error, AuthUser>> signInWithEmailAndPassword({
+  Future<Either<BaseError, AuthUser>> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -36,7 +36,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<Either<Error, AuthUser>> signUpWithEmailAndPassword({
+  Future<Either<BaseError, AuthUser>> signUpWithEmailAndPassword({
     required String email,
     required String password,
   }) async {

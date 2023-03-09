@@ -8,7 +8,7 @@ class SignUpWithEmailAndPassword {
 
   SignUpWithEmailAndPassword(this.repository);
 
-  Future<Either<Error, AuthUser>> call({
+  Future<Either<BaseError, AuthUser>> call({
     required String email,
     required String password,
     required String repeatPassword,

@@ -8,7 +8,7 @@ class GetCurrentlyPlayedMovies {
 
   GetCurrentlyPlayedMovies(this.repository);
 
-  Future<Either<Error, List<Movie>>> call() async {
+  Future<Either<BaseError, List<Movie>>> call() async {
     return await repository.getCurrentlyPlayedMovies();
   }
 }

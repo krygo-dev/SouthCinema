@@ -5,12 +5,12 @@ import 'package:south_cinema/core/error/error.dart';
 abstract class AuthenticationRepository {
   AuthUser? get currentUser;
 
-  Future<Either<Error, AuthUser>> signInWithEmailAndPassword({
+  Future<Either<BaseError, AuthUser>> signInWithEmailAndPassword({
     required String email,
     required String password,
   });
 
-  Future<Either<Error, AuthUser>> signUpWithEmailAndPassword({
+  Future<Either<BaseError, AuthUser>> signUpWithEmailAndPassword({
     required String email,
     required String password,
   });

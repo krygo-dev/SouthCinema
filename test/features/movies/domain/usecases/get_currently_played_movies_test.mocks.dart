@@ -42,52 +42,52 @@ class MockMoviesRepository extends _i1.Mock implements _i3.MoviesRepository {
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>
+  _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>
       getCurrentlyPlayedMovies() => (super.noSuchMethod(
             Invocation.method(
               #getCurrentlyPlayedMovies,
               [],
             ),
             returnValue:
-                _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>.value(
-                    _FakeEither_0<_i5.Error, List<_i6.Movie>>(
+                _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
+                    _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
               this,
               Invocation.method(
                 #getCurrentlyPlayedMovies,
                 [],
               ),
             )),
-          ) as _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>);
+          ) as _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>> getAnnouncedMovies() =>
+  _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>> getAnnouncedMovies() =>
       (super.noSuchMethod(
         Invocation.method(
           #getAnnouncedMovies,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>.value(
-            _FakeEither_0<_i5.Error, List<_i6.Movie>>(
+        returnValue: _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
+            _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
           this,
           Invocation.method(
             #getAnnouncedMovies,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>);
+      ) as _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>);
   @override
-  _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>> getAllMovies() =>
+  _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>> getAllMovies() =>
       (super.noSuchMethod(
         Invocation.method(
           #getAllMovies,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>.value(
-            _FakeEither_0<_i5.Error, List<_i6.Movie>>(
+        returnValue: _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
+            _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
           this,
           Invocation.method(
             #getAllMovies,
             [],
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Error, List<_i6.Movie>>>);
+      ) as _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>);
 }
