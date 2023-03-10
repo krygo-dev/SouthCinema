@@ -16,3 +16,11 @@ class AuthError extends BaseError {
 class NetworkError extends BaseError {
   const NetworkError({super.message = "You don't have Internet connection."});
 }
+
+class GettingDataError extends BaseError {
+  const GettingDataError({super.message = 'Getting data was unsuccessful'});
+}
+
+class InvalidInputError extends BaseError {
+  const InvalidInputError({super.message = 'Please provide valid input'});
+}

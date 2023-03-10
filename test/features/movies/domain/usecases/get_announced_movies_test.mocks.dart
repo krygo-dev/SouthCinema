@@ -65,8 +65,9 @@ class MockMoviesRepository extends _i1.Mock implements _i3.MoviesRepository {
           #getAnnouncedMovies,
           [],
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
-            _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
+        returnValue:
+            _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
+                _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
           this,
           Invocation.method(
             #getAnnouncedMovies,
@@ -75,19 +76,22 @@ class MockMoviesRepository extends _i1.Mock implements _i3.MoviesRepository {
         )),
       ) as _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>);
   @override
-  _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>> getAllMovies() =>
+  _i4.Future<_i2.Either<_i5.BaseError, _i6.Movie>> getMovieById(
+          {required String? id}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getAllMovies,
+          #getMovieById,
           [],
+          {#id: id},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>.value(
-            _FakeEither_0<_i5.BaseError, List<_i6.Movie>>(
+        returnValue: _i4.Future<_i2.Either<_i5.BaseError, _i6.Movie>>.value(
+            _FakeEither_0<_i5.BaseError, _i6.Movie>(
           this,
           Invocation.method(
-            #getAllMovies,
+            #getMovieById,
             [],
+            {#id: id},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.BaseError, List<_i6.Movie>>>);
+      ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.Movie>>);
 }

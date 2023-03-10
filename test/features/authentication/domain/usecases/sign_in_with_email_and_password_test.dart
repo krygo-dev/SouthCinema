@@ -43,14 +43,14 @@ void main() {
 
   test('should return Error when signing in was unsuccessful', () async {
     // arrange
-    final tAuthError = AuthError(message: 'Unexpected error');
+    const tAuthError = AuthError(message: 'Unexpected error');
     when(mockAuthenticationRepository.signInWithEmailAndPassword(
             email: anyNamed("email"), password: anyNamed("password")))
-        .thenAnswer((_) async => Left(tAuthError));
+        .thenAnswer((_) async => const Left(tAuthError));
     // act
     final result = await usecase(email: tEmail, password: tPassword);
     // assert
-    expect(result, Left(tAuthError));
+    expect(result, const Left(tAuthError));
     verify(mockAuthenticationRepository.signInWithEmailAndPassword(
       email: tEmail,
       password: tPassword,

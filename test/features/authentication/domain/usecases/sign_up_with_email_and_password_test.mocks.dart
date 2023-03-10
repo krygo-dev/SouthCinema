@@ -44,59 +44,63 @@ class MockAuthenticationRepository extends _i1.Mock
   }
 
   @override
-  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>> signInWithEmailAndPassword({
+  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>
+      signInWithEmailAndPassword({
     required String? email,
     required String? password,
   }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #signInWithEmailAndPassword,
-          [],
-          {
-            #email: email,
-            #password: password,
-          },
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
-            _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
-          this,
-          Invocation.method(
-            #signInWithEmailAndPassword,
-            [],
-            {
-              #email: email,
-              #password: password,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
+          (super.noSuchMethod(
+            Invocation.method(
+              #signInWithEmailAndPassword,
+              [],
+              {
+                #email: email,
+                #password: password,
+              },
+            ),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
+                    _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
+              this,
+              Invocation.method(
+                #signInWithEmailAndPassword,
+                [],
+                {
+                  #email: email,
+                  #password: password,
+                },
+              ),
+            )),
+          ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
   @override
-  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>> signUpWithEmailAndPassword({
+  _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>
+      signUpWithEmailAndPassword({
     required String? email,
     required String? password,
   }) =>
-      (super.noSuchMethod(
-        Invocation.method(
-          #signUpWithEmailAndPassword,
-          [],
-          {
-            #email: email,
-            #password: password,
-          },
-        ),
-        returnValue: _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
-            _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
-          this,
-          Invocation.method(
-            #signUpWithEmailAndPassword,
-            [],
-            {
-              #email: email,
-              #password: password,
-            },
-          ),
-        )),
-      ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
+          (super.noSuchMethod(
+            Invocation.method(
+              #signUpWithEmailAndPassword,
+              [],
+              {
+                #email: email,
+                #password: password,
+              },
+            ),
+            returnValue:
+                _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>.value(
+                    _FakeEither_0<_i5.BaseError, _i6.AuthUser>(
+              this,
+              Invocation.method(
+                #signUpWithEmailAndPassword,
+                [],
+                {
+                  #email: email,
+                  #password: password,
+                },
+              ),
+            )),
+          ) as _i4.Future<_i2.Either<_i5.BaseError, _i6.AuthUser>>);
   @override
   _i4.Future<void> signOut() => (super.noSuchMethod(
         Invocation.method(
