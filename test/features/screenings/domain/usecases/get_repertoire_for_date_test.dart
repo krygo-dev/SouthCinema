@@ -20,10 +20,21 @@ void main() {
   });
 
   const tDate = '15/03/2023';
-  const tRepertoireList = [RepertoireScreening(id: 'id', title: 'title', date: 'date', screenings: [])];
+  const tRepertoireList = [
+    RepertoireScreening(
+      id: 'id',
+      title: 'title',
+      date: 'date',
+      screenings: [],
+    )
+  ];
+  const tGettingDataError = GettingDataError();
 
-  test('should return list of RepertoireScreening for provided date', () async {
+  test(
+      'should return list of RepertoireScreening from repository for provided date',
+      () async {
     // arrange
+
     when(mockScreenignsRepository.getRepertoireForDate(date: anyNamed('date')))
         .thenAnswer((_) async => const Right(tRepertoireList));
     // act
@@ -33,10 +44,9 @@ void main() {
     verify(mockScreenignsRepository.getRepertoireForDate(date: tDate));
     verifyNoMoreInteractions(mockScreenignsRepository);
   });
-  
+
   test('should return error when getting data was unsuccessful', () async {
     // arrange
-    const tGettingDataError = GettingDataError(message: 'Test error message');
     when(mockScreenignsRepository.getRepertoireForDate(date: anyNamed('date')))
         .thenAnswer((_) async => const Left(tGettingDataError));
     // act
