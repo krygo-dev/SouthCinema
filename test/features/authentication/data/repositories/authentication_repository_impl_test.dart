@@ -80,7 +80,7 @@ void main() {
 
       test('should return AuthError when signing in is unsuccessful', () async {
         // arrange
-        final tAuthError = AuthError(message: 'Unexpected error');
+        const tAuthError = AuthError(message: 'Unexpected error');
         when(mockAuthenticationService.signInWithEmailAndPassword(any, any))
             .thenThrow(tAuthError);
         // act
@@ -91,7 +91,7 @@ void main() {
         // assert
         verify(mockAuthenticationService.signInWithEmailAndPassword(
             tEmail, tPassword));
-        expect(result, equals(Left(tAuthError)));
+        expect(result, equals(const Left(tAuthError)));
       });
     });
 
@@ -105,7 +105,7 @@ void main() {
         );
         // assert
         verifyZeroInteractions(mockAuthenticationService);
-        expect(result, equals(Left(NetworkError())));
+        expect(result, equals(const Left(NetworkError())));
       });
     });
   });
@@ -145,7 +145,7 @@ void main() {
 
       test('should return AuthError when signing up is unsuccessful', () async {
         // arrange
-        final tAuthError = AuthError(message: 'Unexpected error');
+        const tAuthError = AuthError(message: 'Unexpected error');
         when(mockAuthenticationService.signUpWithEmailAndPassword(any, any))
             .thenThrow(tAuthError);
         // act
@@ -156,7 +156,7 @@ void main() {
         // assert
         verify(mockAuthenticationService.signUpWithEmailAndPassword(
             tEmail, tPassword));
-        expect(result, equals(Left(tAuthError)));
+        expect(result, equals(const Left(tAuthError)));
       });
     });
 
@@ -169,7 +169,7 @@ void main() {
         );
         // assert
         verifyZeroInteractions(mockAuthenticationService);
-        expect(result, equals(Left(NetworkError())));
+        expect(result, equals(const Left(NetworkError())));
       });
     });
   });

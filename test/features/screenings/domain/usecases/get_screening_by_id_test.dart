@@ -24,7 +24,7 @@ void main() {
   const tGettingDataError = GettingDataError();
   final tScreening = Screening(
     id: 'testId',
-    date: Timestamp(1000, 1000),
+    date: Timestamp.fromDate(DateTime(2023, 3, 15)),
     movieID: 'movieID',
     movieTitle: 'movieTitle',
     roomID: 'roomID',

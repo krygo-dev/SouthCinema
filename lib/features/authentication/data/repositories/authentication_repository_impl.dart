@@ -9,7 +9,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final AuthenticationService authenticationService;
   final NetworkInfo networkInfo;
 
-
   AuthenticationRepositoryImpl({
     required this.authenticationService,
     required this.networkInfo,
@@ -25,13 +24,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final authUser = await authenticationService.signInWithEmailAndPassword(email, password);
+        final authUser = await authenticationService.signInWithEmailAndPassword(
+            email, password);
         return Right(authUser);
-      } on AuthError catch(error) {
+      } on AuthError catch (error) {
         return Left(error);
       }
     } else {
-      return Left(NetworkError());
+      return const Left(NetworkError());
     }
   }
 
@@ -42,13 +42,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final authUser = await authenticationService.signUpWithEmailAndPassword(email, password);
+        final authUser = await authenticationService.signUpWithEmailAndPassword(
+            email, password);
         return Right(authUser);
-      } on AuthError catch(error) {
+      } on AuthError catch (error) {
         return Left(error);
       }
     } else {
-      return Left(NetworkError());
+      return const Left(NetworkError());
     }
   }
 
@@ -57,7 +58,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     if (await networkInfo.isConnected) {
       return await authenticationService.signOut();
     } else {
-      throw NetworkError();
+      throw const NetworkError();
     }
   }
 }
