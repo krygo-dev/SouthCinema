@@ -24,7 +24,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
       await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return currentUser!;
     } on FirebaseAuthException catch(e) {
-      throw AuthError(message: e.message != null ? e.message! : 'Unexpected error');
+      throw AuthError(message: e.message ?? 'Unexpected error');
     }
   }
 
@@ -34,7 +34,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
       await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       return currentUser!;
     } on FirebaseAuthException catch(e) {
-      throw AuthError(message: e.message != null ? e.message! : 'Unexpected error');
+      throw AuthError(message: e.message ?? 'Unexpected error');
     }
   }
 
@@ -43,7 +43,7 @@ class AuthenticationServiceImpl implements AuthenticationService {
     if (currentUser != null) {
       return await firebaseAuth.signOut();
     } else {
-      throw AuthError(message: 'There is not any logged in user');
+      throw const AuthError(message: 'There is not any logged in user');
     }
   }
 }
