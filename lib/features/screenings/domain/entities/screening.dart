@@ -20,7 +20,7 @@ class Screening extends Equatable {
     required this.seatsTaken,
   });
 
-  factory Screening.fromJson(Map<String, Object> json) {
+  factory Screening.fromJson(Map<String, dynamic> json) {
     return Screening(
       id: json['id']! as String,
       date: json['date']! as Timestamp,

@@ -5,6 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service_impl.dart';
 import 'package:south_cinema/features/screenings/domain/entities/repertoire_screening.dart';
+import 'package:south_cinema/features/screenings/domain/entities/room.dart';
+import 'package:south_cinema/features/screenings/domain/entities/screening.dart';
 
 import 'screenings_service_test.mocks.dart';
 
@@ -13,6 +15,8 @@ import 'screenings_service_test.mocks.dart';
   CollectionReference,
   QuerySnapshot,
   Query,
+  DocumentReference,
+  DocumentSnapshot,
 ], customMocks: [
   MockSpec<QueryDocumentSnapshot>(
     unsupportedMembers: {Symbol('data')},
@@ -27,6 +31,8 @@ void main() {
   late MockQuerySnapshot<Map<String, dynamic>> mockQuerySnapshot;
   late MockQueryDocumentSnapshot<Map<String, dynamic>>
       mockQueryDocumentSnapshot;
+  late MockDocumentReference<Map<String, dynamic>> mockDocumentReference;
+  late MockDocumentSnapshot<Map<String, dynamic>> mockDocumentSnapshot;
 
   setUp(() {
     mockFirebaseFirestore = MockFirebaseFirestore();
@@ -34,6 +40,8 @@ void main() {
     mockQuery = MockQuery();
     mockQuerySnapshot = MockQuerySnapshot();
     mockQueryDocumentSnapshot = MockQueryDocumentSnapshot();
+    mockDocumentReference = MockDocumentReference();
+    mockDocumentSnapshot = MockDocumentSnapshot();
     screeningsServiceImpl = ScreeningsServiceImpl(mockFirebaseFirestore);
   });
 
@@ -83,8 +91,108 @@ void main() {
       await expectLater(() => call(tDate), throwsA(isA<GettingDataError>()));
     });
   });
+
+  group('getRoomById', () {
+    const tCollectionPath = 'rooms';
+    const tId = 'room_id';
+    const tRoom = Room(id: 'room_id', name: 'name', rows: 10, rowsLength: 10);
+    const tJson = {
+      'id': 'room_id',
+      'name': 'name',
+      'rows': 10,
+      'rowsLength': 10
+    };
+
+    test(
+        'should get document by provided id from rooms collection and return it as Room entity',
+        () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenAnswer((_) async => mockDocumentSnapshot);
+      when(mockDocumentSnapshot.data()).thenReturn(tJson);
+      // act
+      final result = await screeningsServiceImpl.getRoomById(tId);
+      // assert
+      expect(result, tRoom);
+      verify(mockFirebaseFirestore.collection(tCollectionPath));
+      verify(mockCollectionReference.doc(tId));
+    });
+
+    test('should throw GettingDataError when getting data fails', () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenThrow(FirebaseException(plugin: 'firestore'));
+      // act
+      final call = screeningsServiceImpl.getRoomById;
+      // assert
+      verifyNoMoreInteractions(mockFirebaseFirestore);
+      await expectLater(() => call(tId), throwsA(isA<GettingDataError>()));
+    });
+  });
+
+  group('getScreeningById', () {
+    const tCollectionPath = 'screenings';
+    const tId = 'test_id';
+    final tScreening = Screening(
+      id: 'test_id',
+      date: Timestamp.fromDate(DateTime(2023, 3, 15)),
+      movieID: 'movieID',
+      movieTitle: 'movieTitle',
+      roomID: 'roomID',
+      reservationOn: true,
+      seatsTaken: const ['0101', '0102'],
+    );
+    final tJson = {
+      'id': 'test_id',
+      'date': Timestamp.fromDate(DateTime(2023, 3, 15)),
+      'movieID': 'movieID',
+      'movieTitle': 'movieTitle',
+      'roomID': 'roomID',
+      'reservationOn': true,
+      'seatsTaken': const ['0101', '0102'],
+    };
+
+    test('''should get document by provided id from screenings collection 
+      and return in as Screening entity''', () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenAnswer((_) async => mockDocumentSnapshot);
+      when(mockDocumentSnapshot.data()).thenReturn(tJson);
+      // act
+      final result = await screeningsServiceImpl.getScreeningById(tId);
+      // assert
+      expect(result, tScreening);
+      verify(mockFirebaseFirestore.collection(tCollectionPath));
+      verify(mockCollectionReference.doc(tId));
+    });
+
+    test('should throw GettingDataError when getting data fails', () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.get())
+          .thenThrow(FirebaseException(plugin: 'firestore'));
+      // act
+      final call = screeningsServiceImpl.getScreeningById;
+      // assert
+      verifyNoMoreInteractions(mockFirebaseFirestore);
+      await expectLater(() => call(tId), throwsA(isA<GettingDataError>()));
+    });
+  });
 }
 
+// Function used to mock behavior of QueryDocumentSnapshot.data() method
+// See usage in @GenerateMocks annotation
 Map<String, dynamic> jsonData() {
   return {
     'id': 'testId',

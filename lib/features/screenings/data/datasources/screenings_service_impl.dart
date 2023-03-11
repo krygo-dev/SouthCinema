@@ -14,11 +14,14 @@ class ScreeningsServiceImpl implements ScreeningsService {
   Future<List<RepertoireScreening>> getRepertoireForDate(String date) async {
     try {
       final snapshots = (await firebaseFirestore
-          .collection('repertoire')
-          .where('date', isEqualTo: date)
-          .get()).docs;
+              .collection('repertoire')
+              .where('date', isEqualTo: date)
+              .get())
+          .docs;
 
-      final repertoireList = snapshots.map((snapshot) => RepertoireScreening.fromJson(snapshot.data())).toList();
+      final repertoireList = snapshots
+          .map((snapshot) => RepertoireScreening.fromJson(snapshot.data()))
+          .toList();
       return repertoireList;
     } on FirebaseException catch (e) {
       throw GettingDataError(message: e.message ?? 'Unexpected error');
@@ -26,14 +29,22 @@ class ScreeningsServiceImpl implements ScreeningsService {
   }
 
   @override
-  Future<Room> getRoomById(String id) {
-    // TODO: implement getRoomById
-    throw UnimplementedError();
+  Future<Room> getRoomById(String id) async {
+    try {
+      final doc = await firebaseFirestore.collection('rooms').doc(id).get();
+      return Room.fromJson(doc.data()!);
+    } on FirebaseException catch (e) {
+      throw GettingDataError(message: e.message ?? 'Unexpected error');
+    }
   }
 
   @override
-  Future<Screening> getScreeningById(String id) {
-    // TODO: implement getScreeningById
-    throw UnimplementedError();
+  Future<Screening> getScreeningById(String id) async {
+    try {
+      final doc = await firebaseFirestore.collection('screenings').doc(id).get();
+      return Screening.fromJson(doc.data()!);
+    } on FirebaseException catch (e) {
+      throw GettingDataError(message: e.message ?? 'Unexpected error');
+    }
   }
 }
