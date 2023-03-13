@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Movie extends Equatable {
   final String id;
-  final String ageRestriction;
+  final int ageRestriction;
   final String description;
   final String director;
   final String distribution;
@@ -35,6 +35,26 @@ class Movie extends Equatable {
     required this.genre,
   });
 
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'],
+      ageRestriction: json['ageRestriction'],
+      description: json['description'],
+      director: json['director'],
+      distribution: json['distribution'],
+      format: json['format'],
+      posterUrl: json['posterUrl'],
+      premiereDate: json['premiereDate'],
+      productionCountry: json['productionCountry'],
+      title: json['title'],
+      trailerUrl: json['trailerUrl'],
+      durationMin: json['durationMin'],
+      subtitles: json['subtitles'],
+      cast: json['cast'],
+      genre: json['genre'],
+    );
+  }
+
   @override
   List<Object?> get props => [
         id,
@@ -58,7 +78,7 @@ class Movie extends Equatable {
 const sampleListOfMovies = [
   Movie(
     id: "id",
-    ageRestriction: "ageRestriction",
+    ageRestriction: 15,
     description: "description",
     director: "director",
     distribution: "distribution",
@@ -75,7 +95,7 @@ const sampleListOfMovies = [
   ),
   Movie(
     id: "id",
-    ageRestriction: "ageRestriction",
+    ageRestriction: 15,
     description: "description",
     director: "director",
     distribution: "distribution",

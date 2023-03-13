@@ -34,7 +34,7 @@ void main() {
     );
     // assert
     verifyZeroInteractions(mockAuthenticationRepository);
-    expect(result, Left(AuthError(message: 'Passwords are different')));
+    expect(result, const Left(AuthError(message: 'Passwords are different')));
   });
 
   test('should return AuthUser when signed up successfully', () async {
@@ -59,10 +59,10 @@ void main() {
 
   test('should return Error when signing up was unsuccessful', () async {
     // arrange
-    final tAuthError = AuthError(message: 'Unexpected error');
+    const tAuthError = AuthError(message: 'Unexpected error');
     when(mockAuthenticationRepository.signUpWithEmailAndPassword(
             email: anyNamed("email"), password: anyNamed("password")))
-        .thenAnswer((_) async => Left(tAuthError));
+        .thenAnswer((_) async => const Left(tAuthError));
     // act
     final result = await usecase(
       email: tEmail,
@@ -70,7 +70,7 @@ void main() {
       repeatPassword: tPassword,
     );
     // assert
-    expect(result, Left(tAuthError));
+    expect(result, const Left(tAuthError));
     verify(mockAuthenticationRepository.signUpWithEmailAndPassword(
       email: tEmail,
       password: tPassword,

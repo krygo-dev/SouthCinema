@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/domain/repositories/movies_repository.dart';
 import 'package:south_cinema/features/movies/domain/usecases/get_announced_movies.dart';
@@ -19,6 +20,7 @@ void main() {
   });
 
   const tMoviesList = sampleListOfMovies;
+  const tGettingDataError = GettingDataError();
 
   test('should get list of announced movies from the repository', () async {
     // arrange
@@ -28,6 +30,18 @@ void main() {
     final result = await usecase();
     // assert
     expect(result, const Right(tMoviesList));
+    verify(mockMoviesRepository.getAnnouncedMovies());
+    verifyNoMoreInteractions(mockMoviesRepository);
+  });
+
+  test('should return error when getting data was unsuccessful', () async {
+    // arrange
+    when(mockMoviesRepository.getAnnouncedMovies())
+        .thenAnswer((_) async => const Left(tGettingDataError));
+    // act
+    final result = await usecase();
+    // assert
+    expect(result, const Left(tGettingDataError));
     verify(mockMoviesRepository.getAnnouncedMovies());
     verifyNoMoreInteractions(mockMoviesRepository);
   });
