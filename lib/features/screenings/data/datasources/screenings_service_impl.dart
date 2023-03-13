@@ -16,8 +16,7 @@ class ScreeningsServiceImpl implements ScreeningsService {
       final snapshots = (await firebaseFirestore
               .collection('repertoire')
               .where('date', isEqualTo: date)
-              .get())
-          .docs;
+              .get()).docs;
 
       final repertoireList = snapshots
           .map((snapshot) => RepertoireScreening.fromJson(snapshot.data()))
@@ -41,7 +40,8 @@ class ScreeningsServiceImpl implements ScreeningsService {
   @override
   Future<Screening> getScreeningById(String id) async {
     try {
-      final doc = await firebaseFirestore.collection('screenings').doc(id).get();
+      final doc =
+          await firebaseFirestore.collection('screenings').doc(id).get();
       return Screening.fromJson(doc.data()!);
     } on FirebaseException catch (e) {
       throw GettingDataError(message: e.message ?? 'Unexpected error');

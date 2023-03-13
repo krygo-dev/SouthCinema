@@ -18,6 +18,7 @@ void main() {
       trailerUrl: 'trailerUrl',
       durationMin: 120,
       subtitles: false,
+      currentlyPlayed: true,
       cast: ['test', 'test2'],
       genre: ['test', 'test2'],
     );
@@ -36,6 +37,7 @@ void main() {
       'trailerUrl': 'trailerUrl',
       'durationMin': 120,
       'subtitles': false,
+      'currentlyPlayed': true,
       'cast': ['test', 'test2'],
       'genre': ['test', 'test2'],
     };

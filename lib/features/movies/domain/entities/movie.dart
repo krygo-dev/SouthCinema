@@ -14,6 +14,7 @@ class Movie extends Equatable {
   final String trailerUrl;
   final int durationMin;
   final bool subtitles;
+  final bool currentlyPlayed;
   final List<String> cast;
   final List<String> genre;
 
@@ -31,6 +32,7 @@ class Movie extends Equatable {
     required this.trailerUrl,
     required this.durationMin,
     required this.subtitles,
+    required this.currentlyPlayed,
     required this.cast,
     required this.genre,
   });
@@ -50,6 +52,7 @@ class Movie extends Equatable {
       trailerUrl: json['trailerUrl'],
       durationMin: json['durationMin'],
       subtitles: json['subtitles'],
+      currentlyPlayed: json['currentlyPlayed'],
       cast: json['cast'],
       genre: json['genre'],
     );
@@ -70,6 +73,7 @@ class Movie extends Equatable {
         trailerUrl,
         durationMin,
         subtitles,
+        currentlyPlayed,
         cast,
         genre,
       ];
@@ -90,6 +94,7 @@ const sampleListOfMovies = [
     trailerUrl: "trailerUrl",
     durationMin: 100,
     subtitles: true,
+    currentlyPlayed: true,
     cast: ["Test", "Test2"],
     genre: ["SF"],
   ),
@@ -107,6 +112,7 @@ const sampleListOfMovies = [
     trailerUrl: "trailerUrl",
     durationMin: 130,
     subtitles: true,
+    currentlyPlayed: true,
     cast: ["Test3", "Test4"],
     genre: ["SF"],
   ),
