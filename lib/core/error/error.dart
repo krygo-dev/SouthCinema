@@ -21,6 +21,10 @@ class GettingDataError extends BaseError {
   const GettingDataError({super.message = 'Getting data was unsuccessful'});
 }
 
+class SettingDataError extends BaseError {
+  const SettingDataError({super.message = 'Setting data was unsuccessful'});
+}
+
 class InvalidInputError extends BaseError {
   const InvalidInputError({super.message = 'Please provide valid input'});
 }

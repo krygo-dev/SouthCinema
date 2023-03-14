@@ -28,7 +28,7 @@ void main() {
     street: 'street',
     contactNumber: 'contactNumber',
   );
-  const tGettingDataError = GettingDataError();
+  const tSettingDataError = SettingDataError();
 
   test('should return true when setting data was successful', () async {
     // arrange
@@ -45,11 +45,11 @@ void main() {
   test('should return error when setting data was unsuccessful', () async {
     // arrange
     when(mockUserProfileRepository.setOrUpdateUserData(user: anyNamed('user')))
-        .thenAnswer((_) async => const Left(tGettingDataError));
+        .thenAnswer((_) async => const Left(tSettingDataError));
     // act
     final result = await usecase(user: tUser);
     // assert
-    expect(result, const Left(tGettingDataError));
+    expect(result, const Left(tSettingDataError));
     verify(mockUserProfileRepository.setOrUpdateUserData(user: tUser));
     verifyNoMoreInteractions(mockUserProfileRepository);
   });
