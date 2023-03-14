@@ -3,12 +3,12 @@ import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/user_profile/domain/entities/user.dart';
 import 'package:south_cinema/features/user_profile/domain/repositories/user_profile_repository.dart';
 
-class GetUserById {
+class SetOrUpdateUserData {
   final UserProfileRepository repository;
 
-  GetUserById(this.repository);
+  SetOrUpdateUserData(this.repository);
 
-  Future<Either<BaseError, User>> call({required String uid}) async {
-    return await repository.getUserById(uid: uid);
+  Future<Either<BaseError, bool>> call({required User user}) async {
+    return await repository.setOrUpdateUserData(user: user);
   }
 }
