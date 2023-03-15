@@ -137,7 +137,7 @@ void main() {
         expect(result, const Right(true));
       });
 
-      test('should return error when getting data was unsuccessful', () async {
+      test('should return error when setting data was unsuccessful', () async {
         // arrange
         when(mockUserService.setOrUpdateUserData(any)).thenThrow(tSettingDataError);
         // act
