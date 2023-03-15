@@ -3,12 +3,12 @@ import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/reservations/domain/entities/reservation.dart';
 import 'package:south_cinema/features/reservations/domain/repositories/reservations_repository.dart';
 
-class CreateNewReservation {
+class GetUserReservations {
   final ReservationsRepository repository;
 
-  CreateNewReservation(this.repository);
+  GetUserReservations(this.repository);
 
-  Future<Either<BaseError, bool>> call({required Reservation reservation}) async {
-    return await repository.createNewReservation(reservation: reservation);
+  Future<Either<BaseError, List<Reservation>>> call({required String uid}) async {
+    return await repository.getUserReservations(uid: uid);
   }
 }
