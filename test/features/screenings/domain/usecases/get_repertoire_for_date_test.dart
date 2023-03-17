@@ -9,7 +9,7 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_repertoire_
 
 import 'get_repertoire_for_date_test.mocks.dart';
 
-@GenerateMocks([ScreenignsRepository])
+@GenerateMocks([ScreeningsRepository])
 void main() {
   late GetRepertoireForDate usecase;
   late MockScreenignsRepository mockScreenignsRepository;

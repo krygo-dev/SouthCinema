@@ -10,7 +10,7 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_screening_b
 
 import 'get_screening_by_id_test.mocks.dart';
 
-@GenerateMocks([ScreenignsRepository])
+@GenerateMocks([ScreeningsRepository])
 void main() {
   late GetScreeningById usecase;
   late MockScreenignsRepository mockScreenignsRepository;

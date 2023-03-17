@@ -9,7 +9,7 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_room_by_id.
 
 import 'get_room_by_id_test.mocks.dart';
 
-@GenerateMocks([ScreenignsRepository])
+@GenerateMocks([ScreeningsRepository])
 void main() {
   late GetRoomById usecase;
   late MockScreenignsRepository mockScreenignsRepository;

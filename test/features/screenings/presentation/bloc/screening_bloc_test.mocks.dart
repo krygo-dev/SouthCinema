@@ -31,7 +31,7 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_screening_b
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeScreenignsRepository_0 extends _i1.SmartFake
-    implements _i2.ScreenignsRepository {
+    implements _i2.ScreeningsRepository {
   _FakeScreenignsRepository_0(
     Object parent,
     Invocation parentInvocation,
@@ -60,13 +60,13 @@ class MockGetScreeningById extends _i1.Mock implements _i4.GetScreeningById {
   }
 
   @override
-  _i2.ScreenignsRepository get repository => (super.noSuchMethod(
+  _i2.ScreeningsRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeScreenignsRepository_0(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.ScreenignsRepository);
+      ) as _i2.ScreeningsRepository);
   @override
   _i5.Future<_i3.Either<_i6.BaseError, _i7.Screening>> call(
           {required String? id}) =>
@@ -97,13 +97,13 @@ class MockGetRoomById extends _i1.Mock implements _i8.GetRoomById {
   }
 
   @override
-  _i2.ScreenignsRepository get repository => (super.noSuchMethod(
+  _i2.ScreeningsRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeScreenignsRepository_0(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.ScreenignsRepository);
+      ) as _i2.ScreeningsRepository);
   @override
   _i5.Future<_i3.Either<_i6.BaseError, _i9.Room>> call({required String? id}) =>
       (super.noSuchMethod(

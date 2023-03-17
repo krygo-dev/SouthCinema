@@ -4,7 +4,7 @@ import 'package:south_cinema/features/screenings/domain/entities/repertoire_scre
 import 'package:south_cinema/features/screenings/domain/repositories/screenings_repository.dart';
 
 class GetRepertoireForDate {
-  final ScreenignsRepository repository;
+  final ScreeningsRepository repository;
 
   GetRepertoireForDate(this.repository);
 

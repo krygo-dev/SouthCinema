@@ -4,7 +4,7 @@ import 'package:south_cinema/features/screenings/domain/entities/screening.dart'
 import 'package:south_cinema/features/screenings/domain/repositories/screenings_repository.dart';
 
 class GetScreeningById {
-  final ScreenignsRepository repository;
+  final ScreeningsRepository repository;
 
   GetScreeningById(this.repository);
 

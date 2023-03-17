@@ -4,7 +4,7 @@ import 'package:south_cinema/features/screenings/domain/entities/room.dart';
 import 'package:south_cinema/features/screenings/domain/repositories/screenings_repository.dart';
 
 class GetRoomById {
-  final ScreenignsRepository repository;
+  final ScreeningsRepository repository;
 
   GetRoomById(this.repository);
 

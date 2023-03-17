@@ -27,7 +27,7 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_repertoire_
 // ignore_for_file: subtype_of_sealed_class
 
 class _FakeScreenignsRepository_0 extends _i1.SmartFake
-    implements _i2.ScreenignsRepository {
+    implements _i2.ScreeningsRepository {
   _FakeScreenignsRepository_0(
     Object parent,
     Invocation parentInvocation,
@@ -57,13 +57,13 @@ class MockGetRepertoireForDate extends _i1.Mock
   }
 
   @override
-  _i2.ScreenignsRepository get repository => (super.noSuchMethod(
+  _i2.ScreeningsRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
         returnValue: _FakeScreenignsRepository_0(
           this,
           Invocation.getter(#repository),
         ),
-      ) as _i2.ScreenignsRepository);
+      ) as _i2.ScreeningsRepository);
   @override
   _i5.Future<_i3.Either<_i6.BaseError, List<_i7.RepertoireScreening>>> call(
           {required String? date}) =>

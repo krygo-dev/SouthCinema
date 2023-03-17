@@ -7,7 +7,7 @@ import 'package:south_cinema/features/screenings/domain/entities/room.dart';
 import 'package:south_cinema/features/screenings/domain/entities/screening.dart';
 import 'package:south_cinema/features/screenings/domain/repositories/screenings_repository.dart';
 
-class ScreeningsRepositoryImpl implements ScreenignsRepository {
+class ScreeningsRepositoryImpl implements ScreeningsRepository {
   final ScreeningsService screeningsService;
   final NetworkInfo networkInfo;
 

@@ -42,7 +42,7 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockScreenignsRepository extends _i1.Mock
-    implements _i3.ScreenignsRepository {
+    implements _i3.ScreeningsRepository {
   MockScreenignsRepository() {
     _i1.throwOnMissingStub(this);
   }
