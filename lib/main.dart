@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:south_cinema/core/theme/theme.dart';
+import 'features/screenings/presentation/pages/splash_page.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: theme(),
+      home: const SplashPage(),
     );
   }
 }

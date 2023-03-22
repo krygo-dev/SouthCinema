@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:south_cinema/core/theme/colors.dart';
 
 ThemeData theme() {
@@ -13,6 +14,17 @@ ThemeData theme() {
       onBackground: onBackgroundColor,
     ),
     iconTheme: const IconThemeData(color: primaryColor),
+    appBarTheme: const AppBarTheme(
+      backgroundColor: backgroundColor,
+      elevation: 0,
+      systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.light,
+        systemNavigationBarColor: backgroundColor,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+    ),
   );
 }
 
