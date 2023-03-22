@@ -60,6 +60,10 @@ void init() {
   // Data sources
   sl.registerLazySingleton<MoviesService>(() => MoviesServiceImpl(sl()));
 
+  /// Features - Authentication ///
+  /// Features - Reservations ///
+  /// Features - User_profile ///
+
   /// Core ///
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 

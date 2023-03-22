@@ -41,3 +41,25 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+assets:
+  fonts:
+    - family: DMSans
+      fonts:
+        - assets: assets/fonts/DMSans-Bold.ttf
+          weight: 700
+        - assets: assets/fonts/DMSans-BoldItalic.ttf
+          style: italic
+          weight: 700
+        - assets: assets/fonts/DMSans-Italic.ttf
+          style: italic
+        - assets: assets/fonts/DMSans-Medium.ttf
+          weight: 500
+        - assets: assets/fonts/DMSans-MediumItalic.ttf
+          style: italic
+          weight: 500
+        - assets: assets/fonts/DMSans-Regular.ttf
+          weight: 400
+  images:
+    - /images/logo_230x76.png
+    - /images/logo_350x350.png

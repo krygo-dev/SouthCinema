@@ -26,9 +26,9 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_repertoire_
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-class _FakeScreenignsRepository_0 extends _i1.SmartFake
+class _FakeScreeningsRepository_0 extends _i1.SmartFake
     implements _i2.ScreeningsRepository {
-  _FakeScreenignsRepository_0(
+  _FakeScreeningsRepository_0(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -59,7 +59,7 @@ class MockGetRepertoireForDate extends _i1.Mock
   @override
   _i2.ScreeningsRepository get repository => (super.noSuchMethod(
         Invocation.getter(#repository),
-        returnValue: _FakeScreenignsRepository_0(
+        returnValue: _FakeScreeningsRepository_0(
           this,
           Invocation.getter(#repository),
         ),
