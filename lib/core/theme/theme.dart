@@ -11,48 +11,61 @@ ThemeData theme() {
       primary: primaryColor,
       secondary: secondaryColor,
       tertiary: tertiaryColor,
+      background: backgroundColor,
       onBackground: onBackgroundColor,
     ),
-    iconTheme: const IconThemeData(color: primaryColor),
-    appBarTheme: const AppBarTheme(
-      backgroundColor: backgroundColor,
-      elevation: 0,
-      systemOverlayStyle: SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness: Brightness.light,
-        statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: backgroundColor,
-        systemNavigationBarDividerColor: Colors.transparent,
-      ),
-    ),
+    iconTheme: const IconThemeData(color: primaryColor, size: 20),
+    appBarTheme: _appBarTheme(),
   );
 }
 
 TextTheme _textTheme() {
   return const TextTheme(
     titleLarge: TextStyle(
+      fontFamily: 'DMSans',
       fontSize: 18,
       fontWeight: FontWeight.w400,
     ),
     titleMedium: TextStyle(
+      fontFamily: 'DMSans',
       fontSize: 14,
       fontWeight: FontWeight.w700,
       color: primaryColor,
     ),
     labelMedium: TextStyle(
+      fontFamily: 'DMSans',
       fontSize: 12,
       fontWeight: FontWeight.w400,
       color: secondaryColor,
     ),
     labelSmall: TextStyle(
+      fontFamily: 'DMSans',
       fontSize: 8,
       fontWeight: FontWeight.w400,
       color: primaryColor,
     ),
     bodySmall: TextStyle(
+      fontFamily: 'DMSans',
       fontSize: 8,
       fontWeight: FontWeight.w400,
       color: tertiaryColor,
+    ),
+  );
+}
+
+AppBarTheme _appBarTheme() {
+  return const AppBarTheme(
+    backgroundColor: backgroundColor,
+    iconTheme: IconThemeData(color: primaryColor, size: 23),
+    elevation: 0,
+    centerTitle: true,
+    toolbarHeight: 80,
+    systemOverlayStyle: SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
+      systemNavigationBarColor: backgroundColor,
+      systemNavigationBarDividerColor: Colors.transparent,
     ),
   );
 }
