@@ -17,7 +17,7 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
   MoviesBloc({
     required this.getCurrentlyPlayedMovies,
     required this.getAnnouncedMovies,
-  }) : super(Empty()) {
+  }) : super(MoviesEmpty()) {
     on<GetCurrentlyPlayedMoviesEvent>(_getCurrentlyPlayedMovies);
     on<GetAnnouncedMoviesEvent>(_getAnnouncedMovies);
   }
@@ -26,11 +26,11 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     GetCurrentlyPlayedMoviesEvent event,
     Emitter<MoviesState> emit,
   ) async {
-    emit(Loading());
+    emit(MoviesLoading());
     final errorOrMovies = await getCurrentlyPlayedMovies();
     errorOrMovies.fold(
-      (error) => emit(Error(message: error.message)),
-      (movies) => emit(Loaded(moviesList: movies)),
+      (error) => emit(MoviesError(message: error.message)),
+      (movies) => emit(MoviesLoaded(moviesList: movies)),
     );
   }
 
@@ -38,11 +38,11 @@ class MoviesBloc extends Bloc<MoviesEvent, MoviesState> {
     GetAnnouncedMoviesEvent event,
     Emitter<MoviesState> emit,
   ) async {
-    emit(Loading());
+    emit(MoviesLoading());
     final errorOrMovies = await getAnnouncedMovies();
     errorOrMovies.fold(
-          (error) => emit(Error(message: error.message)),
-          (movies) => emit(Loaded(moviesList: movies)),
+          (error) => emit(MoviesError(message: error.message)),
+          (movies) => emit(MoviesLoaded(moviesList: movies)),
     );
   }
 }

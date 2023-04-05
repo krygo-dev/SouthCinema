@@ -5,23 +5,23 @@ abstract class RepertoireState extends Equatable {
   List<Object> get props => [];
 }
 
-class Empty extends RepertoireState {}
+class RepertoireEmpty extends RepertoireState {}
 
-class Loading extends RepertoireState {}
+class RepertoireLoading extends RepertoireState {}
 
-class Loaded extends RepertoireState {
+class RepertoireLoaded extends RepertoireState {
   final List<RepertoireScreening> repertoireList;
 
-  Loaded({required this.repertoireList});
+  RepertoireLoaded({required this.repertoireList});
 
   @override
   List<Object> get props => [repertoireList];
 }
 
-class Error extends RepertoireState {
+class RepertoireError extends RepertoireState {
   final String message;
 
-  Error({required this.message});
+  RepertoireError({required this.message});
 
   @override
   List<Object> get props => [message];

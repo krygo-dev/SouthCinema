@@ -5,23 +5,23 @@ abstract class MoviesState extends Equatable {
   List<Object> get props => [];
 }
 
-class Empty extends MoviesState {}
+class MoviesEmpty extends MoviesState {}
 
-class Loading extends MoviesState {}
+class MoviesLoading extends MoviesState {}
 
-class Loaded extends MoviesState {
+class MoviesLoaded extends MoviesState {
   final List<Movie> moviesList;
 
-  Loaded({required this.moviesList});
+  MoviesLoaded({required this.moviesList});
 
   @override
   List<Object> get props => [moviesList];
 }
 
-class Error extends MoviesState {
+class MoviesError extends MoviesState {
   final String message;
 
-  Error({required this.message});
+  MoviesError({required this.message});
 
   @override
   List<Object> get props => [message];

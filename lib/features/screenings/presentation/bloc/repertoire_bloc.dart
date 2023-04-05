@@ -9,7 +9,7 @@ part 'repertoire_state.dart';
 class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
   final GetRepertoireForDate getRepertoireForDate;
 
-  RepertoireBloc({required this.getRepertoireForDate}) : super(Empty()) {
+  RepertoireBloc({required this.getRepertoireForDate}) : super(RepertoireEmpty()) {
     on<GetRepertoireForDateEvent>(_onGetRepertoireForDate);
   }
 
@@ -17,12 +17,12 @@ class RepertoireBloc extends Bloc<RepertoireEvent, RepertoireState> {
     GetRepertoireForDateEvent event,
     Emitter<RepertoireState> emit,
   ) async {
-    emit(Loading());
+    emit(RepertoireLoading());
     final errorOrRepertoire =
         await getRepertoireForDate(date: event.dateString);
     errorOrRepertoire.fold(
-      (error) => emit(Error(message: error.message)),
-      (list) => emit(Loaded(repertoireList: list)),
+      (error) => emit(RepertoireError(message: error.message)),
+      (list) => emit(RepertoireLoaded(repertoireList: list)),
     );
   }
 }

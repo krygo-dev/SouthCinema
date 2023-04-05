@@ -21,7 +21,7 @@ void main() {
 
   test('initial state should be Empty', () {
     // assert
-    expect(bloc.state, equals(Empty()));
+    expect(bloc.state, equals(RepertoireEmpty()));
   });
 
   group('GetRepertoireForDate', () {
@@ -55,8 +55,8 @@ void main() {
           .thenAnswer((_) async => const Right(tRepertoireScreeningList));
       // assert later
       final expected = [
-        Loading(),
-        Loaded(repertoireList: tRepertoireScreeningList)
+        RepertoireLoading(),
+        RepertoireLoaded(repertoireList: tRepertoireScreeningList)
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
@@ -69,8 +69,8 @@ void main() {
           .thenAnswer((_) async => const Left(GettingDataError()));
       // assert later
       final expected = [
-        Loading(),
-        Error(message: const GettingDataError().message),
+        RepertoireLoading(),
+        RepertoireError(message: const GettingDataError().message),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
@@ -84,8 +84,8 @@ void main() {
           .thenAnswer((_) async => const Left(NetworkError()));
       // assert later
       final expected = [
-        Loading(),
-        Error(message: const NetworkError().message),
+        RepertoireLoading(),
+        RepertoireError(message: const NetworkError().message),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act

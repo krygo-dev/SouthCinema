@@ -27,7 +27,7 @@ void main() {
 
   test('initial state should be Empty', () {
     // assert
-    expect(bloc.state, equals(Empty()));
+    expect(bloc.state, equals(MoviesEmpty()));
   });
 
   group('GetCurrentlyPlayedMovies', () {
@@ -69,7 +69,7 @@ void main() {
       when(mockGetCurrentlyPlayedMovies())
           .thenAnswer((_) async => const Right(tMoviesList));
       // assert later
-      final expected = [Loading(), Loaded(moviesList: tMoviesList)];
+      final expected = [MoviesLoading(), MoviesLoaded(moviesList: tMoviesList)];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
       bloc.add(GetCurrentlyPlayedMoviesEvent());
@@ -82,8 +82,8 @@ void main() {
           .thenAnswer((_) async => const Left(GettingDataError()));
       // assert later
       final expected = [
-        Loading(),
-        Error(message: const GettingDataError().message),
+        MoviesLoading(),
+        MoviesError(message: const GettingDataError().message),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
@@ -97,8 +97,8 @@ void main() {
           .thenAnswer((_) async => const Left(NetworkError()));
       // assert later
       final expected = [
-        Loading(),
-        Error(message: const NetworkError().message),
+        MoviesLoading(),
+        MoviesError(message: const NetworkError().message),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
@@ -145,7 +145,7 @@ void main() {
           when(mockGetAnnouncedMovies())
               .thenAnswer((_) async => const Right(tMoviesList));
           // assert later
-          final expected = [Loading(), Loaded(moviesList: tMoviesList)];
+          final expected = [MoviesLoading(), MoviesLoaded(moviesList: tMoviesList)];
           expectLater(bloc.stream, emitsInOrder(expected));
           // act
           bloc.add(GetAnnouncedMoviesEvent());
@@ -158,8 +158,8 @@ void main() {
               .thenAnswer((_) async => const Left(GettingDataError()));
           // assert later
           final expected = [
-            Loading(),
-            Error(message: const GettingDataError().message),
+            MoviesLoading(),
+            MoviesError(message: const GettingDataError().message),
           ];
           expectLater(bloc.stream, emitsInOrder(expected));
           // act
@@ -173,8 +173,8 @@ void main() {
           .thenAnswer((_) async => const Left(NetworkError()));
       // assert later
       final expected = [
-        Loading(),
-        Error(message: const NetworkError().message),
+        MoviesLoading(),
+        MoviesError(message: const NetworkError().message),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act
