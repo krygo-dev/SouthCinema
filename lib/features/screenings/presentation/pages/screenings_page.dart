@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/repertoire_bloc.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_played_announced_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_repertoire_dates_row.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_repertoire_list_item.dart';
 import 'package:south_cinema/injection_container.dart';
 
 class ScreeningsPage extends StatelessWidget {
@@ -22,74 +24,50 @@ class ScreeningsPage extends StatelessWidget {
         ],
         child: Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-          child: Column(
-            children: [
-              const SCRepertoireDatesRow(),
-              Padding(
-                padding: const EdgeInsets.all(17.0),
-                child: Container(
-                  color: Theme.of(context).colorScheme.onBackground,
-                  padding: const EdgeInsets.symmetric(vertical: 17),
-                  child: BlocBuilder<RepertoireBloc, RepertoireState>(
-                    builder: (context, state) {
-                      if (state is RepertoireLoaded) {
-                        print(state.repertoireList);
-                        return Column(
-                          children: state.repertoireList.map((repertoire) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        repertoire.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleMedium,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children:
-                                        repertoire.screenings.map((screening) {
-                                      return Container(
-                                        width: 41,
-                                        height: 24,
-                                        margin: const EdgeInsets.symmetric(vertical: 7, horizontal: 5),
-                                        alignment: Alignment.center,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .background,
-                                        child: Text(
-                                          screening['time'],
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium,
-                                        ),
-                                      );
-                                    }).toList(),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        );
-                      } else if (state is RepertoireLoading) {
-                        print('Repertoire loading');
-                        return const CircularProgressIndicator();
-                      } else if (state is RepertoireError) {
-                        return Text(state.message);
-                      } else {
-                        return const Text('Empty');
-                      }
-                    },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SCRepertoireDatesRow(),
+                // Repertoire container
+                Padding(
+                  padding: const EdgeInsets.all(17.0),
+                  child: Container(
+                    height: 525,
+                    color: Theme.of(context).colorScheme.onBackground,
+                    padding: const EdgeInsets.symmetric(vertical: 17),
+                    child: BlocBuilder<RepertoireBloc, RepertoireState>(
+                      builder: (context, state) {
+                        if (state is RepertoireLoaded) {
+                          return Column(
+                            children: state.repertoireList.map((repertoire) {
+                              return SCRepertoireListItem(repertoire: repertoire);
+                            }).toList(),
+                          );
+                        } else if (state is RepertoireLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is RepertoireError) {
+                          return Center(child: Text(state.message));
+                        } else {
+                          return const Center(child: Text('Empty'));
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-            ],
+                const SCPlayedAnnouncedRow(),
+                Padding(
+                  padding: const EdgeInsets.all(17),
+                  child: Container(
+                    color: Theme.of(context).colorScheme.onBackground,
+                    child: Column(
+                      children: [
+
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

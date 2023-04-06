@@ -12,7 +12,7 @@ class SCRepertoireDatesRow extends StatefulWidget {
 }
 
 class _SCRepertoireDatesRowState extends State<SCRepertoireDatesRow> {
-  int? _value = 0;
+  int _selected = 0;
   final dateFormat = DateFormat('dd/MM/yyyy');
   final currentDateTime = DateTime.now();
 
@@ -39,7 +39,7 @@ class _SCRepertoireDatesRowState extends State<SCRepertoireDatesRow> {
                           .format(currentDateTime.add(Duration(days: index))),
                       style: Theme.of(context).textTheme.labelMedium!.copyWith(
                         shadows: [
-                          _value == index
+                          _selected == index
                               ? const Shadow(
                                   color: secondaryColor,
                                   blurRadius: 5,
@@ -53,7 +53,7 @@ class _SCRepertoireDatesRowState extends State<SCRepertoireDatesRow> {
                           .format(currentDateTime.add(Duration(days: index))),
                       style: Theme.of(context).textTheme.labelSmall!.copyWith(
                         shadows: [
-                          _value == index
+                          _selected == index
                               ? const Shadow(
                                   color: primaryColor,
                                   blurRadius: 5,
@@ -65,14 +65,15 @@ class _SCRepertoireDatesRowState extends State<SCRepertoireDatesRow> {
                   ],
                 ),
               ),
-              selected: _value == index,
+              selected: _selected == index,
               onSelected: (bool selected) {
                 setState(() {
-                  _value = index;
+                  _selected = index;
                   BlocProvider.of<RepertoireBloc>(context).add(
                     GetRepertoireForDateEvent(
-                      dateFormat
-                          .format(currentDateTime.add(Duration(days: index))),
+                      '15/03/2023',
+                      // dateFormat
+                      //     .format(currentDateTime.add(Duration(days: index))),
                     ),
                   );
                 });
