@@ -53,8 +53,8 @@ class Movie extends Equatable {
       durationMin: json['durationMin'],
       subtitles: json['subtitles'],
       currentlyPlayed: json['currentlyPlayed'],
-      cast: json['cast'],
-      genre: json['genre'],
+      cast: (json['cast']! as List).cast<String>(),
+      genre: (json['genre']! as List).cast<String>(),
     );
   }
 

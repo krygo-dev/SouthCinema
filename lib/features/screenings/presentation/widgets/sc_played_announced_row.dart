@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
 
 class SCPlayedAnnouncedRow extends StatefulWidget {
   const SCPlayedAnnouncedRow({Key? key}) : super(key: key);
@@ -38,7 +40,7 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
           onSelected: (bool selected) {
             setState(() {
               _selected = screeningNow;
-              // BlocProvider.of<MoviesBloc>(context).add(GetCurrentlyPlayedMoviesEvent());
+              BlocProvider.of<MoviesBloc>(context).add(GetCurrentlyPlayedMoviesEvent());
             });
           },
           backgroundColor: Theme.of(context).colorScheme.background,
@@ -78,7 +80,7 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
           onSelected: (bool selected) {
             setState(() {
               _selected = announced;
-              // BlocProvider.of<MoviesBloc>(context).add(GetAnnouncedMoviesEvent());
+              BlocProvider.of<MoviesBloc>(context).add(GetAnnouncedMoviesEvent());
             });
           },
           backgroundColor: Theme.of(context).colorScheme.background,
