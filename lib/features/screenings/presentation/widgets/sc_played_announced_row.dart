@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
 
-class SCPlayedAnnouncedRow extends StatefulWidget {
-  const SCPlayedAnnouncedRow({Key? key}) : super(key: key);
+class SCPlayedAnnouncedRow extends StatelessWidget {
+  const SCPlayedAnnouncedRow({
+    Key? key,
+    this.selected = screeningNow,
+    required this.onSelected,
+  }) : super(key: key);
 
-  @override
-  State<SCPlayedAnnouncedRow> createState() => _SCPlayedAnnouncedRowState();
-}
-
-class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
   static const screeningNow = 0;
   static const announced = 1;
-  int _selected = screeningNow;
+
+  final int selected;
+  final ValueChanged<int> onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,11 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
           label: Text(
             'SCREENING NOW',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: _selected == screeningNow
+              color: selected == screeningNow
                   ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).colorScheme.primary,
               shadows: [
-                _selected == screeningNow
+                selected == screeningNow
                     ? Shadow(
                         color: Theme.of(context).colorScheme.secondary,
                         blurRadius: 5,
@@ -36,12 +37,11 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
               ],
             ),
           ),
-          selected: _selected == screeningNow,
+          selected: selected == screeningNow,
           onSelected: (bool selected) {
-            setState(() {
-              _selected = screeningNow;
-              BlocProvider.of<MoviesBloc>(context).add(GetCurrentlyPlayedMoviesEvent());
-            });
+            onSelected(screeningNow);
+            BlocProvider.of<MoviesBloc>(context)
+                .add(GetCurrentlyPlayedMoviesEvent());
           },
           backgroundColor: Theme.of(context).colorScheme.background,
           selectedColor: Theme.of(context).colorScheme.background,
@@ -63,11 +63,11 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
           label: Text(
             'ANNOUNCED',
             style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: _selected == announced
+              color: selected == announced
                   ? Theme.of(context).colorScheme.secondary
                   : Theme.of(context).colorScheme.primary,
               shadows: [
-                _selected == announced
+                selected == announced
                     ? Shadow(
                         color: Theme.of(context).colorScheme.secondary,
                         blurRadius: 5,
@@ -76,12 +76,12 @@ class _SCPlayedAnnouncedRowState extends State<SCPlayedAnnouncedRow> {
               ],
             ),
           ),
-          selected: _selected == announced,
+          selected: selected == announced,
           onSelected: (bool selected) {
-            setState(() {
-              _selected = announced;
-              BlocProvider.of<MoviesBloc>(context).add(GetAnnouncedMoviesEvent());
-            });
+            onSelected(announced);
+            // BlocProvider.of<MoviesBloc>(context).add(GetAnnouncedMoviesEvent());
+            BlocProvider.of<MoviesBloc>(context)
+                .add(GetCurrentlyPlayedMoviesEvent());
           },
           backgroundColor: Theme.of(context).colorScheme.background,
           selectedColor: Theme.of(context).colorScheme.background,
