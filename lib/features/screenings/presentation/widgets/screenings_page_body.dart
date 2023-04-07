@@ -14,8 +14,8 @@ class ScreeningsPageBody extends StatefulWidget {
 }
 
 class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
-  final GlobalKey _key = GlobalKey();
-  final ScrollController _controller = ScrollController();
+  final GlobalKey _playedAnnouncedRowKey = GlobalKey();
+  final ScrollController _scrollController = ScrollController();
   bool _isPinned = false;
   int _selected = 0;
 
@@ -25,11 +25,17 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
     WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
   }
 
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   void _afterLayout(_) {
-    _controller.addListener(
-          () {
-        final RenderBox renderBox =
-        _key.currentContext?.findRenderObject() as RenderBox;
+    _scrollController.addListener(
+      () {
+        final RenderBox renderBox = _playedAnnouncedRowKey.currentContext
+            ?.findRenderObject() as RenderBox;
 
         final Offset offset = renderBox.localToGlobal(Offset.zero);
         final double startY = offset.dy;
@@ -46,6 +52,11 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
     setState(() {
       _selected = newValue;
     });
+    _scrollController.animateTo(
+      MediaQuery.of(context).size.height - 200,
+      duration: const Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
   }
 
   @override
@@ -55,7 +66,7 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
           child: SingleChildScrollView(
-            controller: _controller,
+            controller: _scrollController,
             child: Column(
               children: [
                 const SCRepertoireDatesRow(),
@@ -66,12 +77,12 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
                   maintainState: true,
                   maintainSize: true,
                   child: SCPlayedAnnouncedRow(
-                    key: _key,
+                    key: _playedAnnouncedRowKey,
                     selected: _selected,
                     onSelected: _handleOnSelected,
                   ),
                 ),
-                const SCMoviesContainer(),
+                SCMoviesContainer(reversed: _selected == 1),
               ],
             ),
           ),
