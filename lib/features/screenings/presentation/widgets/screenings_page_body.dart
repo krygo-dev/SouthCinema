@@ -17,12 +17,14 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
   final GlobalKey _playedAnnouncedRowKey = GlobalKey();
   final ScrollController _scrollController = ScrollController();
   bool _isPinned = false;
-  int _selected = 0;
+  int _selectedCategory = 0;
+  int _selectedDate = 0;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+
   }
 
   @override
@@ -48,15 +50,21 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
     );
   }
 
-  void _handleOnSelected(int newValue) {
+  void _handleOnCategorySelected(int newValue) {
     setState(() {
-      _selected = newValue;
+      _selectedCategory = newValue;
     });
     _scrollController.animateTo(
       MediaQuery.of(context).size.height - 200,
       duration: const Duration(milliseconds: 500),
       curve: Curves.ease,
     );
+  }
+
+  void _handleOnDateSelected(int newValue) {
+    setState(() {
+      _selectedDate = newValue;
+    });
   }
 
   @override
@@ -69,7 +77,10 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
             controller: _scrollController,
             child: Column(
               children: [
-                const SCRepertoireDatesRow(),
+                SCRepertoireDatesRow(
+                  selected: _selectedDate,
+                  onSelected: _handleOnDateSelected,
+                ),
                 const SCRepertoireContainer(),
                 Visibility(
                   visible: !_isPinned,
@@ -78,11 +89,11 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
                   maintainSize: true,
                   child: SCPlayedAnnouncedRow(
                     key: _playedAnnouncedRowKey,
-                    selected: _selected,
-                    onSelected: _handleOnSelected,
+                    selected: _selectedCategory,
+                    onSelected: _handleOnCategorySelected,
                   ),
                 ),
-                SCMoviesContainer(reversed: _selected == 1),
+                SCMoviesContainer(reversed: _selectedCategory == 1),
               ],
             ),
           ),
@@ -95,8 +106,8 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
             child: Container(
                 color: Theme.of(context).colorScheme.background,
                 child: SCPlayedAnnouncedRow(
-                  selected: _selected,
-                  onSelected: _handleOnSelected,
+                  selected: _selectedCategory,
+                  onSelected: _handleOnCategorySelected,
                 )),
           ),
       ],
