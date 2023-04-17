@@ -44,6 +44,12 @@ TextTheme _textTheme() {
       fontWeight: FontWeight.w400,
       color: primaryColor,
     ),
+    bodyMedium: TextStyle(
+      fontFamily: 'DMSans',
+      fontSize: 11,
+      fontWeight: FontWeight.w500,
+      color: secondaryColor,
+    ),
     bodySmall: TextStyle(
       fontFamily: 'DMSans',
       fontSize: 8,

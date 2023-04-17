@@ -24,7 +24,6 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
-
   }
 
   @override
@@ -81,7 +80,10 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
                   selected: _selectedDate,
                   onSelected: _handleOnDateSelected,
                 ),
-                const SCRepertoireContainer(),
+                const Padding(
+                  padding: EdgeInsets.all(17.0),
+                  child: SCRepertoireContainer(),
+                ),
                 Visibility(
                   visible: !_isPinned,
                   maintainAnimation: true,

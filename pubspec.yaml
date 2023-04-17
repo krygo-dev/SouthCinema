@@ -30,7 +30,9 @@ dependencies:
   fake_cloud_firestore: ^2.4.0
   # Date formatting
   intl: ^0.17.0
-
+  # Youtube video player
+  youtube_player_flutter: ^8.1.2
+  # iOS icons
   cupertino_icons: ^1.0.2
 
 

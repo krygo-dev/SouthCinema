@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
+import 'package:south_cinema/features/movies/presentation/pages/movie_page.dart';
 
 class SCMovieListItem extends StatelessWidget {
   const SCMovieListItem({
@@ -49,13 +50,20 @@ class SCMovieListItem extends StatelessWidget {
       ),
     ];
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          if (!reversed) ...widgetsList else ...widgetsList.reversed.toList(),
-        ],
+    return InkWell(
+      onTap: () {
+        /// TEMPORARY ///
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => MoviePage(movie: movie)));
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            if (!reversed) ...widgetsList else ...widgetsList.reversed.toList(),
+          ],
+        ),
       ),
     );
   }
