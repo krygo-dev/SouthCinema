@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_category_choice_chip.dart';
 
 class SCPlayedAnnouncedRow extends StatelessWidget {
   const SCPlayedAnnouncedRow({
@@ -20,81 +21,33 @@ class SCPlayedAnnouncedRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ChoiceChip(
-          label: Text(
-            'SCREENING NOW',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: selected == screeningNow
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.primary,
-              shadows: [
-                selected == screeningNow
-                    ? Shadow(
-                        color: Theme.of(context).colorScheme.secondary,
-                        blurRadius: 5,
-                      )
-                    : const Shadow()
-              ],
-            ),
-          ),
-          selected: selected == screeningNow,
-          onSelected: (bool selected) {
+        SCCategoryChoiceChip(
+          categoryName: 'SCREENING NOW',
+          category: screeningNow,
+          selected: selected,
+          onSelected: () {
             onSelected(screeningNow);
             BlocProvider.of<MoviesBloc>(context)
                 .add(GetCurrentlyPlayedMoviesEvent());
           },
-          backgroundColor: Theme.of(context).colorScheme.background,
-          selectedColor: Theme.of(context).colorScheme.background,
-          padding: EdgeInsets.zero,
-          labelPadding: EdgeInsets.zero,
-          elevation: 0,
-          pressElevation: 0,
-          shape: ContinuousRectangleBorder(
-            side: BorderSide(
-                width: 0, color: Theme.of(context).colorScheme.background),
-          ),
         ),
         Container(
           width: 2,
           height: 29,
           color: Theme.of(context).colorScheme.onBackground,
         ),
-        ChoiceChip(
-          label: Text(
-            'ANNOUNCED',
-            style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: selected == announced
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.primary,
-              shadows: [
-                selected == announced
-                    ? Shadow(
-                        color: Theme.of(context).colorScheme.secondary,
-                        blurRadius: 5,
-                      )
-                    : const Shadow()
-              ],
-            ),
-          ),
-          selected: selected == announced,
-          onSelected: (bool selected) {
-            onSelected(announced);
-            // BlocProvider.of<MoviesBloc>(context).add(GetAnnouncedMoviesEvent());
-            BlocProvider.of<MoviesBloc>(context)
-                .add(GetCurrentlyPlayedMoviesEvent());
-          },
-          backgroundColor: Theme.of(context).colorScheme.background,
-          selectedColor: Theme.of(context).colorScheme.background,
-          padding: EdgeInsets.zero,
-          labelPadding: EdgeInsets.zero,
-          elevation: 0,
-          pressElevation: 0,
-          shape: ContinuousRectangleBorder(
-            side: BorderSide(
-                width: 0, color: Theme.of(context).colorScheme.background),
-          ),
-        ),
+        SCCategoryChoiceChip(
+            categoryName: 'ANNOUNCED',
+            category: announced,
+            selected: selected,
+            onSelected: () {
+              onSelected(announced);
+              BlocProvider.of<MoviesBloc>(context)
+                  .add(GetAnnouncedMoviesEvent());
+            }),
       ],
     );
   }
 }
+
+
