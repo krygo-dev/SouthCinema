@@ -1,22 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:south_cinema/features/screenings/presentation/pages/screenings_page.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    /// Redirection from splash page to home
-    /// TEMPORARY SOLUTION
-    Timer(
-      const Duration(seconds: 3),
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ScreeningsPage()),
-          ),
-    );
+
+    /// Redirect to ScreeningsPage (main application page) after 3 seconds ///
+    Timer(const Duration(seconds: 3), () => context.goNamed('screenings'));
 
     return Scaffold(
       body: Column(

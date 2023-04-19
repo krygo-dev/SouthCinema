@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/theme/theme.dart';
-import 'features/screenings/presentation/pages/splash_page.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 
@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      title: 'South Cinema',
       theme: theme(),
-      home: const SplashPage(),
+      routerConfig: NavigationRouter().router,
     );
   }
 }

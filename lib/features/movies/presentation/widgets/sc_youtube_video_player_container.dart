@@ -20,7 +20,7 @@ class _SCYoutubeVideoPlayerContainerState extends State<SCYoutubeVideoPlayerCont
 
     _controller = YoutubePlayerController(
       initialVideoId: videoId!,
-      flags: const YoutubePlayerFlags(autoPlay: false),
+      flags: const YoutubePlayerFlags(autoPlay: false, forceHD: true),
     );
 
     super.initState();
