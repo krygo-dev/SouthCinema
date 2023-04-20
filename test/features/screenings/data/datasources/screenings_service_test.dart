@@ -95,12 +95,15 @@ void main() {
   group('getRoomById', () {
     const tCollectionPath = 'rooms';
     const tId = 'room_id';
-    const tRoom = Room(id: 'room_id', name: 'name', rows: 10, rowsLength: 10);
-    const tJson = {
+    const tRoom = Room(
+      id: 'room_id',
+      name: 'name',
+      seatsConfiguration: [13, 12, 13, 12],
+    );
+    const tJson = <String, Object>{
       'id': 'room_id',
       'name': 'name',
-      'rows': 10,
-      'rowsLength': 10
+      'seatsConfiguration': [13, 12, 13, 12],
     };
 
     test(

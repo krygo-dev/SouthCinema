@@ -9,7 +9,6 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_room_by_id.
 
 import 'get_room_by_id_test.mocks.dart';
 
-
 @GenerateMocks([ScreeningsRepository])
 void main() {
   late GetRoomById usecase;
@@ -21,7 +20,11 @@ void main() {
   });
 
   const tId = 'room_1';
-  const tRoom = Room(id: 'room_1', name: 'Room 1', rows: 10, rowsLength: 10);
+  const tRoom = Room(
+    id: 'room_1',
+    name: 'Room 1',
+    seatsConfiguration: [13, 12, 13, 12],
+  );
   const tGettingDataError = GettingDataError();
 
   test('should return Room from repository for provided id', () async {

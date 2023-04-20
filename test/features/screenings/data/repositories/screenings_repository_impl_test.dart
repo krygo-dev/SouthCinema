@@ -110,7 +110,11 @@ void main() {
 
   group('getRoomById', () {
     const tId = 'testId';
-    const tRoom = Room(id: 'testId', name: 'name', rows: 10, rowsLength: 10);
+    const tRoom = Room(
+      id: 'testId',
+      name: 'name',
+      seatsConfiguration: [13, 12, 13, 12],
+    );
     const tGettingDataError = GettingDataError();
 
     test('should check if device is online', () async {

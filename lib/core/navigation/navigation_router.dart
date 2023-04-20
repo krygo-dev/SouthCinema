@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/presentation/pages/movie_page.dart';
+import 'package:south_cinema/features/screenings/presentation/pages/screening_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/screenings_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/splash_page.dart';
 
@@ -36,6 +37,12 @@ class NavigationRouter {
           reverseTransitionDuration: const Duration(milliseconds: 500),
           maintainState: true,
         ),
+      ),
+      GoRoute(
+        name: 'screening',
+        path: '/screening/:id',
+        builder: (context, state) =>
+            ScreeningPage(screeningId: state.params['id']!),
       ),
     ],
   );

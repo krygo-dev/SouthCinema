@@ -13,6 +13,8 @@ ThemeData theme() {
       tertiary: tertiaryColor,
       background: backgroundColor,
       onBackground: onBackgroundColor,
+      onSurface: onSurfaceColor,
+      error: errorColor,
     ),
     iconTheme: const IconThemeData(color: primaryColor, size: 20),
     appBarTheme: _appBarTheme(),
@@ -44,11 +46,17 @@ TextTheme _textTheme() {
       fontWeight: FontWeight.w400,
       color: primaryColor,
     ),
-    bodyMedium: TextStyle(
+    bodyLarge: TextStyle(
       fontFamily: 'DMSans',
       fontSize: 11,
       fontWeight: FontWeight.w500,
       color: secondaryColor,
+    ),
+    bodyMedium: TextStyle(
+      fontFamily: 'DMSans',
+      fontSize: 10,
+      fontWeight: FontWeight.w400,
+      color: primaryColor,
     ),
     bodySmall: TextStyle(
       fontFamily: 'DMSans',

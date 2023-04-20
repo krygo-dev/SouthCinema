@@ -44,7 +44,11 @@ void main() {
       reservationOn: true,
       seatsTaken: const ['0101', '0102'],
     );
-    const tRoom = Room(id: 'roomID', name: 'name', rows: 10, rowsLength: 10);
+    const tRoom = Room(
+      id: 'roomID',
+      name: 'name',
+      seatsConfiguration: [13, 12, 13, 12],
+    );
 
     test('should get data from GetScreeningById usecase', () async {
       // arrange

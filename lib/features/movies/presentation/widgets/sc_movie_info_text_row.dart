@@ -20,12 +20,12 @@ class SCMovieInfoTextRow extends StatelessWidget {
             '$infoTitle: ',
             style: Theme.of(context)
                 .textTheme
-                .bodyMedium!
+                .bodyLarge!
                 .copyWith(color: Theme.of(context).colorScheme.primary),
           ),
           Text(
             infoText,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ],
       ),
