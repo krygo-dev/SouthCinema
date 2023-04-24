@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_legend_column.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_seats_configuration_column.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_title_date.dart';
 
 import '../../../../injection_container.dart';
 
@@ -52,30 +54,18 @@ class _ScreeningPageState extends State<ScreeningPage> {
                 child: BlocBuilder<ScreeningBloc, ScreeningState>(
                   builder: (context, state) {
                     if (state is Loaded) {
-                      final dateTime = state.screening.date.toDate();
                       final dateFormat = DateFormat.Hm().add_yMd();
+                      final dateTimeStr =
+                          dateFormat.format(state.screening.date.toDate());
 
                       return Column(
                         children: [
-                          Image.asset(
-                            state.room.id == 'room_1'
-                                ? 'assets/images/room_1.png'
-                                : 'assets/images/room_1.png',
-                            // width: 130,
-                            height: 30,
-                            fit: BoxFit.cover,
+                          SCRoomTitleDate(
+                            roomID: state.room.id,
+                            movieTitle: state.screening.movieTitle,
+                            dateTime: dateTimeStr,
                           ),
-                          Text(
-                            state.screening.movieTitle,
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          Text(
-                            dateFormat.format(dateTime),
-                            style: Theme.of(context).textTheme.bodyMedium,
-                          ),
-                          const SizedBox(
-                            height: 27,
-                          ),
+                          const SizedBox(height: 27),
                           Container(
                             width: double.infinity,
                             height: 18,
@@ -86,23 +76,23 @@ class _ScreeningPageState extends State<ScreeningPage> {
                               style: Theme.of(context).textTheme.bodyMedium,
                             ),
                           ),
-                          const SizedBox(
-                            height: 37,
-                          ),
+                          const SizedBox(height: 37),
                           SCRoomSeatsConfigurationColumn(
                             seatsConfiguration: state.room.seatsConfiguration,
                             seatsTaken: state.screening.seatsTaken,
                             chosenSeats: chosenSeats,
                           ),
-                          const SizedBox(
-                            height: 40,
-                          ),
+                          const SizedBox(height: 40),
                           const SCRoomLegendColumn(),
-                          const SizedBox(
-                            height: 44,
-                          ),
+                          const SizedBox(height: 44),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              if (chosenSeats.isEmpty) return;
+
+                              _bookTicketSelected
+                                  ? context.pushNamed('reservation')
+                                  : context.pushNamed('buy_ticket');
+                            },
                             style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStatePropertyAll<Color>(

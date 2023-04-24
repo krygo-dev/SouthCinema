@@ -18,7 +18,7 @@ class SCRoomLegendColumn extends StatelessWidget {
               Theme.of(context).colorScheme.secondary,
             ),
             Text(
-              '- EMPTY SEAT',
+              ' - EMPTY SEAT',
               style:
               Theme.of(context).textTheme.labelSmall,
             ),
@@ -35,7 +35,7 @@ class SCRoomLegendColumn extends StatelessWidget {
               Theme.of(context).colorScheme.primary,
             ),
             Text(
-              '- CHOSEN SEAT',
+              ' - CHOSEN SEAT',
               style:
               Theme.of(context).textTheme.labelSmall,
             ),
@@ -52,7 +52,7 @@ class SCRoomLegendColumn extends StatelessWidget {
               Theme.of(context).colorScheme.error,
             ),
             Text(
-              '- NOT AVAILABLE SEAT',
+              ' - NOT AVAILABLE SEAT',
               style:
               Theme.of(context).textTheme.labelSmall,
             ),
