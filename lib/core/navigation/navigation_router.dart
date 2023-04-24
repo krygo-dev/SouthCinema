@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
+import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/presentation/pages/movie_page.dart';
 import 'package:south_cinema/features/reservations/presentation/pages/buy_ticket_page.dart';
@@ -54,7 +55,8 @@ class NavigationRouter {
       GoRoute(
         name: 'buy_ticket',
         path: '/buy_ticket',
-        builder: (context, state) => const BuyTicketPage(),
+        builder: (context, state) =>
+            BuyTicketPage(arguments: state.extra as BuyTicketPageArguments),
       ),
     ],
   );

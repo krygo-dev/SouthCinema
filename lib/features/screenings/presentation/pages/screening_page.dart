@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
@@ -91,7 +92,13 @@ class _ScreeningPageState extends State<ScreeningPage> {
 
                               _bookTicketSelected
                                   ? context.pushNamed('reservation')
-                                  : context.pushNamed('buy_ticket');
+                                  : context.pushNamed('buy_ticket',
+                                      extra: BuyTicketPageArguments(
+                                        room: state.room,
+                                        screening: state.screening,
+                                        dateTimeStr: dateTimeStr,
+                                        chosenSeats: chosenSeats,
+                                      ));
                             },
                             style: ButtonStyle(
                                 backgroundColor:
