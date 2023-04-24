@@ -34,6 +34,12 @@ TextTheme _textTheme() {
       fontWeight: FontWeight.w700,
       color: primaryColor,
     ),
+    labelLarge: TextStyle(
+      fontFamily: 'DMSans',
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: primaryColor,
+    ),
     labelMedium: TextStyle(
       fontFamily: 'DMSans',
       fontSize: 12,

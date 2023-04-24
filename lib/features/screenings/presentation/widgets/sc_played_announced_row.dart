@@ -10,6 +10,7 @@ class SCPlayedAnnouncedRow extends StatelessWidget {
     required this.onSelected,
   }) : super(key: key);
 
+
   static const screeningNow = 0;
   static const announced = 1;
 
