@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
-import 'package:south_cinema/core/text_input_formatters.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
-import 'package:south_cinema/features/reservations/presentation/widgets/sc_details_input_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_card_details_column.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_personal_details_column.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_title_date.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_text_button.dart';
 
 class BuyTicketPage extends StatefulWidget {
   const BuyTicketPage({
@@ -28,6 +29,14 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
       TextEditingController();
   final TextEditingController _cardCVVController = TextEditingController();
 
+  static const List<String> tickets = [
+    'ADULT TICKET 7\$',
+    'STUDENT TICKET 4\$',
+  ];
+
+  Map<String, String> selectedTickets = {};
+  double totalPrice = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +49,9 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
               padding: const EdgeInsets.symmetric(horizontal: 17),
               child: Container(
                 width: double.infinity,
-                height: 572,
+                constraints: const BoxConstraints(
+                  minHeight: 572,
+                ),
                 padding:
                     const EdgeInsets.symmetric(horizontal: 23, vertical: 12),
                 color: Theme.of(context).colorScheme.onBackground,
@@ -56,8 +67,62 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                     ),
                     ...widget.arguments.chosenSeats
                         .map(
-                          (seat) => SCTicketsRowDropdown(
-                            seat: seat,
+                          (seat) => Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}  -  ',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                              ),
+                              Column(
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      selectedTickets[seat] = tickets.first;
+                                      calculateTotalPrice(seat);
+                                    },
+                                    child: Container(
+                                        width: 150,
+                                        height: 16,
+                                        padding: const EdgeInsets.all(2),
+                                        margin: const EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                        child: Text(tickets.first)),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      selectedTickets[seat] = tickets.last;
+                                      calculateTotalPrice(seat);
+                                    },
+                                    child: Container(
+                                        width: 150,
+                                        height: 16,
+                                        padding: const EdgeInsets.all(2),
+                                        margin: const EdgeInsets.all(2),
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          borderRadius:
+                                              BorderRadius.circular(2),
+                                        ),
+                                        child: Text(tickets.last)),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         )
                         .toList(),
@@ -74,7 +139,7 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'TOTAL PRICE: ',
+                            'TOTAL PRICE: $totalPrice\$',
                             textAlign: TextAlign.left,
                             style: Theme.of(context)
                                 .textTheme
@@ -99,35 +164,10 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(
-                        // mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SCDetailsInputRow(
-                              label: 'Full name:',
-                              controller: _fullNameController,
-                              keyboardType: TextInputType.text,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SCDetailsInputRow(
-                              label: 'E-mail:',
-                              controller: _emailController,
-                              keyboardType: TextInputType.emailAddress,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 15),
-                            child: SCDetailsInputRow(
-                              label: 'Mobile number:',
-                              controller: _mobileNumberController,
-                              keyboardType: TextInputType.phone,
-                              formatters: mobileNumberFormatters,
-                            ),
-                          ),
-                        ],
+                      child: SCPersonalDetailsColumn(
+                        fullNameController: _fullNameController,
+                        emailController: _emailController,
+                        mobileNumberController: _mobileNumberController,
                       ),
                     ),
                     Divider(
@@ -143,57 +183,17 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SCDetailsInputRow(
-                              label: 'Full name:',
-                              controller: _cardFullNameController,
-                              keyboardType: TextInputType.text,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: SCDetailsInputRow(
-                              label: 'Card number:',
-                              controller: _cardNumberController,
-                              keyboardType: TextInputType.number,
-                              formatters: cardNumberFormatters,
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              SizedBox(
-                                width: 90,
-                                child: SCDetailsInputRow(
-                                  label: 'Exp. date:',
-                                  controller: _cardExpiryDateController,
-                                  keyboardType: TextInputType.number,
-                                  formatters: cardExpiryDateFormatters,
-                                  textFieldWidth: 36,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              SizedBox(
-                                width: 60,
-                                child: SCDetailsInputRow(
-                                  label: 'CVV:',
-                                  controller: _cardCVVController,
-                                  keyboardType: TextInputType.number,
-                                  formatters: cardCVVCodeFormatters,
-                                  textFieldWidth: 31,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                      child: SCCardDetailsColumn(
+                        cardFullNameController: _cardFullNameController,
+                        cardNumberController: _cardNumberController,
+                        cardExpiryDateController: _cardExpiryDateController,
+                        cardCVVController: _cardCVVController,
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    SCTextButton(buttonLabel: 'PAY', onPressed: () {}),
                   ],
                 ),
               ),
@@ -203,49 +203,18 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
       ),
     );
   }
-}
 
-class SCTicketsRowDropdown extends StatefulWidget {
-  const SCTicketsRowDropdown({
-    super.key,
-    required this.seat,
-  });
+  void calculateTotalPrice(String seat) {
+    double sum = 0;
+    totalPrice = 0;
 
-  final String seat;
+    selectedTickets.forEach((key, value) {
+      String numberStr = value.substring(value.length - 2, value.length - 1);
+      sum += double.parse(numberStr);
+    });
 
-  @override
-  State<SCTicketsRowDropdown> createState() => _SCTicketsRowDropdownState();
-}
-
-class _SCTicketsRowDropdownState extends State<SCTicketsRowDropdown> {
-  List<String> tickets = ['ADULT TICKET 7\$', 'STUDENT TICKET 4\$'];
-  String currentValue = 'ADULT TICKET 7\$';
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Row(
-        children: [
-          Text(
-            'ROW ${widget.seat.substring(0, 2)} SEAT ${widget.seat.substring(2)}  -  ',
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-          ),
-          Container(
-            width: 150,
-            // height: 16,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(2),
-            ),
-            child: Column(
-              children: [Text(tickets.first), Text(tickets.last)],
-            ),
-          ),
-        ],
-      ),
-    );
+    setState(() {
+      totalPrice = sum;
+    });
   }
 }

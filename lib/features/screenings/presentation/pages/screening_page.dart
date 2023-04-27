@@ -9,6 +9,7 @@ import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_bu
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_legend_column.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_seats_configuration_column.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_title_date.dart';
+import 'package:south_cinema/features/screenings/presentation/widgets/sc_text_button.dart';
 
 import '../../../../injection_container.dart';
 
@@ -86,7 +87,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                           const SizedBox(height: 40),
                           const SCRoomLegendColumn(),
                           const SizedBox(height: 44),
-                          TextButton(
+                          SCTextButton(
                             onPressed: () {
                               if (chosenSeats.isEmpty) return;
 
@@ -100,23 +101,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
                                         chosenSeats: chosenSeats,
                                       ));
                             },
-                            style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                  Theme.of(context).colorScheme.onSurface,
-                                ),
-                                shape: MaterialStatePropertyAll<
-                                        RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                )),
-                                fixedSize: const MaterialStatePropertyAll<Size>(
-                                  Size(107, 34),
-                                )),
-                            child: Text(
-                              _bookTicketSelected ? 'BOOK' : 'BUY',
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
+                            buttonLabel: _bookTicketSelected ? 'BOOK' : 'BUY',
                           ),
                         ],
                       );
