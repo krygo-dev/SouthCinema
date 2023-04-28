@@ -4,60 +4,64 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:south_cinema/core/error/error.dart';
-import 'package:south_cinema/features/reservations/domain/entities/reservation.dart';
+import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
 import 'package:south_cinema/features/reservations/domain/repositories/reservations_repository.dart';
-import 'package:south_cinema/features/reservations/domain/usecases/create_new_reservation.dart';
+import 'package:south_cinema/features/reservations/domain/usecases/create_new_purchase.dart';
 
-import 'create_new_reservation_test.mocks.dart';
+import 'create_new_purchase_test.mocks.dart';
 
 @GenerateMocks([ReservationsRepository])
 void main() {
-  late CreateNewReservation usecase;
+  late CreateNewPurchase usecase;
   late MockReservationsRepository mockReservationsRepository;
 
   setUp(() {
     mockReservationsRepository = MockReservationsRepository();
-    usecase = CreateNewReservation(mockReservationsRepository);
+    usecase = CreateNewPurchase(mockReservationsRepository);
   });
 
-  final tReservation = Reservation(
+  final tPurchase = Purchase(
     id: 'id',
     screeningId: 'screeningId',
     userId: 'userId',
-    fullName: 'Full Name',
+    fullName: 'fullName',
     createdAt: Timestamp.now(),
     phoneNumber: 'phoneNumber',
-    seats: const ['0101', '0102'],
+    email: 'email',
+    tickets: const {'0101': 'ADULT', '0102': 'STUDENT'},
+    totalPrice: 15.0,
   );
   const tSettingDataError = SettingDataError();
 
-  test('should return true when creating new reservation was successful',
+  test('should return true when creating new purchase was successful',
       () async {
     // arrange
-    when(mockReservationsRepository.createNewReservation(
-      reservation: anyNamed('reservation'),
+    when(mockReservationsRepository.createNewPurchase(
+      purchase: anyNamed('purchase'),
     )).thenAnswer((_) async => const Right(true));
     // act
-    final result = await usecase(reservation: tReservation);
+    final result = await usecase(purchase: tPurchase);
     // assert
     expect(result, const Right(true));
-    verify(mockReservationsRepository.createNewReservation(
-        reservation: tReservation));
+    verify(mockReservationsRepository.createNewPurchase(
+      purchase: tPurchase,
+    ));
     verifyNoMoreInteractions(mockReservationsRepository);
   });
 
-  test('should return error when creating new reservation was unsuccessful',
+  test('should return error when creating new purchase was unsuccessful',
       () async {
     // arrange
-    when(mockReservationsRepository.createNewReservation(
-      reservation: anyNamed('reservation'),
+    when(mockReservationsRepository.createNewPurchase(
+      purchase: anyNamed('purchase'),
     )).thenAnswer((_) async => const Left(tSettingDataError));
     // act
-    final result = await usecase(reservation: tReservation);
+    final result = await usecase(purchase: tPurchase);
     // assert
     expect(result, const Left(tSettingDataError));
-    verify(mockReservationsRepository.createNewReservation(
-        reservation: tReservation));
+    verify(mockReservationsRepository.createNewPurchase(
+      purchase: tPurchase,
+    ));
     verifyNoMoreInteractions(mockReservationsRepository);
   });
 }

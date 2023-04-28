@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 
 class ReservationPage extends StatelessWidget {
   const ReservationPage({Key? key}) : super(key: key);

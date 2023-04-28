@@ -3,10 +3,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:south_cinema/core/error/error.dart';
-import 'package:south_cinema/features/reservations/data/datasources/reservations_service_impl.dart';
-import 'package:south_cinema/features/reservations/domain/entities/reservation.dart';
+import 'package:south_cinema/features/reservations/data/datasources/purchase_service_impl.dart';
+import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
 
-import 'reservations_service_test.mocks.dart';
+import 'purchase_service_test.mocks.dart';
 
 @GenerateMocks([
   FirebaseFirestore,
@@ -22,7 +22,7 @@ import 'reservations_service_test.mocks.dart';
   ),
 ])
 void main() {
-  late ReservationsServiceImpl reservationsServiceImpl;
+  late PurchaseServiceImpl purchaseServiceImpl;
   late MockFirebaseFirestore mockFirebaseFirestore;
   late MockCollectionReference<Map<String, dynamic>> mockCollectionReference;
   late MockQuery<Map<String, dynamic>> mockQuery;
@@ -31,7 +31,7 @@ void main() {
   mockQueryDocumentSnapshot;
   late MockDocumentReference<Map<String, dynamic>> mockDocumentReference;
 
-  const tCollectionPath = 'reservations';
+  const tCollectionPath = 'purchases';
 
   setUp(() {
     mockFirebaseFirestore = MockFirebaseFirestore();
@@ -40,11 +40,11 @@ void main() {
     mockQuerySnapshot = MockQuerySnapshot();
     mockQueryDocumentSnapshot = MockQueryDocumentSnapshot();
     mockDocumentReference = MockDocumentReference();
-    reservationsServiceImpl = ReservationsServiceImpl(mockFirebaseFirestore);
+    purchaseServiceImpl = PurchaseServiceImpl(mockFirebaseFirestore);
   });
 
-  group('createNewReservation', () {
-    final tReservation = Reservation.fromJson(jsonData());
+  group('createNewPurchase', () {
+    final tPurchase = Purchase.fromJson(jsonData());
 
     test('return true when setting data was successful', () async {
       // arrange
@@ -57,13 +57,13 @@ void main() {
       when(mockDocumentReference.update(any)).thenAnswer((_) async => true);
       // act
       final result =
-      await reservationsServiceImpl.createNewReservation(tReservation);
+      await purchaseServiceImpl.createNewPurchase(tPurchase);
       // assert
       expect(result, true);
       verify(mockFirebaseFirestore.collection(tCollectionPath));
-      verify(mockCollectionReference.add(tReservation.toJson()));
+      verify(mockCollectionReference.add(tPurchase.toJson()));
       verify(mockDocumentReference.id);
-      verify(mockCollectionReference.doc(tReservation.id));
+      verify(mockCollectionReference.doc(tPurchase.id));
       verify(mockDocumentReference.update({'id': 'id'}));
     });
 
@@ -74,20 +74,20 @@ void main() {
       when(mockCollectionReference.add(any))
           .thenThrow(FirebaseException(plugin: 'firestore'));
       // act
-      final call = reservationsServiceImpl.createNewReservation;
+      final call = purchaseServiceImpl.createNewPurchase;
       // assert
       verifyNoMoreInteractions(mockFirebaseFirestore);
       await expectLater(
-              () => call(tReservation), throwsA(isA<SettingDataError>()));
+              () => call(tPurchase), throwsA(isA<SettingDataError>()));
     });
   });
 
-  group('getUserReservations', () {
+  group('getUserPurchasedTickets', () {
     const tId = 'userId';
-    final tReservation = Reservation.fromJson(jsonData());
+    final tPurchase = Purchase.fromJson(jsonData());
 
-    test('''should get all documents from reservation collection where 
-      userId is equal provided id and return them as list of Reservation''', () async {
+    test('''should get all documents from purchases collection where 
+      userId is equal provided id and return them as list of Purchase''', () async {
       // arrange
       when(mockFirebaseFirestore.collection(any))
           .thenReturn(mockCollectionReference);
@@ -97,9 +97,9 @@ void main() {
       when(mockQuerySnapshot.docs).thenReturn([mockQueryDocumentSnapshot]);
       when(mockQueryDocumentSnapshot.data()).thenReturn(jsonData());
       // act
-      final result = await reservationsServiceImpl.getUserReservations(tId);
+      final result = await purchaseServiceImpl.getUserPurchasedTickets(tId);
       // assert
-      expect(result, contains(tReservation));
+      expect(result, contains(tPurchase));
       verify(mockFirebaseFirestore.collection(tCollectionPath));
       verify(mockCollectionReference.where('userId', isEqualTo: tId));
     });
@@ -112,7 +112,7 @@ void main() {
           .thenReturn(mockQuery);
       when(mockQuery.get()).thenThrow(FirebaseException(plugin: 'firestore'));
       // act
-      final call = reservationsServiceImpl.getUserReservations;
+      final call = purchaseServiceImpl.getUserPurchasedTickets;
       // assert
       verifyNoMoreInteractions(mockFirebaseFirestore);
       await expectLater(() => call(tId), throwsA(isA<GettingDataError>()));
@@ -127,9 +127,11 @@ Map<String, dynamic> jsonData() {
     'id': 'id',
     'screeningId': 'screeningId',
     'userId': 'userId',
-    'fullName': 'Full Name',
+    'fullName': 'fullName',
     'createdAt': Timestamp.fromDate(DateTime(2023, 3, 15, 11, 45)),
     'phoneNumber': 'phoneNumber',
-    'seats': ['0101', '0102'],
+    'email': 'email',
+    'tickets': {'0101': 'ADULT', '0102': 'STUDENT'},
+    'totalPrice': 15.0,
   };
 }

@@ -1,34 +1,40 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class Reservation extends Equatable {
+class Purchase extends Equatable {
   final String id;
   final String screeningId;
   final String? userId;
   final String fullName;
   final Timestamp createdAt;
   final String phoneNumber;
-  final List<String> seats;
+  final String email;
+  final Map<String, String> tickets;
+  final double totalPrice;
 
-  const Reservation({
+  const Purchase({
     required this.id,
     required this.screeningId,
     this.userId,
     required this.fullName,
     required this.createdAt,
     required this.phoneNumber,
-    required this.seats,
+    required this.email,
+    required this.tickets,
+    required this.totalPrice,
   });
 
-  factory Reservation.fromJson(Map<String, dynamic> json) {
-    return Reservation(
+  factory Purchase.fromJson(Map<String, dynamic> json) {
+    return Purchase(
       id: json['id'],
       screeningId: json['screeningId'],
       userId: json['userId'],
       fullName: json['fullName'],
       createdAt: json['createdAt'],
       phoneNumber: json['phoneNumber'],
-      seats: json['seats'],
+      email: json['email'],
+      tickets: (json['tickets']! as Map).cast<String, String>(),
+      totalPrice: json['totalPrice'],
     );
   }
 
@@ -40,11 +46,22 @@ class Reservation extends Equatable {
       'fullName': fullName,
       'createdAt': createdAt,
       'phoneNumber': phoneNumber,
-      'seats': seats,
+      'email': email,
+      'tickets': tickets,
+      'totalPrice': totalPrice,
     };
   }
 
   @override
-  List<Object?> get props =>
-      [id, screeningId, userId, fullName, createdAt, phoneNumber, seats];
+  List<Object?> get props => [
+        id,
+        screeningId,
+        userId,
+        fullName,
+        createdAt,
+        phoneNumber,
+        email,
+        tickets,
+        totalPrice,
+      ];
 }

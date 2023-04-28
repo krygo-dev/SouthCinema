@@ -5,11 +5,11 @@ import 'package:intl/intl.dart';
 import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_legend_column.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_seats_configuration_column.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_title_date.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_text_button.dart';
+import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
+import 'package:south_cinema/core/widgets/sc_text_button.dart';
 
 import '../../../../injection_container.dart';
 

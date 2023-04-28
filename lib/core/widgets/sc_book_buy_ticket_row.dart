@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_category_choice_chip.dart';
+import 'package:south_cinema/core/widgets/sc_category_choice_chip.dart';
 
 class SCBookBuyTicketRow extends StatelessWidget {
   const SCBookBuyTicketRow({

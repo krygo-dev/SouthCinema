@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_category_choice_chip.dart';
+import 'package:south_cinema/core/widgets/sc_category_choice_chip.dart';
 
 class SCPlayedAnnouncedRow extends StatelessWidget {
   const SCPlayedAnnouncedRow({

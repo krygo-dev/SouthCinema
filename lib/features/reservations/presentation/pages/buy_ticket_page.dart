@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_book_buy_ticket_row.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_card_details_column.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_personal_details_column.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_title_date.dart';
-import 'package:south_cinema/features/screenings/presentation/widgets/sc_text_button.dart';
+import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/features/reservations/presentation/widgets/sc_card_details_column.dart';
+import 'package:south_cinema/features/reservations/presentation/widgets/sc_personal_details_column.dart';
+import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
+import 'package:south_cinema/core/widgets/sc_text_button.dart';
 
 class BuyTicketPage extends StatefulWidget {
   const BuyTicketPage({
@@ -65,6 +65,7 @@ class _BuyTicketPageState extends State<BuyTicketPage> {
                     const SizedBox(
                       height: 27,
                     ),
+                    /// TEMPORARY - WILL CHANGE SOON ///
                     ...widget.arguments.chosenSeats
                         .map(
                           (seat) => Row(
