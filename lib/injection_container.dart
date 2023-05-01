@@ -10,6 +10,17 @@ import 'package:south_cinema/features/movies/domain/repositories/movies_reposito
 import 'package:south_cinema/features/movies/domain/usecases/get_announced_movies.dart';
 import 'package:south_cinema/features/movies/domain/usecases/get_currently_played_movies.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
+import 'package:south_cinema/features/reservations/data/datasources/purchase_service.dart';
+import 'package:south_cinema/features/reservations/data/datasources/purchase_service_impl.dart';
+import 'package:south_cinema/features/reservations/data/datasources/reservations_service.dart';
+import 'package:south_cinema/features/reservations/data/datasources/reservations_service_impl.dart';
+import 'package:south_cinema/features/reservations/data/repositories/reservations_repository_impl.dart';
+import 'package:south_cinema/features/reservations/domain/repositories/reservations_repository.dart';
+import 'package:south_cinema/features/reservations/domain/usecases/create_new_purchase.dart';
+import 'package:south_cinema/features/reservations/domain/usecases/create_new_reservation.dart';
+import 'package:south_cinema/features/reservations/domain/usecases/get_user_purchased_tickets.dart';
+import 'package:south_cinema/features/reservations/domain/usecases/get_user_reservations.dart';
+import 'package:south_cinema/features/reservations/presentation/bloc/purchase_bloc.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service_impl.dart';
 import 'package:south_cinema/features/screenings/data/repositories/screenings_repository_impl.dart';
@@ -61,7 +72,28 @@ void init() {
   sl.registerLazySingleton<MoviesService>(() => MoviesServiceImpl(sl()));
 
   /// Features - Authentication ///
+
   /// Features - Reservations ///
+  //Bloc
+  sl.registerFactory(() => PurchaseBloc(createNewPurchase: sl()));
+  // Use cases
+  sl.registerLazySingleton(() => CreateNewPurchase(sl()));
+  sl.registerLazySingleton(() => GetUserPurchasedTickets(sl()));
+  sl.registerLazySingleton(() => CreateNewReservation(sl()));
+  sl.registerLazySingleton(() => GetUserReservations(sl()));
+  // Repository
+  sl.registerLazySingleton<ReservationsRepository>(
+    () => ReservationsRepositoryImpl(
+      reservationService: sl(),
+      purchaseService: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<ReservationService>(
+      () => ReservationsServiceImpl(sl()));
+  sl.registerLazySingleton<PurchaseService>(() => PurchaseServiceImpl(sl()));
+
   /// Features - User_profile ///
 
   /// Core ///

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:south_cinema/features/screenings/domain/entities/room.dart';
 import 'package:south_cinema/features/screenings/domain/entities/screening.dart';
 
-class BuyTicketPageArguments {
-  BuyTicketPageArguments({
+class PurchasePageArguments {
+  PurchasePageArguments({
     Key? key,
     required this.room,
     required this.screening,

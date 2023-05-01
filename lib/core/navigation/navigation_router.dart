@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
-import 'package:south_cinema/core/navigation/buy_ticket_page_arguments.dart';
+import 'package:south_cinema/core/navigation/purchase_page_arguments.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/presentation/pages/movie_page.dart';
-import 'package:south_cinema/features/reservations/presentation/pages/buy_ticket_page.dart';
+import 'package:south_cinema/features/reservations/presentation/pages/purchase_page.dart';
 import 'package:south_cinema/features/reservations/presentation/pages/reservation_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/screening_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/screenings_page.dart';
@@ -53,10 +53,10 @@ class NavigationRouter {
         builder: (context, state) => const ReservationPage(),
       ),
       GoRoute(
-        name: 'buy_ticket',
-        path: '/buy_ticket',
+        name: 'purchase',
+        path: '/purchase',
         builder: (context, state) =>
-            BuyTicketPage(arguments: state.extra as BuyTicketPageArguments),
+            PurchasePage(arguments: state.extra as PurchasePageArguments),
       ),
     ],
   );
