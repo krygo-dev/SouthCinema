@@ -2,11 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/reservations/data/datasources/reservations_service.dart';
 import 'package:south_cinema/features/reservations/domain/entities/reservation.dart';
+import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 
 class ReservationsServiceImpl implements ReservationService {
   final FirebaseFirestore firebaseFirestore;
+  final ScreeningsService screeningsService;
 
-  ReservationsServiceImpl(this.firebaseFirestore);
+  ReservationsServiceImpl(this.firebaseFirestore, this.screeningsService);
 
   @override
   Future<bool> createNewReservation(Reservation reservation) async {
@@ -16,6 +18,10 @@ class ReservationsServiceImpl implements ReservationService {
           await collectionRef.add(reservation.toJson()).then((doc) => doc.id);
 
       await collectionRef.doc(documentId).update({'id': documentId});
+      await screeningsService.updateScreeningSeatsTaken(
+        reservation.screeningId,
+        reservation.seats,
+      );
 
       return true;
     } on FirebaseException catch (e) {
@@ -27,9 +33,10 @@ class ReservationsServiceImpl implements ReservationService {
   Future<List<Reservation>> getUserReservations(String uid) async {
     try {
       final snapshots = (await firebaseFirestore
-          .collection('reservations')
-          .where('userId', isEqualTo: uid)
-          .get()).docs;
+              .collection('reservations')
+              .where('userId', isEqualTo: uid)
+              .get())
+          .docs;
 
       final reservationsList = snapshots
           .map((snapshot) => Reservation.fromJson(snapshot.data()))

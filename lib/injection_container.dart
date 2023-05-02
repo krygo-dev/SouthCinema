@@ -91,8 +91,10 @@ void init() {
   );
   // Data sources
   sl.registerLazySingleton<ReservationService>(
-      () => ReservationsServiceImpl(sl()));
-  sl.registerLazySingleton<PurchaseService>(() => PurchaseServiceImpl(sl()));
+      () => ReservationsServiceImpl(sl(), sl()));
+  sl.registerLazySingleton<PurchaseService>(
+    () => PurchaseServiceImpl(sl(), sl()),
+  );
 
   /// Features - User_profile ///
 

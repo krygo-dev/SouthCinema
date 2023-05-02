@@ -5,10 +5,12 @@ import 'package:mockito/mockito.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/reservations/data/datasources/purchase_service_impl.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
+import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 
 import 'purchase_service_test.mocks.dart';
 
 @GenerateMocks([
+  ScreeningsService,
   FirebaseFirestore,
   CollectionReference,
   QuerySnapshot,
@@ -23,30 +25,36 @@ import 'purchase_service_test.mocks.dart';
 ])
 void main() {
   late PurchaseServiceImpl purchaseServiceImpl;
+  late MockScreeningsService mockScreeningsService;
   late MockFirebaseFirestore mockFirebaseFirestore;
   late MockCollectionReference<Map<String, dynamic>> mockCollectionReference;
   late MockQuery<Map<String, dynamic>> mockQuery;
   late MockQuerySnapshot<Map<String, dynamic>> mockQuerySnapshot;
   late MockQueryDocumentSnapshot<Map<String, dynamic>>
-  mockQueryDocumentSnapshot;
+      mockQueryDocumentSnapshot;
   late MockDocumentReference<Map<String, dynamic>> mockDocumentReference;
 
   const tCollectionPath = 'purchases';
 
   setUp(() {
+    mockScreeningsService = MockScreeningsService();
     mockFirebaseFirestore = MockFirebaseFirestore();
     mockCollectionReference = MockCollectionReference();
     mockQuery = MockQuery();
     mockQuerySnapshot = MockQuerySnapshot();
     mockQueryDocumentSnapshot = MockQueryDocumentSnapshot();
     mockDocumentReference = MockDocumentReference();
-    purchaseServiceImpl = PurchaseServiceImpl(mockFirebaseFirestore);
+    purchaseServiceImpl = PurchaseServiceImpl(
+      mockFirebaseFirestore,
+      mockScreeningsService,
+    );
   });
 
   group('createNewPurchase', () {
     final tPurchase = Purchase.fromJson(jsonData());
+    final tSeats = ['0101', '0102'];
 
-    test('return true when setting data was successful', () async {
+    test('should return true when setting data was successful', () async {
       // arrange
       when(mockFirebaseFirestore.collection(tCollectionPath))
           .thenReturn(mockCollectionReference);
@@ -55,9 +63,10 @@ void main() {
       when(mockDocumentReference.id).thenReturn('id');
       when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
       when(mockDocumentReference.update(any)).thenAnswer((_) async => true);
+      when(mockScreeningsService.updateScreeningSeatsTaken(any, any))
+          .thenAnswer((_) async => true);
       // act
-      final result =
-      await purchaseServiceImpl.createNewPurchase(tPurchase);
+      final result = await purchaseServiceImpl.createNewPurchase(tPurchase);
       // assert
       expect(result, true);
       verify(mockFirebaseFirestore.collection(tCollectionPath));
@@ -65,6 +74,8 @@ void main() {
       verify(mockDocumentReference.id);
       verify(mockCollectionReference.doc(tPurchase.id));
       verify(mockDocumentReference.update({'id': 'id'}));
+      verify(mockScreeningsService.updateScreeningSeatsTaken(
+          tPurchase.screeningId, tSeats));
     });
 
     test('should throw SettingDataError when setting data fails', () async {
@@ -78,7 +89,7 @@ void main() {
       // assert
       verifyNoMoreInteractions(mockFirebaseFirestore);
       await expectLater(
-              () => call(tPurchase), throwsA(isA<SettingDataError>()));
+          () => call(tPurchase), throwsA(isA<SettingDataError>()));
     });
   });
 
@@ -87,7 +98,8 @@ void main() {
     final tPurchase = Purchase.fromJson(jsonData());
 
     test('''should get all documents from purchases collection where 
-      userId is equal provided id and return them as list of Purchase''', () async {
+      userId is equal provided id and return them as list of Purchase''',
+        () async {
       // arrange
       when(mockFirebaseFirestore.collection(any))
           .thenReturn(mockCollectionReference);

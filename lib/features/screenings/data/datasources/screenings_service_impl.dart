@@ -47,4 +47,16 @@ class ScreeningsServiceImpl implements ScreeningsService {
       throw GettingDataError(message: e.message ?? 'Unexpected error');
     }
   }
+
+  @override
+  Future<void> updateScreeningSeatsTaken(String screeningId, List<String> newTakenSeats) async {
+    try {
+      await firebaseFirestore
+          .collection('screenings')
+          .doc(screeningId)
+          .update({'seatsTaken': FieldValue.arrayUnion(newTakenSeats)});
+    } on FirebaseException catch (e) {
+      throw SettingDataError(message: e.message ?? 'Unexpected error');
+    }
+  }
 }

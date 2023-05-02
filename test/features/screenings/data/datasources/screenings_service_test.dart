@@ -192,6 +192,44 @@ void main() {
       await expectLater(() => call(tId), throwsA(isA<GettingDataError>()));
     });
   });
+
+  group('updateScreeningSeatsTaken', () {
+    const tCollectionPath = 'screenings';
+    const tScreeningId = 'screeningId';
+    const tSeatsTaken = ['0101', '0102'];
+
+    test('''should update seatsTaken with new seats of 
+      provided screeningId in screenings collection''', () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.update(any)).thenAnswer((_) async => true);
+      // act
+      await screeningsServiceImpl.updateScreeningSeatsTaken(
+          tScreeningId, tSeatsTaken);
+      // assert
+      verify(mockFirebaseFirestore.collection(tCollectionPath));
+      verify(mockCollectionReference.doc(tScreeningId));
+      verify(mockDocumentReference
+          .update({'seatsTaken': FieldValue.arrayUnion(tSeatsTaken)}));
+    });
+
+    test('should throw SettingDataError when setting data fails', () async {
+      // arrange
+      when(mockFirebaseFirestore.collection(any))
+          .thenReturn(mockCollectionReference);
+      when(mockCollectionReference.doc(any)).thenReturn(mockDocumentReference);
+      when(mockDocumentReference.update(any))
+          .thenThrow(FirebaseException(plugin: 'firestore'));
+      // act
+      final call = screeningsServiceImpl.updateScreeningSeatsTaken;
+      // assert
+      verifyNoMoreInteractions(mockFirebaseFirestore);
+      await expectLater(() => call(tScreeningId, tSeatsTaken),
+          throwsA(isA<SettingDataError>()));
+    });
+  });
 }
 
 // Function used to mock behavior of QueryDocumentSnapshot.data() method

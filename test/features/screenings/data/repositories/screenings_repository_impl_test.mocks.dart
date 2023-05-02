@@ -94,6 +94,22 @@ class MockScreeningsService extends _i1.Mock implements _i4.ScreeningsService {
           ),
         )),
       ) as _i5.Future<_i3.Screening>);
+  @override
+  _i5.Future<void> updateScreeningSeatsTaken(
+    String? screeningId,
+    List<String>? newTakenSeats,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateScreeningSeatsTaken,
+          [
+            screeningId,
+            newTakenSeats,
+          ],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 }
 
 /// A class which mocks [NetworkInfo].

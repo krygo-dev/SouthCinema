@@ -6,4 +6,5 @@ abstract class ScreeningsService {
   Future<List<RepertoireScreening>> getRepertoireForDate(String date);
   Future<Room> getRoomById(String id);
   Future<Screening> getScreeningById(String id);
+  Future<void> updateScreeningSeatsTaken(String screeningId, List<String> newTakenSeats);
 }
