@@ -274,8 +274,6 @@ class _PurchasePageState extends State<PurchasePage> {
                                   totalPrice: totalPrice,
                                 );
 
-                                print(newPurchase);
-
                                 BlocProvider.of<PurchaseBloc>(context)
                                     .add(CreateNewPurchaseEvent(newPurchase));
                               },

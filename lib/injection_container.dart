@@ -21,6 +21,7 @@ import 'package:south_cinema/features/reservations/domain/usecases/create_new_re
 import 'package:south_cinema/features/reservations/domain/usecases/get_user_purchased_tickets.dart';
 import 'package:south_cinema/features/reservations/domain/usecases/get_user_reservations.dart';
 import 'package:south_cinema/features/reservations/presentation/bloc/purchase_bloc.dart';
+import 'package:south_cinema/features/reservations/presentation/bloc/reservation_bloc.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service_impl.dart';
 import 'package:south_cinema/features/screenings/data/repositories/screenings_repository_impl.dart';
@@ -73,9 +74,10 @@ void init() {
 
   /// Features - Authentication ///
 
-  /// Features - Reservations ///
+  /// Features - Reservations/Purchases ///
   //Bloc
   sl.registerFactory(() => PurchaseBloc(createNewPurchase: sl()));
+  sl.registerFactory(() => ReservationBloc(createNewReservation: sl()));
   // Use cases
   sl.registerLazySingleton(() => CreateNewPurchase(sl()));
   sl.registerLazySingleton(() => GetUserPurchasedTickets(sl()));
