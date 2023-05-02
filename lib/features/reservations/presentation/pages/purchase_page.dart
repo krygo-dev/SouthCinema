@@ -11,6 +11,7 @@ import 'package:south_cinema/features/reservations/presentation/widgets/sc_card_
 import 'package:south_cinema/features/reservations/presentation/widgets/sc_personal_details_column.dart';
 import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
+import 'package:south_cinema/features/reservations/presentation/widgets/sc_result_container.dart';
 import 'package:south_cinema/injection_container.dart';
 
 class PurchasePage extends StatefulWidget {
@@ -71,39 +72,21 @@ class _PurchasePageState extends State<PurchasePage> {
                         );
                       } else if (state is PurchaseLoaded) {
                         return Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Purchase completed',
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                              const SizedBox(height: 16),
-                              SCTextButton(
-                                buttonLabel: 'Go back',
-                                onPressed: () => context.goNamed('screenings'),
-                              ),
-                            ],
+                          child: SCResultContainer(
+                            text: 'Purchase completed',
+                            buttonLabel: 'Go back',
+                            onPressed: () => context.goNamed('screenings'),
                           ),
                         );
                       } else if (state is PurchaseError) {
                         return Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                state.message,
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                              const SizedBox(height: 16),
-                              SCTextButton(
-                                buttonLabel: 'Try again',
-                                onPressed: () {
-                                  context.pushReplacementNamed(
-                                    'purchase',
-                                    extra: widget.arguments,
-                                  );
-                                },
-                              ),
-                            ],
+                          child: SCResultContainer(
+                            text: state.message,
+                            buttonLabel: 'Try again',
+                            onPressed: () => context.pushReplacementNamed(
+                              'reservation',
+                              extra: widget.arguments,
+                            ),
                           ),
                         );
                       } else {
