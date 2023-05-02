@@ -8,6 +8,7 @@ class Reservation extends Equatable {
   final String fullName;
   final Timestamp createdAt;
   final String phoneNumber;
+  final String email;
   final List<String> seats;
 
   const Reservation({
@@ -17,6 +18,7 @@ class Reservation extends Equatable {
     required this.fullName,
     required this.createdAt,
     required this.phoneNumber,
+    required this.email,
     required this.seats,
   });
 
@@ -28,6 +30,7 @@ class Reservation extends Equatable {
       fullName: json['fullName'],
       createdAt: json['createdAt'],
       phoneNumber: json['phoneNumber'],
+      email: json['email'],
       seats: json['seats'],
     );
   }
@@ -40,11 +43,12 @@ class Reservation extends Equatable {
       'fullName': fullName,
       'createdAt': createdAt,
       'phoneNumber': phoneNumber,
+      'email': email,
       'seats': seats,
     };
   }
 
   @override
   List<Object?> get props =>
-      [id, screeningId, userId, fullName, createdAt, phoneNumber, seats];
+      [id, screeningId, userId, fullName, createdAt, phoneNumber, email, seats];
 }

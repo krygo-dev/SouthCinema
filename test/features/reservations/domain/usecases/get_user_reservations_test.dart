@@ -30,6 +30,7 @@ void main() {
       fullName: 'Full Name',
       createdAt: Timestamp.now(),
       phoneNumber: 'phoneNumber',
+      email: 'email',
       seats: const ['0101'],
     ),
     Reservation(
@@ -39,6 +40,7 @@ void main() {
       fullName: 'Full Name',
       createdAt: Timestamp.now(),
       phoneNumber: 'phoneNumber2',
+      email: 'email2',
       seats: const ['0102'],
     ),
   ];

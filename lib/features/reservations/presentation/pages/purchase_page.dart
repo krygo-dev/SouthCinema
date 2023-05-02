@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:south_cinema/core/navigation/purchase_page_arguments.dart';
+import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
@@ -19,7 +19,7 @@ class PurchasePage extends StatefulWidget {
     required this.arguments,
   }) : super(key: key);
 
-  final PurchasePageArguments arguments;
+  final ReservationPurchasePageArguments arguments;
 
   @override
   State<PurchasePage> createState() => _PurchasePageState();

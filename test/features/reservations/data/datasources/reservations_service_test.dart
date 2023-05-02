@@ -144,6 +144,7 @@ Map<String, dynamic> jsonData() {
     'fullName': 'Full Name',
     'createdAt': Timestamp.fromDate(DateTime(2023, 3, 15, 11, 45)),
     'phoneNumber': 'phoneNumber',
+    'email': 'email',
     'seats': ['0101', '0102'],
   };
 }

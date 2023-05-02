@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:south_cinema/core/navigation/purchase_page_arguments.dart';
+import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
@@ -91,15 +91,22 @@ class _ScreeningPageState extends State<ScreeningPage> {
                             onPressed: () {
                               if (chosenSeats.isEmpty) return;
 
+                              final navArgs = ReservationPurchasePageArguments(
+                                room: state.room,
+                                screening: state.screening,
+                                dateTimeStr: dateTimeStr,
+                                chosenSeats: chosenSeats,
+                              );
+
                               _bookTicketSelected
-                                  ? context.pushNamed('reservation')
-                                  : context.pushNamed('purchase',
-                                      extra: PurchasePageArguments(
-                                        room: state.room,
-                                        screening: state.screening,
-                                        dateTimeStr: dateTimeStr,
-                                        chosenSeats: chosenSeats,
-                                      ));
+                                  ? context.pushNamed(
+                                      'reservation',
+                                      extra: navArgs,
+                                    )
+                                  : context.pushNamed(
+                                      'purchase',
+                                      extra: navArgs,
+                                    );
                             },
                             buttonLabel: _bookTicketSelected ? 'BOOK' : 'BUY',
                           ),

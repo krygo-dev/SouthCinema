@@ -11,6 +11,7 @@ void main() {
     fullName: 'Full Name',
     createdAt: time,
     phoneNumber: 'phoneNumber',
+    email: 'email',
     seats: const ['0101', '0102'],
   );
 
@@ -21,6 +22,7 @@ void main() {
     'fullName': 'Full Name',
     'createdAt': time,
     'phoneNumber': 'phoneNumber',
+    'email': 'email',
     'seats': ['0101', '0102'],
   };
 

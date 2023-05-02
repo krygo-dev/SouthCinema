@@ -59,6 +59,7 @@ void main() {
       fullName: 'Full Name',
       createdAt: Timestamp.now(),
       phoneNumber: 'phoneNumber',
+      email: 'email',
       seats: const ['0101', '0102'],
     );
     const tSettingDataError = SettingDataError();
@@ -128,6 +129,7 @@ void main() {
         fullName: 'Full Name',
         createdAt: Timestamp.now(),
         phoneNumber: 'phoneNumber',
+        email: 'email',
         seats: const ['0101', '0102'],
       ),
       Reservation(
@@ -137,6 +139,7 @@ void main() {
         fullName: 'Full Name',
         createdAt: Timestamp.now(),
         phoneNumber: 'phoneNumber',
+        email: 'email',
         seats: const ['0101', '0102'],
       )
     ];

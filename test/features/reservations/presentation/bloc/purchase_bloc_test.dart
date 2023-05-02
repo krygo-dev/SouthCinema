@@ -38,9 +38,8 @@ void main() {
       totalPrice: 11.0,
     );
 
-    test(
-        'should call CreateNewPurchase usecase to create new purchase at firebase',
-        () async {
+    test('''should call CreateNewPurchase usecase to create new 
+      purchase at firebase''', () async {
       // arrange
       when(mockCreateNewPurchase(purchase: anyNamed('purchase')))
           .thenAnswer((_) async => const Right(tResult));
