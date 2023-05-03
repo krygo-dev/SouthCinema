@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:south_cinema/core/error/show_error_dialog.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
+import 'package:south_cinema/core/util/text_fields_checker.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
@@ -101,6 +103,21 @@ class ReservationPage extends StatelessWidget {
                             SCTextButton(
                               buttonLabel: 'BOOK',
                               onPressed: () {
+                                final controllers = [
+                                  _fullNameController,
+                                  _emailController,
+                                  _mobileNumberController,
+                                ];
+
+                                if (checkIfTextFieldsEmpty(controllers)) {
+                                  showErrorDialog(
+                                    context,
+                                    alertTitle: 'Missing input error',
+                                    alertMessage: 'Fill up all input fields.',
+                                  );
+                                  return;
+                                }
+
                                 final newReservation = Reservation(
                                   id: '',
                                   screeningId: arguments.screening.id,

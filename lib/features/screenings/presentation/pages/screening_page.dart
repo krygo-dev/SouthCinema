@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:south_cinema/core/error/show_error_dialog.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
@@ -89,7 +90,15 @@ class _ScreeningPageState extends State<ScreeningPage> {
                           const SizedBox(height: 44),
                           SCTextButton(
                             onPressed: () {
-                              if (chosenSeats.isEmpty) return;
+                              if (chosenSeats.isEmpty) {
+                                showErrorDialog(
+                                  context,
+                                  alertTitle: 'No seats selected',
+                                  alertMessage:
+                                      'Please select at least one seat to continue.',
+                                );
+                                return;
+                              }
 
                               final navArgs = ReservationPurchasePageArguments(
                                 room: state.room,

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:south_cinema/core/util/constants.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/reservations/data/datasources/reservations_service.dart';
 import 'package:south_cinema/features/reservations/domain/entities/reservation.dart';
@@ -13,7 +14,7 @@ class ReservationsServiceImpl implements ReservationService {
   @override
   Future<bool> createNewReservation(Reservation reservation) async {
     try {
-      final collectionRef = firebaseFirestore.collection('reservations');
+      final collectionRef = firebaseFirestore.collection(reservationsPath);
       final documentId =
           await collectionRef.add(reservation.toJson()).then((doc) => doc.id);
 
@@ -33,7 +34,7 @@ class ReservationsServiceImpl implements ReservationService {
   Future<List<Reservation>> getUserReservations(String uid) async {
     try {
       final snapshots = (await firebaseFirestore
-              .collection('reservations')
+              .collection(reservationsPath)
               .where('userId', isEqualTo: uid)
               .get())
           .docs;

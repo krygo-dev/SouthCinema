@@ -8,7 +8,15 @@ class CreateNewReservation {
 
   CreateNewReservation(this.repository);
 
-  Future<Either<BaseError, bool>> call({required Reservation reservation}) async {
+  Future<Either<BaseError, bool>> call({
+    required Reservation reservation,
+  }) async {
+    if (reservation.fullName.isEmpty ||
+        reservation.email.isEmpty ||
+        reservation.phoneNumber.isEmpty) {
+      return const Left(EmptyTextFieldError());
+    }
+
     return await repository.createNewReservation(reservation: reservation);
   }
 }

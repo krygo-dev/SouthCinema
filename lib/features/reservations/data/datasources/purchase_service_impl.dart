@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:south_cinema/core/util/constants.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/reservations/data/datasources/purchase_service.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
@@ -13,7 +14,7 @@ class PurchaseServiceImpl implements PurchaseService {
   @override
   Future<bool> createNewPurchase(Purchase purchase) async {
     try {
-      final collectionRef = firebaseFirestore.collection('purchases');
+      final collectionRef = firebaseFirestore.collection(purchasesPath);
       final documentId =
           await collectionRef.add(purchase.toJson()).then((doc) => doc.id);
 
@@ -35,7 +36,7 @@ class PurchaseServiceImpl implements PurchaseService {
   Future<List<Purchase>> getUserPurchasedTickets(String uid) async {
     try {
       final snapshots = (await firebaseFirestore
-              .collection('purchases')
+              .collection(purchasesPath)
               .where('userId', isEqualTo: uid)
               .get())
           .docs;

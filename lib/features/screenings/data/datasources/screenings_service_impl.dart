@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:south_cinema/core/util/constants.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 import 'package:south_cinema/features/screenings/domain/entities/repertoire_screening.dart';
@@ -14,7 +15,7 @@ class ScreeningsServiceImpl implements ScreeningsService {
   Future<List<RepertoireScreening>> getRepertoireForDate(String date) async {
     try {
       final snapshots = (await firebaseFirestore
-              .collection('repertoire')
+              .collection(repertoirePath)
               .where('date', isEqualTo: date)
               .get()).docs;
 
@@ -30,7 +31,7 @@ class ScreeningsServiceImpl implements ScreeningsService {
   @override
   Future<Room> getRoomById(String id) async {
     try {
-      final doc = await firebaseFirestore.collection('rooms').doc(id).get();
+      final doc = await firebaseFirestore.collection(roomsPath).doc(id).get();
       return Room.fromJson(doc.data()!);
     } on FirebaseException catch (e) {
       throw GettingDataError(message: e.message ?? 'Unexpected error');
@@ -41,7 +42,7 @@ class ScreeningsServiceImpl implements ScreeningsService {
   Future<Screening> getScreeningById(String id) async {
     try {
       final doc =
-          await firebaseFirestore.collection('screenings').doc(id).get();
+          await firebaseFirestore.collection(screeningsPath).doc(id).get();
       return Screening.fromJson(doc.data()!);
     } on FirebaseException catch (e) {
       throw GettingDataError(message: e.message ?? 'Unexpected error');
@@ -52,7 +53,7 @@ class ScreeningsServiceImpl implements ScreeningsService {
   Future<void> updateScreeningSeatsTaken(String screeningId, List<String> newTakenSeats) async {
     try {
       await firebaseFirestore
-          .collection('screenings')
+          .collection(screeningsPath)
           .doc(screeningId)
           .update({'seatsTaken': FieldValue.arrayUnion(newTakenSeats)});
     } on FirebaseException catch (e) {

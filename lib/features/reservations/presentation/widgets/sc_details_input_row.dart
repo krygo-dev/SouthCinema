@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class SCDetailsInputRow extends StatelessWidget {
+class SCDetailsInputRow extends StatefulWidget {
   const SCDetailsInputRow({
     super.key,
     required this.label,
@@ -18,25 +18,30 @@ class SCDetailsInputRow extends StatelessWidget {
   final double textFieldWidth;
 
   @override
+  State<SCDetailsInputRow> createState() => _SCDetailsInputRowState();
+}
+
+class _SCDetailsInputRowState extends State<SCDetailsInputRow> {
+  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
           child: Text(
-            label,
+            widget.label,
             style: Theme.of(context).textTheme.bodyMedium,
             textAlign: TextAlign.center,
           ),
         ),
         Container(
-          width: textFieldWidth,
+          width: widget.textFieldWidth,
           height: 16,
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.background,
             borderRadius: BorderRadius.circular(2),
           ),
           child: TextField(
-            controller: controller,
+            controller: widget.controller,
             showCursor: true,
             textAlign: TextAlign.center,
             textAlignVertical: TextAlignVertical.center,
@@ -47,8 +52,8 @@ class SCDetailsInputRow extends StatelessWidget {
             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               fontWeight: FontWeight.w500,
             ),
-            keyboardType: keyboardType,
-            inputFormatters: formatters ?? [],
+            keyboardType: widget.keyboardType,
+            inputFormatters: widget.formatters ?? [],
           ),
         ),
       ],

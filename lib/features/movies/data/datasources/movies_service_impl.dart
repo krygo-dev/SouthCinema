@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:south_cinema/core/util/constants.dart';
 import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/movies/data/datasources/movies_service.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
@@ -12,7 +13,7 @@ class MoviesServiceImpl implements MoviesService {
   Future<List<Movie>> getCurrentlyPlayedMovies() async {
     try {
       final snapshots = (await firebaseFirestore
-              .collection('movies')
+              .collection(moviesPath)
               .where('currentlyPlayed', isEqualTo: true)
               .get())
               .docs;
@@ -28,7 +29,7 @@ class MoviesServiceImpl implements MoviesService {
   Future<List<Movie>> getAnnouncedMovies() async {
     try {
       final snapshots = (await firebaseFirestore
-          .collection('movies')
+          .collection(moviesPath)
           .where('currentlyPlayed', isEqualTo: false)
           .get())
           .docs;
@@ -43,7 +44,7 @@ class MoviesServiceImpl implements MoviesService {
   @override
   Future<Movie> getMovieById({required String id}) async {
     try {
-      final doc = await firebaseFirestore.collection('movies').doc(id).get();
+      final doc = await firebaseFirestore.collection(moviesPath).doc(id).get();
       return Movie.fromJson(doc.data()!);
     } on FirebaseException catch (e) {
       throw GettingDataError(message: e.message ?? 'Unexpected error');

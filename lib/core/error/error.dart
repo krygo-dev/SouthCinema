@@ -25,6 +25,8 @@ class SettingDataError extends BaseError {
   const SettingDataError({super.message = 'Setting data was unsuccessful'});
 }
 
-class InvalidInputError extends BaseError {
-  const InvalidInputError({super.message = 'Please provide valid input'});
+class EmptyTextFieldError extends BaseError {
+  const EmptyTextFieldError({
+    super.message = 'Fields can\'t be empty. Please fill up all fields.',
+  });
 }

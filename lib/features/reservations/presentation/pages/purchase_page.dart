@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:south_cinema/core/error/show_error_dialog.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
+import 'package:south_cinema/core/util/text_fields_checker.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
@@ -84,7 +86,7 @@ class _PurchasePageState extends State<PurchasePage> {
                             text: state.message,
                             buttonLabel: 'Try again',
                             onPressed: () => context.pushReplacementNamed(
-                              'reservation',
+                              'purchase',
                               extra: widget.arguments,
                             ),
                           ),
@@ -102,73 +104,67 @@ class _PurchasePageState extends State<PurchasePage> {
                             ),
 
                             /// TEMPORARY - WILL CHANGE SOON ///
-                            ...widget.arguments.chosenSeats
-                                .map(
-                                  (seat) => Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            ...widget.arguments.chosenSeats.map((seat) {
+                              selectedTickets[seat] = tickets.first;
+                              return Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}  -  ',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
+                                        ),
+                                  ),
+                                  Column(
                                     children: [
-                                      Text(
-                                        'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}  -  ',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
+                                      InkWell(
+                                        onTap: () {
+                                          selectedTickets[seat] = tickets.first;
+                                          _calculateTotalPrice(seat);
+                                        },
+                                        child: Container(
+                                            width: 150,
+                                            height: 16,
+                                            padding: const EdgeInsets.all(2),
+                                            margin: const EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
                                               color: Theme.of(context)
                                                   .colorScheme
-                                                  .primary,
+                                                  .background,
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
                                             ),
+                                            child: Text(tickets.first)),
                                       ),
-                                      Column(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              selectedTickets[seat] =
-                                                  tickets.first;
-                                              calculateTotalPrice(seat);
-                                            },
-                                            child: Container(
-                                                width: 150,
-                                                height: 16,
-                                                padding:
-                                                    const EdgeInsets.all(2),
-                                                margin: const EdgeInsets.all(2),
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(2),
-                                                ),
-                                                child: Text(tickets.first)),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              selectedTickets[seat] =
-                                                  tickets.last;
-                                              calculateTotalPrice(seat);
-                                            },
-                                            child: Container(
-                                                width: 150,
-                                                height: 16,
-                                                padding:
-                                                    const EdgeInsets.all(2),
-                                                margin: const EdgeInsets.all(2),
-                                                decoration: BoxDecoration(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .background,
-                                                  borderRadius:
-                                                      BorderRadius.circular(2),
-                                                ),
-                                                child: Text(tickets.last)),
-                                          ),
-                                        ],
+                                      InkWell(
+                                        onTap: () {
+                                          selectedTickets[seat] = tickets.last;
+                                          _calculateTotalPrice(seat);
+                                        },
+                                        child: Container(
+                                            width: 150,
+                                            height: 16,
+                                            padding: const EdgeInsets.all(2),
+                                            margin: const EdgeInsets.all(2),
+                                            decoration: BoxDecoration(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .background,
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                            ),
+                                            child: Text(tickets.last)),
                                       ),
                                     ],
                                   ),
-                                )
-                                .toList(),
+                                ],
+                              );
+                            }).toList(),
                             const SizedBox(
                               height: 10,
                             ),
@@ -246,6 +242,24 @@ class _PurchasePageState extends State<PurchasePage> {
                             SCTextButton(
                               buttonLabel: 'PAY',
                               onPressed: () {
+                                final controllers = [
+                                  _fullNameController,
+                                  _emailController,
+                                  _mobileNumberController,
+                                  _cardFullNameController,
+                                  _cardNumberController,
+                                  _cardExpiryDateController,
+                                  _cardCVVController,
+                                ];
+
+                                if (checkIfTextFieldsEmpty(controllers)) {
+                                  showErrorDialog(
+                                    context,
+                                    alertTitle: 'Missing input error',
+                                    alertMessage: 'Fill up all input fields.',
+                                  );
+                                  return;
+                                }
                                 final newPurchase = Purchase(
                                   id: '',
                                   screeningId: widget.arguments.screening.id,
@@ -275,7 +289,7 @@ class _PurchasePageState extends State<PurchasePage> {
     );
   }
 
-  void calculateTotalPrice(String seat) {
+  void _calculateTotalPrice(String seat) {
     double sum = 0;
     totalPrice = 0;
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:south_cinema/core/text_input_formatters.dart';
+import 'package:south_cinema/core/util/text_input_formatters.dart';
 import 'package:south_cinema/features/reservations/presentation/widgets/sc_details_input_row.dart';
 
 class SCCardDetailsColumn extends StatelessWidget {
