@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:south_cinema/core/error/show_error_dialog.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/util/text_fields_checker.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
@@ -77,7 +78,7 @@ class _PurchasePageState extends State<PurchasePage> {
                           child: SCResultContainer(
                             text: 'Purchase completed',
                             buttonLabel: 'Go back',
-                            onPressed: () => context.goNamed('screenings'),
+                            onPressed: () => context.goNamed(Routes.screenings),
                           ),
                         );
                       } else if (state is PurchaseError) {
@@ -86,7 +87,7 @@ class _PurchasePageState extends State<PurchasePage> {
                             text: state.message,
                             buttonLabel: 'Try again',
                             onPressed: () => context.pushReplacementNamed(
-                              'purchase',
+                              Routes.purchase,
                               extra: widget.arguments,
                             ),
                           ),

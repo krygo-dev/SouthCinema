@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 
 class SCMovieListItem extends StatelessWidget {
@@ -52,7 +53,7 @@ class SCMovieListItem extends StatelessWidget {
 
     return InkWell(
       onTap: () {
-        context.pushNamed('movie', extra: movie);
+        context.pushNamed(Routes.movie, extra: movie);
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 20),

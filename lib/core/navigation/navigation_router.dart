@@ -9,24 +9,36 @@ import 'package:south_cinema/features/screenings/presentation/pages/screening_pa
 import 'package:south_cinema/features/screenings/presentation/pages/screenings_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/splash_page.dart';
 
+abstract class Routes {
+  static String splash = 'splash';
+  static String screenings = 'screenings';
+  static String movie = 'movie';
+  static String screening = 'screening';
+  static String reservation = 'reservation';
+  static String purchase = 'purchase';
+}
+
+
 class NavigationRouter {
+  static const String _initialLocation = '/splash';
+
   get router => _router;
 
   final GoRouter _router = GoRouter(
-    initialLocation: '/splash',
+    initialLocation: _initialLocation,
     routes: [
       GoRoute(
-        name: 'splash',
+        name: Routes.splash,
         path: '/splash',
         builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        name: 'screenings',
+        name: Routes.screenings,
         path: '/screenings',
         builder: (context, state) => const ScreeningsPage(),
       ),
       GoRoute(
-        name: 'movie',
+        name: Routes.movie,
         path: '/movie',
         pageBuilder: (context, state) => CustomTransitionPage(
           child: MoviePage(movie: state.extra as Movie),
@@ -42,20 +54,20 @@ class NavigationRouter {
         ),
       ),
       GoRoute(
-        name: 'screening',
+        name: Routes.screening,
         path: '/screening/:id',
         builder: (context, state) =>
             ScreeningPage(screeningId: state.params['id']!),
       ),
       GoRoute(
-        name: 'reservation',
+        name: Routes.reservation,
         path: '/reservation',
         builder: (context, state) => ReservationPage(
           arguments: state.extra as ReservationPurchasePageArguments,
         ),
       ),
       GoRoute(
-        name: 'purchase',
+        name: Routes.purchase,
         path: '/purchase',
         builder: (context, state) => PurchasePage(
           arguments: state.extra as ReservationPurchasePageArguments,

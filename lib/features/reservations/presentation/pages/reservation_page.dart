@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:south_cinema/core/error/show_error_dialog.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/util/text_fields_checker.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
@@ -57,7 +58,7 @@ class ReservationPage extends StatelessWidget {
                           child: SCResultContainer(
                             text: 'Reservation process completed',
                             buttonLabel: 'Go back',
-                            onPressed: () => context.goNamed('screenings'),
+                            onPressed: () => context.goNamed(Routes.screenings),
                           ),
                         );
                       } else if (state is ReservationError) {
@@ -66,7 +67,7 @@ class ReservationPage extends StatelessWidget {
                             text: state.message,
                             buttonLabel: 'Try again',
                             onPressed: () => context.pushReplacementNamed(
-                              'reservation',
+                              Routes.reservation,
                               extra: arguments,
                             ),
                           ),

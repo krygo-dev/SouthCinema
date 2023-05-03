@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:south_cinema/core/error/show_error_dialog.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
@@ -109,11 +110,11 @@ class _ScreeningPageState extends State<ScreeningPage> {
 
                               _bookTicketSelected
                                   ? context.pushNamed(
-                                      'reservation',
+                                      Routes.reservation,
                                       extra: navArgs,
                                     )
                                   : context.pushNamed(
-                                      'purchase',
+                                      Routes.purchase,
                                       extra: navArgs,
                                     );
                             },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/features/screenings/domain/entities/repertoire_screening.dart';
 
 class SCRepertoireListItem extends StatelessWidget {
@@ -30,7 +31,7 @@ class SCRepertoireListItem extends StatelessWidget {
             children: repertoire.screenings.map((screening) {
               return InkWell(
                 onTap: () => context.pushNamed(
-                  'screening',
+                  Routes.screening,
                   params: {
                     'id': screening['screeningID'],
                   },

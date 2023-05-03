@@ -44,7 +44,6 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
         setState(() {
           _isPinned = startY <= 120;
         });
-        // print("Check position:  - $startY - $_isStuck");
       },
     );
   }
