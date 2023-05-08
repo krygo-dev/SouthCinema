@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/authentication/domain/repositories/authentication_repository.dart';
 
 class SignOut {
@@ -5,7 +7,7 @@ class SignOut {
 
   SignOut(this.repository);
 
-  Future<void> call() {
+  Future<Either<BaseError, void>> call() {
     return repository.signOut();
   }
 }

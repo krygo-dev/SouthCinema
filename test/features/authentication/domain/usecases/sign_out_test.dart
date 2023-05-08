@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -19,9 +20,8 @@ void main() {
   group('sign out', () {
     test('should sign out user', () async {
       // arrange
-      final tSignedOutFuture = Future.value();
       when(mockAuthenticationRepository.signOut())
-          .thenAnswer((_) => tSignedOutFuture);
+          .thenAnswer((_) async => const Right(null));
       // act
       final result = usecase();
       // assert

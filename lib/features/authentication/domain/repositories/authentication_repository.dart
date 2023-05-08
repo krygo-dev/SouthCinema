@@ -15,5 +15,5 @@ abstract class AuthenticationRepository {
     required String password,
   });
 
-  Future<void> signOut();
+  Future<Either<BaseError, void>> signOut();
 }

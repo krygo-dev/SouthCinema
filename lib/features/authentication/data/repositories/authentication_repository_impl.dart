@@ -54,9 +54,14 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<void> signOut() async {
+  Future<Either<BaseError, void>> signOut() async {
     if (await networkInfo.isConnected) {
-      return await authenticationService.signOut();
+      try {
+        final result = await authenticationService.signOut();
+        return Right(result);
+      } on AuthError catch (error) {
+        return Left(error);
+      }
     } else {
       throw const NetworkError();
     }

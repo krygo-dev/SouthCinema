@@ -10,7 +10,7 @@ abstract class BaseError extends Equatable {
 }
 
 class AuthError extends BaseError {
-  const AuthError({required super.message});
+  const AuthError({super.message = 'There isn\'t any currently logged in user.'});
 }
 
 class NetworkError extends BaseError {
