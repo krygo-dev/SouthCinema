@@ -31,6 +31,15 @@ class SignUpPage extends StatelessWidget {
 
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
+
+              if (state is AuthenticationLoaded) {
+                context.pushNamed(
+                  Routes.userProfile,
+                  params: {
+                    'uid': state.authUser.uid,
+                  },
+                );
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 17),
@@ -147,7 +156,6 @@ class SignUpPage extends StatelessWidget {
                           const Text('Already have an account? '),
                           GestureDetector(
                             onTap: () {
-                              print('DEBUG: Sign in');
                               context.goNamed(Routes.signIn);
                             },
                             child: Text(

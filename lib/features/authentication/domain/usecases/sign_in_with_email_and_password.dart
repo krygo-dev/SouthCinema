@@ -12,6 +12,12 @@ class SignInWithEmailAndPassword {
     required String email,
     required String password,
   }) async {
-    return await repository.signInWithEmailAndPassword(email: email, password: password);
+    if (email.isEmpty || password.isEmpty) {
+      return const Left(
+        AuthError(message: 'Email and password fields can\'t be empty.'),
+      );
+    }
+    return await repository.signInWithEmailAndPassword(
+        email: email, password: password);
   }
 }

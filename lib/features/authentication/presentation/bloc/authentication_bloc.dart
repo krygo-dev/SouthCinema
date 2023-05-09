@@ -1,8 +1,6 @@
 import 'dart:async';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:south_cinema/core/error/error.dart';
 import 'package:south_cinema/features/authentication/domain/entities/auth_user.dart';
 import 'package:south_cinema/features/authentication/domain/usecases/get_current_user.dart';
 import 'package:south_cinema/features/authentication/domain/usecases/sign_in_with_email_and_password.dart';
@@ -40,8 +38,7 @@ class AuthenticationBloc
     final currentUser = getCurrentUser.call;
 
     if (currentUser == null) {
-      emit(AuthenticationError(
-          message: const AuthError().message));
+      emit(AuthenticationLoggedOut());
     } else {
       emit(AuthenticationLoaded(authUser: currentUser));
     }

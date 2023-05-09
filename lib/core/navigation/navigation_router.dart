@@ -91,8 +91,8 @@ class NavigationRouter {
       ),
       GoRoute(
         name: Routes.userProfile,
-        path: '/user_profile',
-        builder: (context, state) => const UserProfilePage(),
+        path: '/user_profile/:uid',
+        builder: (context, state) => UserProfilePage(uid: state.params['uid']!),
       ),
     ],
   );

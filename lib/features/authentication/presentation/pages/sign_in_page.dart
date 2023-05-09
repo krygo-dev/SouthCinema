@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
     return Scaffold(
         appBar: const SCAppBar(),
         body: BlocProvider(
-          create: (_) => sl<AuthenticationBloc>(),
+          create: (_) => sl<AuthenticationBloc>()..add(GetCurrentUserEvent()),
           child: BlocListener<AuthenticationBloc, AuthenticationState>(
             listener: (context, state) {
               if (state is AuthenticationError) {
@@ -31,12 +31,12 @@ class SignInPage extends StatelessWidget {
               }
 
               if (state is AuthenticationLoaded) {
-                final snackBar = SnackBar(
-                  content: Text(state.authUser.email!),
-                  duration: const Duration(milliseconds: 1500),
+                context.pushNamed(
+                  Routes.userProfile,
+                  params: {
+                    'uid': state.authUser.uid,
+                  },
                 );
-
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
             },
             child: Padding(
@@ -114,7 +114,8 @@ class SignInPage extends StatelessWidget {
                             return SCTextButton(
                               buttonLabel: 'Sign in',
                               onPressed: () {
-                                BlocProvider.of<AuthenticationBloc>(context).add(
+                                BlocProvider.of<AuthenticationBloc>(context)
+                                    .add(
                                   SignInWithEmailAndPasswordEvent(
                                     email: _emailController.text,
                                     password: _passwordController.text,
@@ -132,13 +133,13 @@ class SignInPage extends StatelessWidget {
                           const Text('Don\'t have an account? '),
                           GestureDetector(
                             onTap: () {
-                              print('DEBUG: Create account');
                               context.goNamed(Routes.signUp);
                             },
                             child: Text(
                               'Create one here',
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.secondary),
+                                  color:
+                                      Theme.of(context).colorScheme.secondary),
                             ),
                           ),
                         ],

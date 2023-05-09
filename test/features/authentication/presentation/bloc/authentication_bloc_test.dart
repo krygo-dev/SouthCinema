@@ -74,14 +74,14 @@ void main() {
       bloc.add(GetCurrentUserEvent());
     });
 
-    test('''should emit [AuthenticationLoading, AuthenticationError] when 
+    test('''should emit [AuthenticationLoading, AuthenticationLoggedOut] when 
       getting data fails''', () {
       // arrange
       when(mockGetCurrentUser.call).thenReturn(null);
       // assert later
       final expected = [
         AuthenticationLoading(),
-        AuthenticationError(message: const AuthError().message),
+        AuthenticationLoggedOut(),
       ];
       expectLater(bloc.stream, emitsInOrder(expected));
       // act

@@ -13,7 +13,17 @@ class SignUpWithEmailAndPassword {
     required String password,
     required String repeatPassword,
   }) async {
-    if (password != repeatPassword) return const Left(AuthError(message: 'Passwords are different'));
-    return await repository.signUpWithEmailAndPassword(email: email, password: password);
+    if (email.isEmpty || password.isEmpty || repeatPassword.isEmpty) {
+      return const Left(
+        AuthError(
+            message:
+                'Email, password and repeat password fields can\'t be empty.'),
+      );
+    }
+    if (password != repeatPassword) {
+      return const Left(AuthError(message: 'Passwords are different'));
+    }
+    return await repository.signUpWithEmailAndPassword(
+        email: email, password: password);
   }
 }
