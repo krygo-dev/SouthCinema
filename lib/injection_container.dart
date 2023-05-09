@@ -3,6 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:south_cinema/core/network/network_info.dart';
+import 'package:south_cinema/features/authentication/data/datasources/authentication_service.dart';
+import 'package:south_cinema/features/authentication/data/datasources/authentication_service_impl.dart';
+import 'package:south_cinema/features/authentication/data/repositories/authentication_repository_impl.dart';
+import 'package:south_cinema/features/authentication/domain/repositories/authentication_repository.dart';
+import 'package:south_cinema/features/authentication/domain/usecases/get_current_user.dart';
+import 'package:south_cinema/features/authentication/domain/usecases/sign_in_with_email_and_password.dart';
+import 'package:south_cinema/features/authentication/domain/usecases/sign_out.dart';
+import 'package:south_cinema/features/authentication/domain/usecases/sign_up_with_email_and_password.dart';
+import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:south_cinema/features/movies/data/datasources/movies_service.dart';
 import 'package:south_cinema/features/movies/data/datasources/movies_service_impl.dart';
 import 'package:south_cinema/features/movies/data/repositories/movies_repository_impl.dart';
@@ -73,6 +82,31 @@ void init() {
   sl.registerLazySingleton<MoviesService>(() => MoviesServiceImpl(sl()));
 
   /// Features - Authentication ///
+  // Bloc
+  sl.registerFactory(
+    () => AuthenticationBloc(
+      getCurrentUser: sl(),
+      signInWithEmailAndPassword: sl(),
+      signUpWithEmailAndPassword: sl(),
+      signOut: sl(),
+    ),
+  );
+  // Use cases
+  sl.registerLazySingleton(() => GetCurrentUser(sl()));
+  sl.registerLazySingleton(() => SignInWithEmailAndPassword(sl()));
+  sl.registerLazySingleton(() => SignUpWithEmailAndPassword(sl()));
+  sl.registerLazySingleton(() => SignOut(sl()));
+  // Repository
+  sl.registerLazySingleton<AuthenticationRepository>(
+    () => AuthenticationRepositoryImpl(
+      authenticationService: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<AuthenticationService>(
+    () => AuthenticationServiceImpl(sl()),
+  );
 
   /// Features - Reservations/Purchases ///
   //Bloc
