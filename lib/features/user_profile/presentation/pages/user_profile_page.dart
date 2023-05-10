@@ -114,6 +114,12 @@ class UserProfilePage extends StatelessWidget {
                             }
                           },
                         ),
+                        SCTextButton(
+                          buttonLabel: 'To home',
+                          onPressed: () {
+                            context.pushNamed(Routes.screenings);
+                          },
+                        ),
                       ],
                     ),
                   ),

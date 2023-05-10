@@ -14,7 +14,7 @@ class CreateNewPurchase {
     if (purchase.fullName.isEmpty ||
         purchase.email.isEmpty ||
         purchase.phoneNumber.isEmpty) {
-      return const Left(EmptyTextFieldError());
+      return const Left(EmptyTextFieldError(message: 'Fill up your personal details.'));
     }
 
     return await repository.createNewPurchase(purchase: purchase);

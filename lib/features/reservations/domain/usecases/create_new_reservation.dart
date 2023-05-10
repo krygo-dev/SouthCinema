@@ -14,7 +14,7 @@ class CreateNewReservation {
     if (reservation.fullName.isEmpty ||
         reservation.email.isEmpty ||
         reservation.phoneNumber.isEmpty) {
-      return const Left(EmptyTextFieldError());
+      return const Left(EmptyTextFieldError(message: 'Fill up your personal details.'));
     }
 
     return await repository.createNewReservation(reservation: reservation);
