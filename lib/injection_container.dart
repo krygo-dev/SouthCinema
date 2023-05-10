@@ -40,6 +40,13 @@ import 'package:south_cinema/features/screenings/domain/usecases/get_room_by_id.
 import 'package:south_cinema/features/screenings/domain/usecases/get_screening_by_id.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/repertoire_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
+import 'package:south_cinema/features/user_profile/data/datasources/user_service.dart';
+import 'package:south_cinema/features/user_profile/data/datasources/user_service_impl.dart';
+import 'package:south_cinema/features/user_profile/data/repositories/user_profile_repository_impl.dart';
+import 'package:south_cinema/features/user_profile/domain/repositories/user_profile_repository.dart';
+import 'package:south_cinema/features/user_profile/domain/usecases/get_user_by_id.dart';
+import 'package:south_cinema/features/user_profile/domain/usecases/set_or_update_user_data.dart';
+import 'package:south_cinema/features/user_profile/presentation/bloc/user_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -133,6 +140,25 @@ void init() {
   );
 
   /// Features - User_profile ///
+  // Bloc
+  sl.registerFactory(
+    () => UserBloc(
+      getUserById: sl(),
+      setOrUpdateUserData: sl(),
+    ),
+  );
+  // Use cases
+  sl.registerLazySingleton(() => GetUserById(sl()));
+  sl.registerLazySingleton(() => SetOrUpdateUserData(sl()));
+  // Repository
+  sl.registerLazySingleton<UserProfileRepository>(
+    () => UserProfileRepositoryImpl(
+      userService: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<UserService>(() => UserServiceImpl(sl()));
 
   /// Core ///
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));

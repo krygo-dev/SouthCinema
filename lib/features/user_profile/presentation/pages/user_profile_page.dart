@@ -26,47 +26,104 @@ class UserProfilePage extends StatelessWidget {
             create: (_) => sl<UserBloc>()..add(GetUserByIdEvent(uid)),
           ),
         ],
-        child: BlocListener<AuthenticationBloc, AuthenticationState>(
-          listener: (context, state) {
-            if (state is AuthenticationLoggedOut) {
-              context.goNamed(Routes.signIn);
-            }
-          },
-          child: Column(
-            children: [
-              const Text('User profile'),
-              BlocBuilder<AuthenticationBloc, AuthenticationState>(
-                builder: (context, state) {
-                  if (state is AuthenticationLoading) {
-                    return Container(
-                      width: 107,
-                      height: 34,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme
-                            .of(context)
-                            .colorScheme
-                            .onSurface,
-                      ),
-                      child: Center(
-                        child: Transform.scale(
-                          scale: 0.5,
-                          child: const CircularProgressIndicator(),
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state is AuthenticationLoggedOut) {
+                  context.goNamed(Routes.signIn);
+                }
+
+                if (state is AuthenticationError) {
+                  final snackBar = SnackBar(
+                    content: Text(state.message),
+                    duration: const Duration(milliseconds: 1500),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              },
+            ),
+            BlocListener<UserBloc, UserState>(
+              listener: (context, state) {
+                if (state is UserError) {
+                  final snackBar = SnackBar(
+                    content: Text(state.message),
+                    duration: const Duration(milliseconds: 1500),
+                  );
+
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                }
+              },
+            ),
+          ],
+          child: BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (state is UserError) {
+                return Center(
+                  child: Text(state.message),
+                );
+              } else if (state is UserLoaded) {
+                return Padding(
+                  padding: const EdgeInsets.all(17),
+                  child: Container(
+                    width: double.infinity,
+                    height: 572,
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 23, vertical: 12),
+                    color: Theme.of(context).colorScheme.onBackground,
+                    child: Column(
+                      children: [
+                        Text(state.user.email),
+                        Text(state.user.name),
+                        Text(state.user.uid),
+                        Text(state.user.contactNumber),
+                        Text(state.user.street),
+                        Text(state.user.city),
+                        Text(state.user.postCode),
+                        BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                          builder: (context, state) {
+                            if (state is AuthenticationLoading) {
+                              return Container(
+                                width: 107,
+                                height: 34,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color:
+                                      Theme.of(context).colorScheme.onSurface,
+                                ),
+                                child: Center(
+                                  child: Transform.scale(
+                                    scale: 0.5,
+                                    child: const CircularProgressIndicator(),
+                                  ),
+                                ),
+                              );
+                            } else {
+                              return SCTextButton(
+                                buttonLabel: 'Sign out',
+                                onPressed: () {
+                                  BlocProvider.of<AuthenticationBloc>(context)
+                                      .add(SignOutEvent());
+                                },
+                              );
+                            }
+                          },
                         ),
-                      ),
-                    );
-                  } else {
-                    return SCTextButton(
-                      buttonLabel: 'Sign out',
-                      onPressed: () {
-                        BlocProvider.of<AuthenticationBloc>(context)
-                            .add(SignOutEvent());
-                      },
-                    );
-                  }
-                },
-              ),
-            ],
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: Text('Unexpected error occurred'),
+                );
+              }
+            },
           ),
         ),
       ),

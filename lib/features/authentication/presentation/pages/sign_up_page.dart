@@ -5,6 +5,8 @@ import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
 import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
+import 'package:south_cinema/features/user_profile/domain/entities/user.dart';
+import 'package:south_cinema/features/user_profile/presentation/bloc/user_bloc.dart';
 import 'package:south_cinema/injection_container.dart';
 
 class SignUpPage extends StatelessWidget {
@@ -19,28 +21,66 @@ class SignUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const SCAppBar(),
-        body: BlocProvider(
-          create: (_) => sl<AuthenticationBloc>(),
-          child: BlocListener<AuthenticationBloc, AuthenticationState>(
-            listener: (context, state) {
-              if (state is AuthenticationError) {
-                final snackBar = SnackBar(
-                  content: Text(state.message),
-                  duration: const Duration(milliseconds: 1500),
-                );
+        body: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (_) => sl<AuthenticationBloc>(),
+            ),
+            BlocProvider(
+              create: (context) => sl<UserBloc>(),
+            ),
+          ],
+          child: MultiBlocListener(
+            listeners: [
+              BlocListener<AuthenticationBloc, AuthenticationState>(
+                listener: (context, state) {
+                  if (state is AuthenticationError) {
+                    final snackBar = SnackBar(
+                      content: Text(state.message),
+                      duration: const Duration(milliseconds: 1500),
+                    );
 
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-              }
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
 
-              if (state is AuthenticationLoaded) {
-                context.pushNamed(
-                  Routes.userProfile,
-                  params: {
-                    'uid': state.authUser.uid,
-                  },
-                );
-              }
-            },
+                  if (state is AuthenticationLoaded) {
+                    final User user = User(
+                      uid: state.authUser.uid,
+                      email: state.authUser.email ?? '',
+                      name: state.authUser.displayName ?? '',
+                      city: '',
+                      postCode: '',
+                      street: '',
+                      contactNumber: '',
+                    );
+
+                    BlocProvider.of<UserBloc>(context)
+                        .add(SetOrUpdateUserDataEvent(user));
+                  }
+                },
+              ),
+              BlocListener<UserBloc, UserState>(
+                listener: (context, state) {
+                  if (state is UserLoaded) {
+                    context.pushNamed(
+                      Routes.userProfile,
+                      params: {
+                        'uid': state.user.uid,
+                      },
+                    );
+                  }
+
+                  if (state is UserError) {
+                    final snackBar = SnackBar(
+                      content: Text(state.message),
+                      duration: const Duration(milliseconds: 1500),
+                    );
+
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
+              ),
+            ],
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 17, vertical: 17),
               child: SingleChildScrollView(
