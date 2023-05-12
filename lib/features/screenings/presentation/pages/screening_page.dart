@@ -6,6 +6,7 @@ import 'package:south_cinema/core/error/show_error_dialog.dart';
 import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_room_legend_column.dart';
@@ -38,6 +39,7 @@ class _ScreeningPageState extends State<ScreeningPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SCAppBar(),
+      drawer: const SCNavDrawer(),
       body: BlocProvider(
         create: (_) =>
             sl<ScreeningBloc>()..add(GetScreeningByIdEvent(widget.screeningId)),

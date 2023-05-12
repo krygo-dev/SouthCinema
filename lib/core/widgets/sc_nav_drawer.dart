@@ -15,15 +15,16 @@ class SCNavDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          const SizedBox(height: 32),
+          const SizedBox(height: 56),
           ListTile(
             title: Text(
               'Screenings',
-              style: TextStyle(
-                color: GoRouterState.of(context).name == Routes.screenings
-                    ? Theme.of(context).colorScheme.secondary
-                    : Theme.of(context).colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: GoRouterState.of(context).name == Routes.screenings
+                        ? Theme.of(context).colorScheme.secondary
+                        : Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
             onTap: () {
               context.pushNamed(Routes.screenings);
@@ -32,26 +33,33 @@ class SCNavDrawer extends StatelessWidget {
           ListTile(
             title: Text(
               'User profile',
-              style: TextStyle(
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: GoRouterState.of(context).name == Routes.userProfile
                     ? Theme.of(context).colorScheme.secondary
                     : Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500,
               ),
             ),
             onTap: () {
-              context.pushNamed(Routes.userProfile, params: {
-                'uid': (BlocProvider.of<AuthenticationBloc>(context).state
-                        as AuthenticationLoaded)
-                    .authUser
-                    .uid,
-              });
+              try {
+                context.pushNamed(Routes.userProfile, params: {
+                  'uid': (BlocProvider.of<AuthenticationBloc>(context).state
+                          as AuthenticationLoaded)
+                      .authUser
+                      .uid,
+                });
+              } on TypeError {
+                context.pushNamed(Routes.signIn);
+              }
             },
           ),
           if (GoRouterState.of(context).name == Routes.userProfile)
             ListTile(
               title: Text(
                 'Sign out',
-                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
               onTap: () {
                 BlocProvider.of<AuthenticationBloc>(context)

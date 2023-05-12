@@ -8,6 +8,7 @@ import 'package:south_cinema/core/util/set_text_editing_controller_value.dart';
 import 'package:south_cinema/core/util/text_fields_checker.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/features/authentication/domain/entities/auth_user.dart';
 import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
@@ -67,6 +68,7 @@ class _PurchasePageState extends State<PurchasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SCAppBar(),
+      drawer: const SCNavDrawer(),
       body: MultiBlocProvider(
         providers: [
           BlocProvider(

@@ -25,8 +25,7 @@ abstract class Routes {
 }
 
 class NavigationRouter {
-  // static const String _initialLocation = '/splash';
-  static const String _initialLocation = '/sign_in';
+  static const String _initialLocation = '/splash';
 
   get router => _router;
 
@@ -82,12 +81,12 @@ class NavigationRouter {
       GoRoute(
         name: Routes.signIn,
         path: '/sign_in',
-        builder: (context, state) => SignInPage(),
+        builder: (context, state) => const SignInPage(),
       ),
       GoRoute(
         name: Routes.signUp,
         path: '/sign_up',
-        builder: (context, state) => SignUpPage(),
+        builder: (context, state) => const SignUpPage(),
       ),
       GoRoute(
         name: Routes.userProfile,

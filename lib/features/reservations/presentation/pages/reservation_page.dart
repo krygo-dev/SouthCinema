@@ -7,6 +7,7 @@ import 'package:south_cinema/core/navigation/reservation_purchase_page_arguments
 import 'package:south_cinema/core/util/set_text_editing_controller_value.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_book_buy_ticket_row.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
 import 'package:south_cinema/features/authentication/domain/entities/auth_user.dart';
@@ -49,6 +50,7 @@ class _ReservationPageState extends State<ReservationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SCAppBar(),
+      drawer: const SCNavDrawer(),
       body: MultiBlocProvider(
         providers: [
           BlocProvider(

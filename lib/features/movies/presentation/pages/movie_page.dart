@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/presentation/widgets/sc_movie_info_text_row.dart';
 import 'package:south_cinema/features/movies/presentation/widgets/sc_movie_poster_title_desc_row.dart';
@@ -15,6 +16,7 @@ class MoviePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SCAppBar(),
+      drawer: const SCNavDrawer(),
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
