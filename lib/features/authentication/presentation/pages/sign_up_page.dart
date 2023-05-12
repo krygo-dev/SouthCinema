@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
 import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:south_cinema/features/user_profile/domain/entities/user.dart';
@@ -34,15 +35,9 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const SCAppBar(),
-        body: MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (_) => sl<AuthenticationBloc>(),
-            ),
-            BlocProvider(
-              create: (context) => sl<UserBloc>(),
-            ),
-          ],
+        drawer: const SCNavDrawer(),
+        body: BlocProvider(
+          create: (_) => sl<UserBloc>(),
           child: MultiBlocListener(
             listeners: [
               BlocListener<AuthenticationBloc, AuthenticationState>(

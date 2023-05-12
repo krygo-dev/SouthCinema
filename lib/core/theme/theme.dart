@@ -18,6 +18,9 @@ ThemeData theme() {
     ),
     iconTheme: const IconThemeData(color: primaryColor, size: 20),
     appBarTheme: _appBarTheme(),
+    drawerTheme: const DrawerThemeData(
+      backgroundColor: onBackgroundColor,
+    )
   );
 }
 

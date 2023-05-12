@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
+import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/features/movies/presentation/bloc/movies_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/repertoire_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/screenings_page_body.dart';
@@ -13,6 +14,7 @@ class ScreeningsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const SCAppBar(),
+      drawer: const SCNavDrawer(),
       body: MultiBlocProvider(
         providers: [
           BlocProvider(

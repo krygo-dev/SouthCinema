@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 class SCAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SCAppBar({
     super.key,
+    this.menuIconVisible = true,
   });
+
+  final bool menuIconVisible;
 
   @override
   Size get preferredSize => const Size.fromHeight(80);
@@ -17,12 +20,12 @@ class SCAppBar extends StatelessWidget implements PreferredSizeWidget {
         height: 76,
       ),
       automaticallyImplyLeading: false,
-      actions: [
+      actions: menuIconVisible ? [
         IconButton(
-          onPressed: () {},
+          onPressed: () => Scaffold.of(context).openDrawer(),
           icon: const Icon(Icons.menu),
         )
-      ],
+      ] : [],
     );
   }
 }
