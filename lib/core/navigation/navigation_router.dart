@@ -7,6 +7,8 @@ import 'package:south_cinema/features/movies/domain/entities/movie.dart';
 import 'package:south_cinema/features/movies/presentation/pages/movie_page.dart';
 import 'package:south_cinema/features/reservations/presentation/pages/purchase_page.dart';
 import 'package:south_cinema/features/reservations/presentation/pages/reservation_page.dart';
+import 'package:south_cinema/features/reservations/presentation/pages/user_purchased_tickets_page.dart';
+import 'package:south_cinema/features/reservations/presentation/pages/user_reservations_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/screening_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/screenings_page.dart';
 import 'package:south_cinema/features/screenings/presentation/pages/splash_page.dart';
@@ -22,6 +24,8 @@ abstract class Routes {
   static String signIn = 'sign_in';
   static String signUp = 'sign_up';
   static String userProfile = 'user_profile';
+  static String userReservations = 'user_reservations';
+  static String userPurchasedTickets = 'user_purchased_tickets';
 }
 
 class NavigationRouter {
@@ -92,6 +96,16 @@ class NavigationRouter {
         name: Routes.userProfile,
         path: '/user_profile/:uid',
         builder: (context, state) => UserProfilePage(uid: state.params['uid']!),
+      ),
+      GoRoute(
+        name: Routes.userReservations,
+        path: '/user_reservations/:uid',
+        builder: (context, state) => UserReservationsPage(uid: state.params['uid']!),
+      ),
+      GoRoute(
+        name: Routes.userPurchasedTickets,
+        path: '/user_purchased_tickets/:uid',
+        builder: (context, state) => UserPurchasedTicketsPage(uid: state.params['uid']!),
       ),
     ],
   );

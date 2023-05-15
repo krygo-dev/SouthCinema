@@ -21,8 +21,8 @@ class ScreeningsPage extends StatelessWidget {
               create: (_) => sl<RepertoireBloc>()
                 ..add(GetRepertoireForDateEvent('15/03/2023'))),
           BlocProvider(
-              create: (_) => sl<MoviesBloc>()
-                ..add(GetCurrentlyPlayedMoviesEvent())),
+              create: (_) =>
+                  sl<MoviesBloc>()..add(GetCurrentlyPlayedMoviesEvent())),
         ],
         child: const ScreeningsPageBody(),
       ),

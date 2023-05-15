@@ -32,6 +32,65 @@ class SCNavDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text(
+              'Reservations',
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: GoRouterState.of(context).name == Routes.userReservations
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            onTap: () {
+              try {
+
+                print((BlocProvider.of<AuthenticationBloc>(context).state
+                as AuthenticationLoaded)
+                    .authUser
+                    .uid);
+
+                context.pushNamed(Routes.userReservations, params: {
+                  'uid': (BlocProvider.of<AuthenticationBloc>(context).state
+                  as AuthenticationLoaded)
+                      .authUser
+                      .uid,
+                });
+              } on TypeError {
+                print('Cast error');
+                context.pushNamed(Routes.signIn);
+              }
+            },
+          ),
+          ListTile(
+            title: Text(
+              'Purchased tickets',
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: GoRouterState.of(context).name == Routes.userPurchasedTickets
+                    ? Theme.of(context).colorScheme.secondary
+                    : Theme.of(context).colorScheme.primary,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            onTap: () {
+              try {
+
+                print((BlocProvider.of<AuthenticationBloc>(context).state
+                as AuthenticationLoaded)
+                    .authUser
+                    .uid);
+
+                context.pushNamed(Routes.userPurchasedTickets, params: {
+                  'uid': (BlocProvider.of<AuthenticationBloc>(context).state
+                  as AuthenticationLoaded)
+                      .authUser
+                      .uid,
+                });
+              } on TypeError {
+                context.pushNamed(Routes.signIn);
+              }
+            },
+          ),
+          ListTile(
+            title: Text(
               'User profile',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: GoRouterState.of(context).name == Routes.userProfile

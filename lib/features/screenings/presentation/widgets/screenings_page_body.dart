@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_movies_container.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_played_announced_row.dart';
 import 'package:south_cinema/features/screenings/presentation/widgets/sc_repertoire_container.dart';
@@ -67,7 +69,18 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationLoaded) {
+          final snackBar = SnackBar(
+            content: Text('Signed in as ${state.authUser.email}'),
+            duration: const Duration(milliseconds: 1500),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+      },
+  child: Stack(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -112,6 +125,7 @@ class _ScreeningsPageBodyState extends State<ScreeningsPageBody> {
                 )),
           ),
       ],
-    );
+    ),
+);
   }
 }

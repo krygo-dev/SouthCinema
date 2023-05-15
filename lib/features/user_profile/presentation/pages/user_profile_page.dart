@@ -46,44 +46,48 @@ class UserProfilePage extends StatelessWidget {
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               }
             },
-            child: BlocBuilder<UserBloc, UserState>(
-              builder: (context, state) {
-                if (state is UserLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is UserError) {
-                  return Center(
-                    child: Text(state.message),
-                  );
-                } else if (state is UserLoaded) {
-                  return Padding(
-                    padding: const EdgeInsets.all(17),
-                    child: Container(
-                      width: double.infinity,
-                      height: 572,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 23, vertical: 12),
-                      color: Theme.of(context).colorScheme.onBackground,
-                      child: Column(
-                        children: [
-                          Text(state.user.email),
-                          Text(state.user.name),
-                          Text(state.user.uid),
-                          Text(state.user.contactNumber),
-                          Text(state.user.street),
-                          Text(state.user.city),
-                          Text(state.user.postCode),
-                        ],
-                      ),
+            child: Padding(
+              padding: const EdgeInsets.all(17),
+              child: Container(
+                width: double.infinity,
+                height: 572,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 23, vertical: 12),
+                color: Theme.of(context).colorScheme.onBackground,
+                child: Column(
+                  children: [
+                    BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
+                        if (state is UserLoading) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is UserError) {
+                          return Center(
+                            child: Text(state.message),
+                          );
+                        } else if (state is UserLoaded) {
+                          return Column(
+                            children: [
+                              Text(state.user.email),
+                              Text(state.user.name),
+                              Text(state.user.uid),
+                              Text(state.user.contactNumber),
+                              Text(state.user.street),
+                              Text(state.user.city),
+                              Text(state.user.postCode),
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                            child: Text('Unexpected error occurred'),
+                          );
+                        }
+                      },
                     ),
-                  );
-                } else {
-                  return const Center(
-                    child: Text('Unexpected error occurred'),
-                  );
-                }
-              },
+                  ],
+                ),
+              ),
             ),
           ),
         ),

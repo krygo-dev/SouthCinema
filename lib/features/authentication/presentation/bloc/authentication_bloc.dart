@@ -34,14 +34,19 @@ class AuthenticationBloc
     GetCurrentUserEvent event,
     Emitter<AuthenticationState> emit,
   ) async {
+    print('DEBUG: $state');
     emit(AuthenticationLoading());
+    print('DEBUG: $state');
+    print('DEBUG: Getting user...');
     final currentUser = getCurrentUser.call;
+    print('DEBUG: User $currentUser');
 
     if (currentUser == null) {
       emit(AuthenticationLoggedOut());
     } else {
       emit(AuthenticationLoaded(authUser: currentUser));
     }
+    print('DEBUG: $state');
   }
 
   FutureOr<void> _signIn(
