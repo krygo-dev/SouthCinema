@@ -13,13 +13,3 @@ class CreateNewReservationEvent extends ReservationEvent {
   @override
   List<Object> get props => [reservation];
 }
-
-
-class GetUserReservationsEvent extends ReservationEvent {
-  final String uid;
-
-  GetUserReservationsEvent(this.uid);
-
-  @override
-  List<Object> get props => [uid];
-}
