@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/injection_container.dart';
@@ -87,7 +88,7 @@ class SCPurchasedTicketsListTile extends StatelessWidget {
                       }),
                       const SizedBox(height: 10),
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -97,8 +98,21 @@ class SCPurchasedTicketsListTile extends StatelessWidget {
                             ),
                           ],
                         ),
-                      )
+                      ),
                     ],
+                  ),
+                  const SizedBox(height: 16),
+                  QrImageView(
+                    data: purchase.id,
+                    size: 150,
+                    eyeStyle: QrEyeStyle(
+                      eyeShape: QrEyeShape.square,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    dataModuleStyle: QrDataModuleStyle(
+                      dataModuleShape: QrDataModuleShape.square,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
                 ],
               );
