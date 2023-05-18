@@ -31,7 +31,7 @@ class Reservation extends Equatable {
       createdAt: json['createdAt'],
       phoneNumber: json['phoneNumber'],
       email: json['email'],
-      seats: json['seats'],
+      seats: (json['seats']! as List).cast<String>(),
     );
   }
 

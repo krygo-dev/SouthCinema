@@ -31,6 +31,7 @@ import 'package:south_cinema/features/reservations/domain/usecases/get_user_purc
 import 'package:south_cinema/features/reservations/domain/usecases/get_user_reservations.dart';
 import 'package:south_cinema/features/reservations/presentation/bloc/purchase_bloc.dart';
 import 'package:south_cinema/features/reservations/presentation/bloc/reservation_bloc.dart';
+import 'package:south_cinema/features/reservations/presentation/bloc/user_purchased_tickets_bloc.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service.dart';
 import 'package:south_cinema/features/screenings/data/datasources/screenings_service_impl.dart';
 import 'package:south_cinema/features/screenings/data/repositories/screenings_repository_impl.dart';
@@ -47,6 +48,8 @@ import 'package:south_cinema/features/user_profile/domain/repositories/user_prof
 import 'package:south_cinema/features/user_profile/domain/usecases/get_user_by_id.dart';
 import 'package:south_cinema/features/user_profile/domain/usecases/set_or_update_user_data.dart';
 import 'package:south_cinema/features/user_profile/presentation/bloc/user_bloc.dart';
+
+import 'features/reservations/presentation/bloc/user_reservations_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -119,6 +122,8 @@ void init() {
   //Bloc
   sl.registerFactory(() => PurchaseBloc(createNewPurchase: sl()));
   sl.registerFactory(() => ReservationBloc(createNewReservation: sl()));
+  sl.registerFactory(() => UserReservationsBloc(getUserReservation: sl()));
+  sl.registerFactory(() => UserPurchasedTicketsBloc(getUserPurchasedTickets: sl()));
   // Use cases
   sl.registerLazySingleton(() => CreateNewPurchase(sl()));
   sl.registerLazySingleton(() => GetUserPurchasedTickets(sl()));
