@@ -62,10 +62,6 @@ class UserReservationsPage extends StatelessWidget {
                             },
                           );
                         }
-                      } else if (state is UserReservationsError) {
-                        return Center(
-                          child: Text(state.message),
-                        );
                       } else {
                         return const Center(
                           child: Text('Unexpected error'),
