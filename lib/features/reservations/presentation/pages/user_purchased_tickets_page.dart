@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:south_cinema/core/util/tickets_tile_state.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/features/reservations/presentation/bloc/user_purchased_tickets_bloc.dart';
-import 'package:south_cinema/features/reservations/presentation/widgets/sc_purchased_tickets_list_tile.dart';
+import 'package:south_cinema/features/reservations/presentation/widgets/sc_tickets_column.dart';
 import 'package:south_cinema/injection_container.dart';
 
 class UserPurchasedTicketsPage extends StatelessWidget {
-  const UserPurchasedTicketsPage({Key? key, required this.uid})
-      : super(key: key);
+  const UserPurchasedTicketsPage({
+    Key? key,
+    required this.uid,
+  }) : super(key: key);
 
   final String uid;
 
@@ -24,7 +27,7 @@ class UserPurchasedTicketsPage extends StatelessWidget {
           padding: const EdgeInsets.all(17),
           child: Container(
             width: double.infinity,
-            constraints: const BoxConstraints(minHeight: 572),
+            constraints: const BoxConstraints(minHeight: double.infinity),
             padding: const EdgeInsets.symmetric(horizontal: 23, vertical: 12),
             color: Theme.of(context).colorScheme.onBackground,
             child: SingleChildScrollView(
@@ -53,16 +56,12 @@ class UserPurchasedTicketsPage extends StatelessWidget {
                             child: Text('You don\'t have any tickets.'),
                           );
                         } else {
-                          return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: state.purchasedTicketsList.length,
-                            itemBuilder: (context, index) {
-                              return SCPurchasedTicketsListTile(
-                                purchase: state.purchasedTicketsList[index],
-                              );
-                            },
-                          );
+                          List<TicketsTileState> tiles = state
+                              .purchasedTicketsList
+                              .map((purchase) => TicketsTileState(purchase))
+                              .toList();
+
+                          return SCTicketsColumn(tilesState: tiles);
                         }
                       } else {
                         return const Center(

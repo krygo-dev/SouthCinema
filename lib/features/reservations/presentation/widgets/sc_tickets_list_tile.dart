@@ -2,36 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:south_cinema/features/reservations/domain/entities/purchase.dart';
+import 'package:south_cinema/core/util/tickets_tile_state.dart';
 import 'package:south_cinema/features/screenings/presentation/bloc/screening_bloc.dart';
 import 'package:south_cinema/injection_container.dart';
 
-class SCPurchasedTicketsListTile extends StatelessWidget {
-  const SCPurchasedTicketsListTile({
-    Key? key,
-    required this.purchase,
-  }) : super(key: key);
+class SCTicketsListTile extends StatelessWidget {
+  const SCTicketsListTile({
+    super.key,
+    required this.tile,
+  });
 
-  final Purchase purchase;
+  final TicketsTileState tile;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<ScreeningBloc>()
-        ..add(
-          GetScreeningByIdEvent(purchase.screeningId),
-        ),
-      child: Container(
-        width: double.infinity,
-        constraints: const BoxConstraints(
-          minHeight: 150,
-        ),
-        padding: const EdgeInsets.all(12),
-        margin: const EdgeInsets.only(bottom: 18),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.onSurface,
-          borderRadius: BorderRadius.circular(10),
-        ),
+    return AnimatedContainer(
+      key: tile.key,
+      curve: Curves.fastOutSlowIn,
+      duration: const Duration(milliseconds: 500),
+      padding: const EdgeInsets.all(12),
+      margin: const EdgeInsets.only(bottom: 18),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.onSurface,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      constraints: BoxConstraints(
+        minHeight: tile.expanded ? 350 : 200,
+      ),
+      child: BlocProvider(
+        create: (_) => sl<ScreeningBloc>()
+          ..add(GetScreeningByIdEvent(tile.purchase.screeningId)),
         child: BlocBuilder<ScreeningBloc, ScreeningState>(
           builder: (context, state) {
             if (state is Loaded) {
@@ -55,14 +55,14 @@ class SCPurchasedTicketsListTile extends StatelessWidget {
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                   Text(
-                    'Reservation id: ${purchase.id.substring(purchase.id.length - 6)}',
+                    'Purchase id: ${tile.purchase.id.substring(tile.purchase.id.length - 6)}',
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                   const SizedBox(height: 20),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      ...purchase.tickets.entries.map((entry) {
+                      ...tile.purchase.tickets.entries.map((entry) {
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 8),
                           child: Row(
@@ -93,27 +93,33 @@ class SCPurchasedTicketsListTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Text(
-                              'Total price: ${purchase.totalPrice}\$',
+                              'Total price: ${tile.purchase.totalPrice}\$',
                               style: Theme.of(context).textTheme.labelMedium,
                             ),
                           ],
                         ),
                       ),
+                      tile.expanded
+                          ? const SizedBox(height: 16)
+                          : const SizedBox(height: 0),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  QrImageView(
-                    data: purchase.id,
-                    size: 150,
-                    eyeStyle: QrEyeStyle(
-                      eyeShape: QrEyeShape.square,
-                      color: Theme.of(context).colorScheme.primary,
+                  AnimatedSize(
+                    curve: Curves.fastOutSlowIn,
+                    duration: const Duration(milliseconds: 500),
+                    child: QrImageView(
+                      data: tile.purchase.id,
+                      size: tile.expanded ? 150 : 0,
+                      eyeStyle: QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                      dataModuleStyle: QrDataModuleStyle(
+                        dataModuleShape: QrDataModuleShape.square,
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
                     ),
-                    dataModuleStyle: QrDataModuleStyle(
-                      dataModuleShape: QrDataModuleShape.square,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
+                  )
                 ],
               );
             } else if (state is Loading) {
