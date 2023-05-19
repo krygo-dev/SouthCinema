@@ -136,34 +136,70 @@ class _ReservationPageState extends State<ReservationPage> {
                           );
                         } else {
                           return Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SCRoomTitleDate(
-                                roomID: widget.arguments.room.id,
-                                movieTitle:
-                                    widget.arguments.screening.movieTitle,
-                                dateTime: widget.arguments.dateTimeStr,
-                              ),
-                              const SizedBox(height: 27),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 15, bottom: 20),
-                                child: Text(
-                                  'PERSONAL DETAILS',
-                                  style: Theme.of(context).textTheme.bodyMedium,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                child: SCPersonalDetailsColumn(
-                                  fullNameController: _fullNameController,
-                                  emailController: _emailController,
-                                  mobileNumberController:
-                                      _mobileNumberController,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 40,
+                              Column(
+                                children: [
+                                  SCRoomTitleDate(
+                                    roomID: widget.arguments.room.id,
+                                    movieTitle:
+                                        widget.arguments.screening.movieTitle,
+                                    dateTime: widget.arguments.dateTimeStr,
+                                  ),
+                                  const SizedBox(height: 27),
+                                  Text(
+                                    'SELECTED SEATS',
+                                    style: Theme.of(context).textTheme.labelMedium,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  ...widget.arguments.chosenSeats.map((seat) {
+                                    return Column(
+                                      children: [
+                                        Row(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(top: 15, bottom: 20),
+                                    child: Text(
+                                      'PERSONAL DETAILS',
+                                      style: Theme.of(context).textTheme.bodyMedium,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(horizontal: 30),
+                                    child: SCPersonalDetailsColumn(
+                                      fullNameController: _fullNameController,
+                                      emailController: _emailController,
+                                      mobileNumberController:
+                                          _mobileNumberController,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 40),
+                                ],
                               ),
                               SCTextButton(
                                 buttonLabel: 'BOOK',

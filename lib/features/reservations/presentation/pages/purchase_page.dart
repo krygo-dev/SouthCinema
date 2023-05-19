@@ -18,6 +18,7 @@ import 'package:south_cinema/features/reservations/presentation/widgets/sc_perso
 import 'package:south_cinema/core/widgets/sc_room_title_date.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
 import 'package:south_cinema/features/reservations/presentation/widgets/sc_result_container.dart';
+import 'package:south_cinema/features/reservations/presentation/widgets/sc_ticket_choice_chip.dart';
 import 'package:south_cinema/features/user_profile/presentation/bloc/user_bloc.dart';
 import 'package:south_cinema/injection_container.dart';
 
@@ -161,77 +162,61 @@ class _PurchasePageState extends State<PurchasePage> {
                                     widget.arguments.screening.movieTitle,
                                 dateTime: widget.arguments.dateTimeStr,
                               ),
-                              const SizedBox(
-                                height: 27,
-                              ),
-
-                              /// TEMPORARY - WILL CHANGE SOON ///
+                              const SizedBox(height: 27),
                               ...widget.arguments.chosenSeats.map((seat) {
-                                selectedTickets[seat] = tickets.first;
-                                return Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                return Column(
                                   children: [
-                                    Text(
-                                      'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}  -  ',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                    ),
-                                    Column(
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        InkWell(
-                                          onTap: () {
-                                            selectedTickets[seat] =
-                                                tickets.first;
-                                            _calculateTotalPrice(seat);
-                                          },
-                                          child: Container(
-                                              width: 150,
-                                              height: 16,
-                                              padding: const EdgeInsets.all(2),
-                                              margin: const EdgeInsets.all(2),
-                                              decoration: BoxDecoration(
+                                        Text(
+                                          'ROW ${seat.substring(0, 2)} SEAT ${seat.substring(2)}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .background,
-                                                borderRadius:
-                                                    BorderRadius.circular(2),
+                                                    .primary,
                                               ),
-                                              child: Text(tickets.first)),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            selectedTickets[seat] =
-                                                tickets.last;
-                                            _calculateTotalPrice(seat);
-                                          },
-                                          child: Container(
-                                              width: 150,
-                                              height: 16,
-                                              padding: const EdgeInsets.all(2),
-                                              margin: const EdgeInsets.all(2),
-                                              decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .background,
-                                                borderRadius:
-                                                    BorderRadius.circular(2),
-                                              ),
-                                              child: Text(tickets.last)),
                                         ),
                                       ],
                                     ),
+                                    Row(
+                                      children: [
+                                        SCTicketChoiceChip(
+                                          label: tickets.first,
+                                          isSelected: selectedTickets[seat] ==
+                                              tickets.first,
+                                          onSelect: () {
+                                            setState(() {
+                                              selectedTickets[seat] =
+                                                  tickets.first;
+                                            });
+                                            _calculateTotalPrice();
+                                          },
+                                        ),
+                                        const SizedBox(width: 20,),
+                                        SCTicketChoiceChip(
+                                          label: tickets.last,
+                                          isSelected: selectedTickets[seat] ==
+                                              tickets.last,
+                                          onSelect: () {
+                                            setState(() {
+                                              selectedTickets[seat] =
+                                                  tickets.last;
+                                            });
+                                            _calculateTotalPrice();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 20,),
                                   ],
                                 );
                               }).toList(),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               Divider(
                                 thickness: 1,
                                 color: Theme.of(context).colorScheme.background,
@@ -302,12 +287,23 @@ class _PurchasePageState extends State<PurchasePage> {
                                   cardCVVController: _cardCVVController,
                                 ),
                               ),
-                              const SizedBox(
-                                height: 40,
-                              ),
+                              const SizedBox(height: 40),
                               SCTextButton(
                                 buttonLabel: 'PAY',
                                 onPressed: () {
+                                  if (selectedTickets.length <
+                                      widget.arguments.chosenSeats.length) {
+                                    const snackBar = SnackBar(
+                                      content: Text(
+                                          'Please select ticket group for every seat.'),
+                                      duration: Duration(milliseconds: 1500),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(snackBar);
+                                    return;
+                                  }
+
                                   final controllers = [
                                     _cardFullNameController,
                                     _cardNumberController,
@@ -326,6 +322,7 @@ class _PurchasePageState extends State<PurchasePage> {
                                         .showSnackBar(snackBar);
                                     return;
                                   }
+
                                   final newPurchase = Purchase(
                                     id: '',
                                     screeningId: widget.arguments.screening.id,
@@ -357,14 +354,13 @@ class _PurchasePageState extends State<PurchasePage> {
     );
   }
 
-  void _calculateTotalPrice(String seat) {
+  void _calculateTotalPrice() {
     double sum = 0;
     totalPrice = 0;
 
-    selectedTickets.forEach((key, value) {
-      String numberStr = value.substring(value.length - 2, value.length - 1);
-      sum += double.parse(numberStr);
-    });
+    for (var ticket in selectedTickets.values) {
+      sum += ticket == tickets.first ? 7 : 4;
+    }
 
     setState(() {
       totalPrice = sum;

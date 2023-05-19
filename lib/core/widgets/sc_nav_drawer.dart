@@ -27,6 +27,7 @@ class SCNavDrawer extends StatelessWidget {
                   ),
             ),
             onTap: () {
+              context.pop();
               context.pushNamed(Routes.screenings);
             },
           ),
@@ -41,6 +42,7 @@ class SCNavDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
+              context.pop();
               try {
 
                 print((BlocProvider.of<AuthenticationBloc>(context).state
@@ -71,6 +73,7 @@ class SCNavDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
+              context.pop();
               try {
 
                 print((BlocProvider.of<AuthenticationBloc>(context).state
@@ -100,6 +103,7 @@ class SCNavDrawer extends StatelessWidget {
               ),
             ),
             onTap: () {
+              context.pop();
               try {
                 context.pushNamed(Routes.userProfile, params: {
                   'uid': (BlocProvider.of<AuthenticationBloc>(context).state
@@ -121,6 +125,7 @@ class SCNavDrawer extends StatelessWidget {
                 ),
               ),
               onTap: () {
+                context.pop();
                 BlocProvider.of<AuthenticationBloc>(context)
                     .add(SignOutEvent());
               },
