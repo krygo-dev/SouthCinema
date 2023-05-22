@@ -5,6 +5,7 @@ import 'package:south_cinema/core/navigation/navigation_router.dart';
 import 'package:south_cinema/core/widgets/sc_app_bar.dart';
 import 'package:south_cinema/core/widgets/sc_nav_drawer.dart';
 import 'package:south_cinema/core/widgets/sc_text_button.dart';
+import 'package:south_cinema/core/widgets/sc_text_field.dart';
 import 'package:south_cinema/features/authentication/presentation/bloc/authentication_bloc.dart';
 import 'package:south_cinema/features/user_profile/domain/entities/user.dart';
 import 'package:south_cinema/features/user_profile/presentation/bloc/user_bloc.dart';
@@ -106,60 +107,28 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 16),
-                      TextField(
-                        controller: _emailController,
-                        decoration: InputDecoration(
-                          hintText: 'email',
-                          hintStyle: Theme.of(context).textTheme.labelLarge,
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.red,
-                            ),
-                          ),
-                        ),
-                        keyboardType: TextInputType.emailAddress,
-                        showCursor: true,
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
+                      SCTextField(
+                          controller: _emailController,
+                          hint: 'email',
+                          keyboardType: TextInputType.emailAddress,
+                          obscure: false,
+                          isEnabled: true,
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      SCTextField(
                         controller: _passwordController,
-                        decoration: InputDecoration(
-                          hintText: 'password',
-                          hintStyle: Theme.of(context).textTheme.labelLarge,
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.green,
-                            ),
-                          ),
-                        ),
+                        hint: 'password',
                         keyboardType: TextInputType.text,
-                        showCursor: true,
-                        obscureText: true,
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
+                        obscure: true,
+                        isEnabled: true,
                       ),
                       const SizedBox(height: 16),
-                      TextField(
+                      SCTextField(
                         controller: _repeatPasswordController,
-                        decoration: InputDecoration(
-                          hintText: 'repeat password',
-                          hintStyle: Theme.of(context).textTheme.labelLarge,
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                              width: 1,
-                              color: Colors.yellow,
-                            ),
-                          ),
-                        ),
+                        hint: 'repeat password',
                         keyboardType: TextInputType.text,
-                        showCursor: true,
-                        obscureText: true,
-                        textAlign: TextAlign.center,
-                        textAlignVertical: TextAlignVertical.center,
+                        obscure: true,
+                        isEnabled: true,
                       ),
                       const SizedBox(height: 16),
                       BlocBuilder<AuthenticationBloc, AuthenticationState>(
