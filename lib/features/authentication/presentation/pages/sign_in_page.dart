@@ -46,7 +46,7 @@ class _SignInPageState extends State<SignInPage> {
               }
 
               if (state is AuthenticationLoaded) {
-                context.pushNamed(
+                context.pushReplacementNamed(
                   Routes.userProfile,
                   params: {
                     'uid': state.authUser.uid,

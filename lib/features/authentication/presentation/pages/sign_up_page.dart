@@ -71,7 +71,7 @@ class _SignUpPageState extends State<SignUpPage> {
               BlocListener<UserBloc, UserState>(
                 listener: (context, state) {
                   if (state is UserLoaded) {
-                    context.pushNamed(
+                    context.pushReplacementNamed(
                       Routes.userProfile,
                       params: {
                         'uid': state.user.uid,
